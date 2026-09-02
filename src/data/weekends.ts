@@ -109,7 +109,12 @@ export const weekends: Weekend[] = [
       },
       { time: '14:30', title: 'Neural networks', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack', type: 'break' },
-      { time: '16:00', title: "Vapnik's statistical learning theory", type: 'lecture' },
+      {
+        time: '16:00',
+        title: "Vapnik's statistical learning theory",
+        type: 'lecture',
+        links: [{ label: 'Slides', url: deck(1, 'statistical-learning-theory.pdf') }],
+      },
     ],
     saturday: [
       { time: '08:00', title: 'Training neural networks with PyTorch', type: 'lecture' },
@@ -133,7 +138,11 @@ export const weekends: Weekend[] = [
         label: 'Neural networks and universal approximation',
         url: deck(1, 'neural-networks-universal-approximation.pdf'),
       },
-      { group: 'Lecture slides', label: "Vapnik's statistical learning theory", url: SOON },
+      {
+        group: 'Lecture slides',
+        label: "Vapnik's statistical learning theory",
+        url: deck(1, 'statistical-learning-theory.pdf'),
+      },
       { group: 'Lecture slides', label: 'Training neural networks with PyTorch', url: SOON },
       { group: 'Lecture slides', label: 'Validation and overfitting', url: SOON },
       { group: 'Coding exercises', label: "First-order optimization: Heron's algorithm", url: SOON },
