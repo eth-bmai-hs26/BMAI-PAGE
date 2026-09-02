@@ -10,21 +10,37 @@ import type { Weekend } from '../types';
 
 const ORG = 'eth-bmai-hs26';
 
-/** Public materials repository for a weekend, e.g. eth-bmai-hs26/BMAI-WE1-public. */
-export const weekendRepo = (n: number): string => `${ORG}/BMAI-WE${n}-public`;
+/**
+ * Name of a public repository in the eth-bmai-hs26 organisation that materials
+ * are read from, e.g. 'w1-cx-public' or 'w1-lecture-slides'.
+ *
+ * Deliberately any string, not a fixed list: a lecturer creates whatever public
+ * repo suits them and we link it, rather than asking them to rename it to fit a
+ * convention. `w<N>-<cx|project|lecture>-public` is the house habit for TA
+ * material, not a rule. The trade-off is that a typo in a repo name is a dead
+ * link at runtime instead of a build error, so paste names, do not type them.
+ */
+export type PublicRepo = string;
 
-/** Direct file link into a weekend's public repo, for slides and handouts. */
-export const raw = (n: number, path: string): string =>
-  `https://raw.githubusercontent.com/${weekendRepo(n)}/main/${path}`;
+/**
+ * Direct file link into a public repo, for slides and handouts. GitHub serves
+ * these as a download rather than rendering them in the browser.
+ */
+export const raw = (repo: PublicRepo, path: string): string =>
+  `https://raw.githubusercontent.com/${ORG}/${repo}/main/${path}`;
 
-/** Notebook in a weekend's public repo, opened in Google Colab. */
-export const colab = (n: number, path: string): string =>
-  `https://colab.research.google.com/github/${weekendRepo(n)}/blob/main/${path}`;
+/** Notebook in a public repo, opened in Google Colab. */
+export const colab = (repo: PublicRepo, path: string): string =>
+  `https://colab.research.google.com/github/${ORG}/${repo}/blob/main/${path}`;
+
+/** File shown in GitHub's own viewer, for a notebook or PDF to preview in-page. */
+export const github = (repo: PublicRepo, path: string): string =>
+  `https://github.com/${ORG}/${repo}/blob/main/${path}`;
 
 /**
  * Placeholder for material that has not been uploaded yet. Renders greyed out
  * as "Soon" instead of a link, so an agenda can go live before its files do.
- * Replace with raw(n, path) or colab(n, path) once the file is in the repo.
+ * Replace with raw(repo, path) or colab(repo, path) once the file is pushed.
  */
 export const SOON = '#';
 
