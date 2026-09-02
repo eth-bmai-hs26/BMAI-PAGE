@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { weekends } from '../data/weekends';
+import { weekends, deck } from '../data/weekends';
 import { WeekendCard } from '../components/WeekendCard';
 import { CalendarStrip } from '../components/CalendarStrip';
 
@@ -31,6 +31,28 @@ export function HomePage() {
                 <dd>Friday &amp; Saturday, 08:00 to 17:00</dd>
               </div>
             </dl>
+            {/*
+              The intro and administration deck sits by the title, not buried in
+              weekend 1's Materials list, because it answers what a participant
+              asks first: how the course is passed, what the deadline is, how the
+              projects work. Same placement as the FDD site.
+
+              download rather than a plain link: every other PDF on this site is
+              offered as a download, and FDD's equivalent button points at
+              raw.githubusercontent.com, which serves a PDF as an attachment
+              anyway. So this matches both.
+            */}
+            <div className="hero__cta">
+              <a
+                className="btn btn--ghost"
+                href={deck(1, 'intro-and-onboarding.pdf')}
+                target="_blank"
+                rel="noopener noreferrer"
+                download=""
+              >
+                Course intro &amp; administration slides (PDF)
+              </a>
+            </div>
           </div>
         </div>
       </section>

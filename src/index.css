@@ -207,6 +207,14 @@ h3 {
   font-weight: 700;
   font-size: 0.98rem;
 }
+/* The call to action row under the hero meta, for material the whole course
+   needs before it needs any single weekend. Same shape as the FDD site. */
+.hero__cta {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 /* ---------- Section ---------- */
 .section {
   padding: 64px 0;
@@ -840,6 +848,21 @@ a.srow__title--link:hover {
   border-color: var(--eth-blue-dark);
   text-decoration: none;
   color: #fff;
+}
+/* Ghost variant, for a button sitting on the tinted hero: a solid blue block
+   there fights the heading rather than supporting it. */
+.btn--ghost {
+  background: #fff;
+  color: var(--eth-blue);
+}
+.btn--ghost:hover:not(:disabled) {
+  background: var(--bg-tint);
+  border-color: var(--eth-blue);
+  color: var(--eth-blue);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .section__cta {
