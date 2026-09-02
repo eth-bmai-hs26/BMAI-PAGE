@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en" data-os="mac">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setting up Claude Code: CAS Building ML/AI Applications, HS26</title>
+<!--
+  Companion setup guide for the weekend 1 Saturday parallel session,
+  "Introduction to Claude Code".
+
+  WHY THIS PAGE EXISTS. Carlos, 2026-09-02: typing a command off a projected
+  slide is error prone, and the room are managers who have barely any
+  programming experience and do not know what VS Code is. So every command on
+  this page has a button that copies it, and every step is written out.
+
+  A copy button INSIDE the PDF is not possible: Acrobat's JavaScript has no
+  clipboard write API, and Preview and pdfpc run no JavaScript at all. That is
+  why this is a web page and not a feature of the deck.
+
+  HARD CONSTRAINTS, from the house course-viz rules:
+    - ONE file. No CDN, no fetch, no external font, no image file.
+    - It must work from file:// as well as over https, because it may be
+      mailed as an attachment before it is published.
+  Everything below is inline for that reason. Do not "tidy" the CSS or the
+  JavaScript into separate files.
+
+  Palette and register follow the deck's Paper and Grid theme, so the guide
+  and the slides read as one thing.
+-->
+<style>
+:root{
+  --paper:#FBF8F2;
+  --ink:#232323;
+  --muted:#6f6a63;
+  --brand:#26456E;
+  --sepia:#8A6D3B;
+  --good:#0072B2;
+  --bad:#D55E00;
+  --rule:#ded7c9;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--serif);
+  color:var(--ink);
+  background-color:var(--paper);
+  /* the squared page of the deck, at the same weight */
+  background-image:
+    repeating-linear-gradient(to right, rgba(0,0,0,.045) 0 1px, transparent 1px 5mm),
+    repeating-linear-gradient(to bottom, rgba(0,0,0,.045) 0 1px, transparent 1px 5mm);
+  line-height:1.6;
+  font-size:17px;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px 96px;
+      border-left:1px solid rgba(138,109,59,.45)}
+@media (max-width:700px){.wrap{border-left:none;padding:0 16px 64px}}
+
+header{padding:44px 0 8px}
+.eyebrow{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;
+         color:var(--sepia);font-weight:700;margin:0 0 10px}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 6px;font-weight:700}
+.sub{color:var(--muted);font-size:1.05rem;margin:0}
+hr.rule{border:0;border-top:1.5px solid var(--sepia);margin:18px 0 0;width:110px}
+
+h2{font-size:1.4rem;margin:2.4em 0 .1em;font-weight:700;scroll-margin-top:74px}
+h2 .num{color:var(--sepia);font-variant-numeric:tabular-nums;margin-right:.5em}
+h2+.lede{color:var(--muted);margin:.2em 0 1em}
+h3{font-size:1.06rem;margin:1.6em 0 .4em;font-weight:700}
+p{margin:.7em 0}
+a{color:var(--brand)}
+/* Ligatures OFF everywhere a command appears. A reader whose default mono is
+   a coding font (Fira Code, JetBrains Mono, Cascadia Code) would otherwise see
+   the two hyphens of "claude --version" fused into one long dash, and would
+   type one hyphen. The text is plain ASCII either way, so only the eye is
+   affected, and only for the people who type instead of pressing Copy. */
+code{font-family:var(--mono);font-size:.9em;background:rgba(138,109,59,.10);
+     padding:.08em .32em;border-radius:3px;
+     font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+kbd{font-family:var(--mono);font-size:.82em;border:1px solid var(--rule);
+    border-bottom-width:2px;border-radius:4px;padding:.1em .42em;background:#fff;
+    white-space:nowrap}
+ol,ul{padding-left:1.3em}
+li{margin:.42em 0}
+strong{font-weight:700}
+
+/* ---- the OS switch ------------------------------------------------ */
+.osbar{position:sticky;top:0;z-index:20;background:var(--paper);
+       border-bottom:1px solid var(--rule);padding:10px 0;margin-bottom:4px;
+       display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.osbar .lbl{font-size:.86rem;color:var(--muted)}
+.osbtn{font-family:var(--serif);font-size:.92rem;cursor:pointer;
+       border:1px solid var(--rule);background:#fff;color:var(--ink);
+       border-radius:5px;padding:.3em .9em}
+.osbtn[aria-pressed="true"]{border-color:var(--brand);color:var(--brand);
+       box-shadow:inset 0 0 0 1px var(--brand);font-weight:700}
+html[data-os="mac"] .os-win,
+html[data-os="win"] .os-mac{display:none}
+
+/* ---- the command card, matching the deck's console ---------------- */
+.cmd{border:1.4px solid var(--ink);border-radius:5px;margin:1.1em 0;
+     background:transparent;overflow:hidden}
+.cmd .bar{display:flex;align-items:center;gap:7px;padding:8px 12px 0}
+.cmd .dot{width:7px;height:7px;border-radius:50%;border:1px solid var(--sepia)}
+.cmd .where{margin-left:auto;font-size:.74rem;letter-spacing:.06em;
+            text-transform:uppercase;color:var(--muted)}
+.cmd .hr{height:1px;background:rgba(138,109,59,.4);margin:8px 12px 0}
+.cmd .body{display:flex;align-items:flex-start;gap:10px;padding:10px 12px 12px}
+.cmd pre{margin:0;flex:1;font-family:var(--mono);font-size:.86rem;
+         line-height:1.55;white-space:pre-wrap;word-break:break-word;
+         overflow-wrap:anywhere;
+         font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+.cmd .prompt{color:var(--sepia);user-select:none}
+.copy{flex:none;font-family:var(--serif);font-size:.82rem;cursor:pointer;
+      border:1px solid var(--brand);color:var(--brand);background:#fff;
+      border-radius:5px;padding:.28em .8em;min-width:5.2em}
+.copy:hover{background:var(--brand);color:#fff}
+.copy.ok{border-color:var(--good);color:#fff;background:var(--good)}
+.copy.err{border-color:var(--bad);color:var(--bad);background:#fff}
+.out{font-family:var(--mono);font-size:.82rem;color:var(--muted);
+     margin:.3em 0 0;padding-left:2px;white-space:pre-wrap}
+
+/* ---- notes -------------------------------------------------------- */
+.note{border-left:3px solid var(--sepia);padding:.55em 0 .55em 14px;
+      margin:1.1em 0;color:var(--ink)}
+.note.warn{border-left-color:var(--bad)}
+.note .tag{display:block;font-size:.76rem;letter-spacing:.07em;
+           text-transform:uppercase;color:var(--sepia);font-weight:700;
+           margin-bottom:.15em}
+.note.warn .tag{color:var(--bad)}
+
+/* ---- the drawn figures -------------------------------------------- */
+figure{margin:1.3em 0;text-align:center}
+figure svg{max-width:100%;height:auto}
+figcaption{font-size:.84rem;color:var(--muted);margin-top:.4em}
+
+.toc{border:1px solid var(--rule);border-radius:6px;padding:14px 18px;
+     margin:24px 0 8px;background:rgba(255,255,255,.5)}
+.toc p{margin:0 0 .3em;font-weight:700;font-size:.92rem}
+.toc ol{margin:0;padding-left:1.25em;font-size:.94rem}
+.toc li{margin:.16em 0}
+
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
+       font-size:.86rem;color:var(--muted)}
+
+@media print{
+  .osbar,.copy{display:none}
+  html[data-os] .os-win,html[data-os] .os-mac{display:block}
+  body{background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">CAS Building ML/AI Applications, HS26, weekend 1</p>
+  <h1>Setting up Claude Code</h1>
+  <p class="sub">Everything you need on your laptop before the Saturday morning
+     session, with a button that copies each command so nothing has to be typed
+     by hand.</p>
+  <hr class="rule">
+</header>
+
+<div class="osbar">
+  <span class="lbl">I am on</span>
+  <button class="osbtn" id="btn-mac" aria-pressed="true"  onclick="setOS('mac')">a Mac</button>
+  <button class="osbtn" id="btn-win" aria-pressed="false" onclick="setOS('win')">Windows</button>
+</div>
+
+<p>No experience is assumed. If you have never opened a terminal, this page is
+written for you. It takes about 20 minutes, and you only do it once.</p>
+
+<div class="toc">
+  <p>The six steps</p>
+  <ol>
+    <li><a href="#s1">Install VS Code</a></li>
+    <li><a href="#s2">Open a terminal</a></li>
+    <li><a href="#s3">Accept your Claude invitation</a></li>
+    <li><a href="#s4">Install Claude Code</a></li>
+    <li><a href="#s5">Check that it worked, and sign in</a></li>
+    <li><a href="#s6">Open the exercise notebook</a></li>
+  </ol>
+</div>
+
+<h2 id="s0">First, what these three things are</h2>
+<p class="lede">Three names come up all morning. Here is what each one is, in
+one sentence.</p>
+
+<ul>
+  <li><strong>VS Code</strong> is a free text editor made by Microsoft. It is a
+      window where you look at the files of a project. You will install it in
+      step 1.</li>
+  <li><strong>A terminal</strong> is a window where you type a command, press
+      Enter, and the computer does it. It is already on your machine. You do
+      not install anything for this.</li>
+  <li><strong>Claude Code</strong> is the program you are here to learn. It
+      runs inside a terminal, reads the files of your project, and edits them
+      when you ask it to in plain English.</li>
+</ul>
+
+<p>They fit together like this: you open your project folder in VS Code, you
+open a terminal inside that window, and you start Claude Code in it.</p>
+
+<figure>
+<svg viewBox="0 0 620 220" role="img" aria-label="A VS Code window with a file list on the left, an editor in the middle, and a terminal panel along the bottom.">
+  <rect x="10" y="10" width="600" height="200" rx="6" fill="none" stroke="#232323" stroke-width="1.6"/>
+  <line x1="10" y1="38" x2="610" y2="38" stroke="#6f6a63" stroke-width="1"/>
+  <circle cx="30" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <circle cx="44" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <circle cx="58" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <line x1="150" y1="38" x2="150" y2="210" stroke="#6f6a63" stroke-width="1"/>
+  <text x="26" y="60" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#6f6a63">novagrid</text>
+  <text x="34" y="80" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#232323">index.html</text>
+  <text x="34" y="98" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#232323">CLAUDE.md</text>
+  <g stroke="#6f6a63" stroke-width="4" stroke-linecap="round">
+    <line x1="168" y1="58" x2="430" y2="58"/><line x1="168" y1="76" x2="370" y2="76"/>
+    <line x1="168" y1="94" x2="450" y2="94"/><line x1="168" y1="112" x2="330" y2="112"/>
+  </g>
+  <line x1="150" y1="140" x2="610" y2="140" stroke="#232323" stroke-width="1.6"/>
+  <text x="168" y="158" font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#6f6a63">TERMINAL</text>
+  <text x="168" y="182" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#8A6D3B">$</text>
+  <rect x="182" y="172" width="7" height="13" fill="#232323"/>
+  <text x="470" y="182" font-family="Georgia,serif" font-size="10" fill="#26456E">Claude Code runs here</text>
+</svg>
+<figcaption>The editor, with a terminal panel along the bottom. You will build
+this up in steps 1 and 2.</figcaption>
+</figure>
+
+<h2 id="s1"><span class="num">1</span>Install VS Code</h2>
+<p class="lede">A free download from Microsoft. Nothing to configure.</p>
+
+<div class="os-mac">
+<ol>
+  <li>Go to <a href="https://code.visualstudio.com/download">code.visualstudio.com/download</a>
+      and click the <strong>Mac</strong> download button.</li>
+  <li>Your browser saves a <code>.zip</code> file. Open your
+      <strong>Downloads</strong> folder and double-click it. That produces an
+      application called <strong>Visual Studio Code</strong>.</li>
+  <li>Drag <strong>Visual Studio Code</strong> into your
+      <strong>Applications</strong> folder. This is the step people skip. If
+      you leave it in Downloads it still runs, but it will nag you.</li>
+  <li>Open it from Applications. The first time, macOS asks whether you are
+      sure you want to open an app downloaded from the internet. Click
+      <strong>Open</strong>.</li>
+</ol>
+</div>
+
+<div class="os-win">
+<ol>
+  <li>Go to <a href="https://code.visualstudio.com/download">code.visualstudio.com/download</a>
+      and click the <strong>Windows</strong> download button.</li>
+  <li>Your browser saves a file whose name ends in <code>.exe</code>. Open your
+      <strong>Downloads</strong> folder and double-click it.</li>
+  <li>The installer asks a series of questions. <strong>Click Next on every
+      screen and accept what is already selected.</strong> You do not need to
+      change anything.</li>
+  <li>Leave <strong>Launch Visual Studio Code</strong> ticked on the last
+      screen and click Finish.</li>
+</ol>
+</div>
+
+<div class="note">
+  <span class="tag">You can stop worrying about it now</span>
+  VS Code is only a window onto your files. Nothing you do in this guide
+  depends on knowing how to use it beyond opening a folder.
+</div>
+
+<h2 id="s2"><span class="num">2</span>Open a terminal</h2>
+<p class="lede">A window with a blinking cursor, where you type one line and
+   press Enter.</p>
+
+<div class="os-mac">
+<ol>
+  <li>Press <kbd>Cmd</kbd> <kbd>Space</kbd>. A search box appears in the middle
+      of the screen.</li>
+  <li>Type <code>Terminal</code> and press <kbd>Enter</kbd>.</li>
+</ol>
+<p>A window opens with a line of text and a blinking block after it. That line
+   is the <strong>prompt</strong>. It is the computer saying it is ready.</p>
+<figure>
+<svg viewBox="0 0 460 110" role="img" aria-label="A terminal window showing a prompt and a blinking cursor.">
+  <rect x="8" y="8" width="444" height="94" rx="6" fill="none" stroke="#232323" stroke-width="1.6"/>
+  <circle cx="28" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <circle cx="42" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <circle cx="56" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <line x1="20" y1="38" x2="440" y2="38" stroke="#8A6D3B" stroke-opacity=".45"/>
+  <text x="24" y="66" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#6f6a63">you@macbook ~ %</text>
+  <rect x="146" y="55" width="8" height="14" fill="#232323"/>
+  <text x="24" y="92" font-family="Georgia,serif" font-size="11" fill="#26456E">this is the prompt, and the block is the cursor</text>
+</svg>
+</figure>
+</div>
+
+<div class="os-win">
+<ol>
+  <li>Press <kbd>Win</kbd> <kbd>X</kbd>. A menu appears in the corner.</li>
+  <li>Choose <strong>Windows PowerShell</strong>, or <strong>Terminal</strong>
+      if that is what your menu says.</li>
+</ol>
+<p>A window opens with a line of text and a blinking block after it. That line
+   is the <strong>prompt</strong>. It is the computer saying it is ready.</p>
+<figure>
+<svg viewBox="0 0 460 110" role="img" aria-label="A PowerShell window showing a prompt and a blinking cursor.">
+  <rect x="8" y="8" width="444" height="94" rx="6" fill="none" stroke="#232323" stroke-width="1.6"/>
+  <circle cx="28" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <circle cx="42" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <circle cx="56" cy="24" r="3.5" fill="none" stroke="#8A6D3B"/>
+  <line x1="20" y1="38" x2="440" y2="38" stroke="#8A6D3B" stroke-opacity=".45"/>
+  <text x="24" y="66" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#6f6a63">PS C:\Users\You&gt;</text>
+  <rect x="160" y="55" width="8" height="14" fill="#232323"/>
+  <text x="24" y="92" font-family="Georgia,serif" font-size="11" fill="#26456E">this is the prompt, and the block is the cursor</text>
+</svg>
+</figure>
+<div class="note warn">
+  <span class="tag">Windows has two of these, and they are not the same</span>
+  PowerShell and CMD look alike and take different commands. Look at the start
+  of the line. <strong>PowerShell</strong> begins with <code>PS</code>, as in
+  <code>PS C:\Users\You&gt;</code>. <strong>CMD</strong> has no <code>PS</code>.
+  You want PowerShell. If you are in CMD, close it and open PowerShell with
+  <kbd>Win</kbd> <kbd>X</kbd>.
+</div>
+</div>
+
+<h3>Using a terminal without panicking</h3>
+<ul>
+  <li>You type one line and press <kbd>Enter</kbd>. Nothing happens until you
+      press Enter.</li>
+  <li>You cannot click on anything inside the window. Use the arrow keys to
+      move around.</li>
+  <li>Text scrolling past is normal. It is the program telling you what it is
+      doing.</li>
+  <li>To paste,
+      <span class="os-mac">press <kbd>Cmd</kbd> <kbd>V</kbd></span><span
+      class="os-win">press <kbd>Ctrl</kbd> <kbd>V</kbd>, or right-click</span>.</li>
+  <li>Later, once Claude Code is running: <kbd>Esc</kbd> interrupts it, and
+      typing <code>exit</code> closes it.</li>
+</ul>
+
+<h3>The same terminal, inside VS Code</h3>
+<p>VS Code has one built in, and that is the one you will use during the
+   exercise. Open your project folder with <strong>File</strong>, then
+   <strong>Open Folder</strong>, then open the panel with
+   <strong>Terminal</strong>, then <strong>New Terminal</strong>. It is the
+   same program, docked at the bottom of the editor.</p>
+
+<h2 id="s3"><span class="num">3</span>Accept your Claude invitation</h2>
+<p class="lede">Claude Code needs a paid Claude account. The course bought you
+   one.</p>
+<ol>
+  <li>Look in your mailbox for an <strong>email inviting you to join the
+      course's Claude team</strong>. Check your spam folder if it is not
+      there.</li>
+  <li>Click the button in that email and follow it through. You end up with a
+      Claude account that belongs to the course team.</li>
+  <li>Remember which email address you accepted it with. You will sign in with
+      that address in step 5.</li>
+</ol>
+<div class="note">
+  <span class="tag">If the invitation never arrived</span>
+  Tell the teaching team at the start of the session. You can follow the whole
+  lecture without it and set the account up afterwards.
+</div>
+
+<h2 id="s4"><span class="num">4</span>Install Claude Code</h2>
+<p class="lede">One command. Press Copy, paste it into the terminal you opened
+   in step 2, press Enter.</p>
+
+<div class="os-mac">
+<div class="cmd">
+  <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="where">Terminal</span></div>
+  <div class="hr"></div>
+  <div class="body">
+    <pre><span class="prompt">$ </span>curl -fsSL https://claude.ai/install.sh | bash</pre>
+    <button class="copy" onclick="copyCmd(this)">Copy</button>
+  </div>
+</div>
+<p>Paste it with <kbd>Cmd</kbd> <kbd>V</kbd> and press <kbd>Enter</kbd>. Text
+   scrolls past for a few seconds. When it finishes you see
+   <code>Claude Code successfully installed!</code></p>
+</div>
+
+<div class="os-win">
+<div class="cmd">
+  <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="where">PowerShell</span></div>
+  <div class="hr"></div>
+  <div class="body">
+    <pre><span class="prompt">&gt; </span>irm https://claude.ai/install.ps1 | iex</pre>
+    <button class="copy" onclick="copyCmd(this)">Copy</button>
+  </div>
+</div>
+<p>Paste it with <kbd>Ctrl</kbd> <kbd>V</kbd> and press <kbd>Enter</kbd>. Text
+   scrolls past for a few seconds. When it finishes you see
+   <code>Claude Code successfully installed!</code></p>
+<div class="note">
+  <span class="tag">Only if you ended up in CMD</span>
+  The command above is for PowerShell. In CMD, which has no <code>PS</code> at
+  the start of the line, use this one instead.
+  <div class="cmd">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="where">CMD</span></div>
+    <div class="hr"></div>
+    <div class="body">
+      <pre><span class="prompt">&gt; </span>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</pre>
+      <button class="copy" onclick="copyCmd(this)">Copy</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<h2 id="s5"><span class="num">5</span>Check that it worked, and sign in</h2>
+<p class="lede">Two more commands, then a browser window.</p>
+
+<p>First, ask it which version it is. If it answers, it is installed.</p>
+<div class="cmd">
+  <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="where">Terminal</span></div>
+  <div class="hr"></div>
+  <div class="body">
+    <pre><span class="prompt">$ </span>claude --version</pre>
+    <button class="copy" onclick="copyCmd(this)">Copy</button>
+  </div>
+  <p class="out" style="padding:0 12px 12px">2.1.211 (Claude Code)</p>
+</div>
+<p>The number you see will differ. Any number means it worked.</p>
+
+<p>Now start it.</p>
+<div class="cmd">
+  <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="where">Terminal</span></div>
+  <div class="hr"></div>
+  <div class="body">
+    <pre><span class="prompt">$ </span>claude</pre>
+    <button class="copy" onclick="copyCmd(this)">Copy</button>
+  </div>
+</div>
+<p>The first time, it opens a browser window and asks you to sign in.
+   <strong>Sign in with the address you accepted the team invitation
+   with</strong>, from step 3. Then come back to the terminal. You are done.</p>
+
+<div class="note">
+  <span class="tag">If it says command not found, or is not recognized</span>
+  The installer finished, but this terminal window was opened before it did and
+  has not noticed. <strong>Close the terminal window and open a new one</strong>,
+  then try <code>claude --version</code> again. If it still fails, the fix is in
+  the official
+  <a href="https://code.claude.com/docs/en/troubleshoot-install">installation
+  troubleshooting page</a>, and the teaching team can do it with you in two
+  minutes.
+</div>
+
+<h2 id="s6"><span class="num">6</span>Open the exercise notebook</h2>
+<p class="lede">The Saturday exercise is a notebook you run on your own
+   machine.</p>
+<ol>
+  <li>Download it:
+      <a href="../exercises/we1/operation-midnight-launch.ipynb">operation-midnight-launch.ipynb</a>.
+      Your browser saves it to Downloads.</li>
+  <li>Open <strong>VS Code</strong>, choose <strong>File</strong>, then
+      <strong>Open File</strong>, and pick the file you just downloaded. VS
+      Code opens notebooks itself.</li>
+  <li>The first time you run a cell, VS Code offers to install the
+      <strong>Python</strong> extension and to pick a Python installation.
+      Accept both.</li>
+  <li>Run the first cell. It checks that git, Claude Code and VS Code are all
+      present and tells you if anything is missing.</li>
+</ol>
+<div class="note">
+  <span class="tag">Why this one is not in Google Colab</span>
+  Every other exercise in this course runs in Colab. This one cannot: Claude
+  Code lives in the terminal of your own laptop and edits files in a folder you
+  own, and Colab has neither. The notebook does the setting up, and Claude Code
+  itself runs in the terminal beside it.
+</div>
+
+<h2 id="more">Where to read more</h2>
+<ul>
+  <li><a href="https://code.claude.com/docs/en/terminal-guide">Terminal guide
+      for new users</a>, the official version of steps 2, 4 and 5.</li>
+  <li><a href="https://code.claude.com/docs/en/quickstart">Quickstart</a>, your
+      first session, step by step.</li>
+  <li><a href="https://code.claude.com/docs/en/commands">Every command</a>, the
+      full list of what you can type after a slash.</li>
+  <li><a href="https://code.claude.com/docs/en/setup">Advanced setup</a>, if you
+      would rather install with Homebrew, WinGet, apt or npm.</li>
+</ul>
+
+<footer>
+  CAS Building ML/AI Applications, ETH Zurich, HS26. Weekend 1, Saturday
+  parallel session. Questions before the weekend go to the teaching team.
+</footer>
+
+</div>
+
+<script>
+// --- the OS switch -------------------------------------------------------
+// Guessed from the user agent, then remembered. Wrapped in try/catch because
+// localStorage throws outright in a private window and when a browser is set
+// to block site data, and this page must still work from file://.
+var OS_KEY = "bmai-cc-os";
+
+function setOS(os) {
+  document.documentElement.setAttribute("data-os", os);
+  document.getElementById("btn-mac").setAttribute("aria-pressed", String(os === "mac"));
+  document.getElementById("btn-win").setAttribute("aria-pressed", String(os === "win"));
+  try { localStorage.setItem(OS_KEY, os); } catch (e) {}
+}
+
+(function initOS() {
+  var stored = null;
+  try { stored = localStorage.getItem(OS_KEY); } catch (e) {}
+  if (stored !== "mac" && stored !== "win") {
+    stored = /Win/i.test(navigator.userAgent) ? "win" : "mac";
+  }
+  setOS(stored);
+})();
+
+// --- the copy button -----------------------------------------------------
+// The whole reason this page exists, so it has to work everywhere, including
+// from file:// and in browsers where the async clipboard API is unavailable
+// or refuses. Order: navigator.clipboard first, then a hidden textarea and
+// execCommand, then an honest failure message telling the reader to select
+// the line by hand.
+function commandTextOf(btn) {
+  var pre = btn.parentNode.querySelector("pre");
+  var clone = pre.cloneNode(true);
+  var prompt = clone.querySelector(".prompt");
+  if (prompt) { prompt.parentNode.removeChild(prompt); }   // never copy the "$ "
+  return clone.textContent.trim();
+}
+
+function flash(btn, label, cls) {
+  var original = "Copy";
+  btn.textContent = label;
+  btn.classList.remove("ok", "err");
+  if (cls) { btn.classList.add(cls); }
+  setTimeout(function () {
+    btn.textContent = original;
+    btn.classList.remove("ok", "err");
+  }, 1800);
+}
+
+function legacyCopy(text) {
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.position = "fixed";
+  ta.style.top = "-1000px";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  var ok = false;
+  try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  return ok;
+}
+
+function copyCmd(btn) {
+  var text = commandTextOf(btn);
+  var done = function () { flash(btn, "Copied", "ok"); };
+  var failed = function () { flash(btn, "Select it", "err"); };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () {
+      if (legacyCopy(text)) { done(); } else { failed(); }
+    });
+  } else if (legacyCopy(text)) {
+    done();
+  } else {
+    failed();
+  }
+}
+</script>
+</body>
+</html>

@@ -62,6 +62,28 @@ export const SOON = '#';
 export const deck = (n: number, file: string): string =>
   `${import.meta.env.BASE_URL}slides/we${n}/${file}`;
 
+/**
+ * A participant-facing HOW-TO page hosted by this site, from `public/guides/`.
+ *
+ * Same reasoning as deck(): the source lives in a private repository, and a
+ * page served from here needs no new repository and no visibility change. The
+ * sibling FDD site serves its installation guide the same way.
+ */
+export const guide = (file: string): string =>
+  `${import.meta.env.BASE_URL}guides/${file}`;
+
+/**
+ * An exercise notebook hosted by THIS site, from `public/exercises/we<n>/`.
+ *
+ * Why not colab(): colab() opens a notebook in Google Colab, which is right for
+ * every other exercise in this course and wrong for this one. The Claude Code
+ * exercise drives a terminal program that edits files in a folder the
+ * participant owns, and Colab has neither the folder nor the licence, so the
+ * notebook is DOWNLOADED and opened locally in VS Code. See the setup guide.
+ */
+export const exercise = (n: number, file: string): string =>
+  `${import.meta.env.BASE_URL}exercises/we${n}/${file}`;
+
 export const weekends: Weekend[] = [
   {
     id: 'we1',
@@ -118,6 +140,16 @@ export const weekends: Weekend[] = [
     ],
     saturday: [
       { time: '08:00', title: 'Training neural networks with PyTorch', type: 'lecture' },
+      {
+        time: '08:00',
+        title: 'Introduction to Claude Code (parallel session)',
+        type: 'lecture',
+        links: [
+          { label: 'Slides', url: deck(1, 'introduction-to-claude-code.pdf') },
+          { label: 'Setup guide', url: guide('claude-code-setup.html') },
+          { label: 'Exercise', url: exercise(1, 'operation-midnight-launch.ipynb') },
+        ],
+      },
       { time: '09:00', title: 'Neural networks with PyTorch', type: 'exercise' },
       { time: '10:00', title: 'Coffee break at Cafebar', type: 'break' },
       { time: '10:30', title: 'Validation and overfitting', type: 'lecture' },
@@ -143,6 +175,11 @@ export const weekends: Weekend[] = [
         label: "Vapnik's statistical learning theory",
         url: deck(1, 'statistical-learning-theory.pdf'),
       },
+      {
+        group: 'Lecture slides',
+        label: 'Introduction to Claude Code (Saturday parallel session)',
+        url: deck(1, 'introduction-to-claude-code.pdf'),
+      },
       { group: 'Lecture slides', label: 'Training neural networks with PyTorch', url: SOON },
       { group: 'Lecture slides', label: 'Validation and overfitting', url: SOON },
       { group: 'Coding exercises', label: "First-order optimization: Heron's algorithm", url: SOON },
@@ -150,8 +187,18 @@ export const weekends: Weekend[] = [
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
       { group: 'Coding exercises', label: 'Gradient descent: grasshopper game', url: SOON },
       { group: 'Coding exercises', label: 'Neural networks: forward pass and universal approximation', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Claude Code: Operation Midnight Launch (notebook, runs locally)',
+        url: exercise(1, 'operation-midnight-launch.ipynb'),
+      },
       { group: 'Coding exercises', label: 'Neural networks with PyTorch', url: SOON },
       { group: 'Coding exercises', label: 'Overfitting, validation and regularization', url: SOON },
+      {
+        group: 'Setup',
+        label: 'Setting up Claude Code: VS Code, a terminal, and your licence',
+        url: guide('claude-code-setup.html'),
+      },
       { group: 'Project', label: 'LLM routing: project description', url: SOON },
       { group: 'Project', label: 'LLM routing: grading scheme', url: SOON },
     ],
