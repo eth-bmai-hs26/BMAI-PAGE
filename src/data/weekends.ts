@@ -63,6 +63,22 @@ export const deck = (n: number, file: string): string =>
   `${import.meta.env.BASE_URL}slides/we${n}/${file}`;
 
 /**
+ * An interactive VISUALIZATION hosted by this site, from
+ * `public/viz/we<n>/<name>/`.
+ *
+ * Same reasoning as deck(): the source lives in the private
+ * `eth-bmai-hs26/w1-lecture-material`, and serving the built page from here
+ * needs no new repository and no visibility change.
+ *
+ * A visualization is a FOLDER rather than one file, so this points at its
+ * index.html. Each one is browser only, opens with no build step and no
+ * network, and carries its own vendored libraries, so it works from this
+ * subpath exactly as it works from a file:// URL on a laptop.
+ */
+export const viz = (n: number, name: string): string =>
+  `${import.meta.env.BASE_URL}viz/we${n}/${name}/index.html`;
+
+/**
  * A participant-facing HOW-TO page hosted by this site, from `public/guides/`.
  *
  * Same reasoning as deck(): the source lives in a private repository, and a
@@ -180,8 +196,18 @@ export const weekends: Weekend[] = [
         label: 'Introduction to Claude Code (Saturday parallel session)',
         url: deck(1, 'introduction-to-claude-code.pdf'),
       },
+      {
+        group: 'Lecture slides',
+        label: 'Validation: why regularisation, four objectives, one score (reference)',
+        url: deck(1, 'validation-reference.pdf'),
+      },
       { group: 'Lecture slides', label: 'Training neural networks with PyTorch', url: SOON },
       { group: 'Lecture slides', label: 'Validation and overfitting', url: SOON },
+      {
+        group: 'Visualizations',
+        label: 'The UN games: spurious regression in ten scenes',
+        url: viz(1, 'un-games'),
+      },
       { group: 'Coding exercises', label: "First-order optimization: Heron's algorithm", url: SOON },
       { group: 'Coding exercises', label: 'First-order optimization: Genie game and Robbins-Monro', url: SOON },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
