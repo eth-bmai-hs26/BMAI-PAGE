@@ -30,6 +30,21 @@ This is the pattern in the most recent run of this course, and the sister course
 on AI in industry uses exactly the same one, with about twenty assistants each
 sitting in a group.
 
+## What is already in place for this run
+
+Steps 1 to 3 below are **done**. On the current course you will find:
+
+- The assistants enrolled with a teacher role.
+- **Eighteen empty groups**, `Group A` to `Group R`. That is one spare on top of
+  the pairs the current head count makes, so there is room for an odd team of
+  three.
+- A **Project group choice** activity, already offering all eighteen, with
+  results published, choices changeable, and no per-group cap.
+
+**The one step left is step 4: put an assistant into each group**, once
+participants have picked their teams and you know which teams actually exist.
+Doing it before that means moving people around afterwards.
+
 ## How it is built, in order
 
 The order matters. Doing these in the wrong sequence is the main way to waste an
