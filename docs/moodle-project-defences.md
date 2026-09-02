@@ -1,114 +1,123 @@
-# How the project defences are organised in Moodle
+# Teams, their teaching assistant, and the project defences in Moodle
 
-A method note for whoever runs the project defences. It was written by
-reconstructing what an earlier iteration did, because the person who originally
-set it up has left the team and nobody still on it remembered the mechanism.
+A method note for whoever runs the projects. It was written by reconstructing
+what earlier iterations actually did, because the person who set it up first has
+left the team and nobody still on it remembered the mechanism.
 
-**This file carries no course ids, no module ids and no links that contain one,
-and it names nobody.** It sits in a public repository. Ask the lecturer for the
-actual course coordinates; everything else you need is here.
+**This file carries no course ids, no module ids, no links containing one, and
+it names nobody.** It sits in a public repository. Ask the lecturer for the
+actual course coordinates; the method is all here.
 
-## The short answer
+## What we want
 
-The activity is Moodle's **Scheduler**. In the German interface, which is what
-ETH's Moodle shows by default, it is called **"Planer"**. You find it under
-*Add an activity or resource* / *Aktivität oder Material anlegen*.
+1. Participants form their own teams.
+2. Each team is assigned one teaching assistant.
+3. That same assistant takes the team through **all three** project defences.
+4. The team and the assistant agree between themselves when each defence happens.
 
-The shape is **one Scheduler per project that has a defence**. An iteration with
-three defended projects has three of them, named for the project they belong to.
-Each teaching assistant then opens time slots inside those Schedulers, and each
-participant books exactly one slot per project.
+## The mechanism, in one sentence
 
-## Three things that are easy to confuse with it
+**There is ONE set of course groups. A participant joins a group to form a team,
+and the assistant assigned to that team is added into the same group as a
+member.**
 
-Look at the activity list of an older course and you can pick the wrong one.
+Everything else follows from that. Because a single set of groups serves the
+whole course, the team keeps its assistant across every project automatically,
+with nothing to maintain between projects. Point 4 needs no Moodle feature at
+all: once the participant can see who their assistant is, they write to them.
 
-| You may see | What it actually does |
-|---|---|
-| A Scheduler called something like "Office hours booking" | Weekly office hours. Same module, different purpose, and it lives for the whole semester rather than for one project |
-| A **Group choice** activity ("Gruppenwahl") | Forming the project pairs and groups. It has nothing to do with the defences |
-| An **Assignment** ("Aufgabe") per project | The code hand-in. The defence is the live conversation that follows it |
+This is the pattern in the most recent run of this course, and the sister course
+on AI in industry uses exactly the same one, with about twenty assistants each
+sitting in a group.
 
-So a course can hold a Scheduler that is *not* about defences at all. Read the
-name and the slot dates before copying anything.
+## How it is built, in order
 
-## Settings
+The order matters. Doing these in the wrong sequence is the main way to waste an
+afternoon.
 
-Create the Scheduler, then set these. Everything else can stay at its default.
+**1. Enrol the assistants with a teacher role.** They have to be in the course
+before they can be put in a group. In the last run every assistant held the
+plain `Teacher` role.
 
-| Setting (German label) | Value | Why |
+**2. Create the groups.** *Participants / Groups*, one per team, named plainly:
+`Group A`, `Group B`, and so on. Create a few more than you expect to need. The
+lecturer stays out of every group.
+
+**3. Add the Group choice activity** (`Gruppenwahl` in the German interface,
+which is what ETH's Moodle shows by default). It offers the groups that already
+exist, which is why step 2 comes first. Settings that were used:
+
+| Setting | Value | Effect |
 |---|---|---|
-| Name | `Project N Presentation Slots` | Numbered, so the three are told apart at a glance |
-| Maximum bookings (`Buchungen je Teilnehmer/in`) | **1** | One defence per project per person |
-| Mode (`Modus`) | **one booking in this scheduler** (`in diesem Planer`) | Frees the slot again if somebody cancels |
-| Guard time (`Sperrfrist`) | **0 minutes** | Participants can still rebook late. Raise it if late cancellations become a problem |
-| Default slot duration (`Standarddauer`) | **15 minutes** | See the note below, the earlier iteration used a different number |
-| Notifications (`Benachrichtigungen`) | **Yes** | The assistant is emailed when somebody books or cancels. Without this they have to keep checking the page |
-| Notes (`Bemerkungen`) | **confidential, teachers only** (`Vertrauliche Bemerkung`) | Where the assistant records how the defence went, without the participant reading it |
-| Booking form / student notes | **No** / **No** | Nothing for the participant to fill in beyond taking the slot |
-| Grade (`Bewertung`) | **None** | The defences are pass or fail and are tracked outside Moodle |
-| Group mode | **No groups** | |
+| Publish results | Always show, full results with names | Everyone sees who is in which team |
+| Allow choice to be updated | Yes | People can move while teams are still settling |
+| Show column for unanswered | Yes | You can see who has not chosen yet |
+| Limit the number of responses | **Disabled** | Team sizes were left to sort themselves out, and came out at two to four |
 
-**On the slot duration.** The earlier iteration used 25 minute slots with two
-participants booked into each, so a pair defended together. The value above is
-15, because that is the length this semester's administration slides announce to
-participants. Change it if the pair convention comes back. It only prefills the
-box when an assistant adds a slot, so it is a one field edit and any slot can
-override it.
+**4. Assign an assistant to each team.** *Participants / Groups*, pick the
+group, *Add/remove users*, and add the assistant. One assistant can hold more
+than one team; in the last run a couple of them held two.
 
-## What each teaching assistant then does
+**5. Point the project submissions at the same groups.** Each project hand-in is
+an ordinary Assignment with:
 
-The Scheduler is empty when it is created. It fills up because each assistant
-adds their own slots.
+| Setting | Value | Effect |
+|---|---|---|
+| Students submit in groups | **Yes** | One submission per team rather than per person |
+| Require group to submit | **Yes** | Somebody outside a team is stopped early, with a clear message |
+| Require all group members submit | No | One member uploads on behalf of the team |
+| Grouping for student groups | none | Uses the course's default groups, which is what we want |
+| **Group mode** | **Separate groups** | **This is the important one.** Each assistant sees only their own teams' submissions |
 
-1. Open the Scheduler and choose **Add slots** (`Zeitfenster hinzufügen`). The
-   repeating variant is worth using: it lays down a whole run of evenings at
-   once.
-2. Set the date and time. The earlier iteration ran defences on weekday
-   evenings, in the same window as office hours.
-3. Put **your own meeting link in the Location field** (`Ort`). This is the part
-   that surprises people: the Scheduler has no notion of a meeting room, so the
-   link is simply text in that field, and the participant reads it off the slot
-   they booked. Every assistant therefore uses their own link, and slots run in
-   parallel without collision.
-4. Set the capacity. One participant per slot for individual defences, two if
-   pairs defend together.
+Separate groups is what turns a shared course into each assistant's private
+worklist. Without it every assistant sees all submissions and has to find their
+own by hand.
 
-Participants then open the Scheduler and click a free slot. They see who runs it
-and where it happens. The assistant gets an email.
+## Gotchas
 
-## Traps worth knowing before you start
+- **The member count in Group choice includes the assistant.** A team of one
+  participant plus their assistant displays as 2. So if you ever do turn on a
+  per-group limit, add one to the team size you actually want, or the last
+  participant is locked out of a team that looks full and is not.
+- **Add the assistants after the teams have settled**, or at least be ready to
+  move them. If you assign an assistant to an empty group and nobody picks it,
+  you have to move them again.
+- **An assistant who is not enrolled cannot be added to a group.** The group
+  membership dialog only offers enrolled users, and the failure looks like the
+  person simply missing from a list.
+- **Removing somebody from a group does not remove their submission.** If a
+  participant switches team after submitting, check the old team's hand-in.
+- **The lecturer belongs in no group.** With separate groups on an assignment, a
+  teacher with no group still sees everything, which is what you want.
 
-- **Create the Scheduler before asking anyone to add slots.** An assistant who
-  opens a Scheduler that does not exist yet will make a second one, and then the
-  bookings are split across two activities with nobody noticing until somebody
-  turns up in an empty room.
-- **The location field is free text.** A typo in a meeting link fails silently
-  and only at the moment of the defence. Paste, never type.
-- **Notifications default to off.** Turning them on afterwards does nothing for
-  bookings that were already made, so set it when you create the activity.
-- **Confidential notes are the right setting for defence remarks.** The other
-  option shows the note to the participant.
-- **Deleting a slot deletes its bookings** with no warning worth the name. To
-  move a slot, edit it rather than deleting and recreating.
+## Arranging the defences themselves
 
-## If you ever need to do this in bulk
+Nothing further is needed. The participant sees their assistant in the group
+list, and the two of them settle a time by mail. This is the lightest
+arrangement and it is what we are doing.
 
-Creating three Schedulers by hand takes a few minutes and hand work is fine.
-Driving Moodle from a script is possible and there is a house toolkit for it,
-grown in the exam repositories. Two things about it are worth repeating here,
-because both cost somebody a long afternoon:
+**The alternative, for the record.** An earlier iteration ran the defences
+through Moodle's **Scheduler** module (`Planer`), one instance per project, where
+each assistant published bookable time slots and put their own meeting link in
+the slot's Location field, because the module has no notion of a meeting room.
+That is worth the extra machinery when defences are booked with whoever is free
+rather than with a fixed assistant. With one assistant per team for the whole
+course, it mostly adds a step. Note also that a course can hold a Scheduler
+called something like "Office hours booking", which serves weekly office hours
+and has nothing to do with defences: read the name before copying anything.
 
-- **ETH Shibboleth login cannot be automated.** The login page hangs in an
+## If you ever need to script any of this
+
+Hand work is fine at this size. If you do automate, two things about ETH's
+Moodle are worth knowing, because each cost somebody a long afternoon:
+
+- **The Shibboleth login cannot be automated.** The login page hangs in an
   automation browser and the session binds to the browser that created it. The
   working method is a normal Chrome launched with a remote debugging port and
-  its own profile; you log in by hand once, and the script attaches to that
+  its own profile: you log in by hand once, and a script attaches to that
   already authenticated browser afterwards. The profile persists, so later runs
   reattach without a fresh login.
-- **Several fields on the Scheduler settings form sit in collapsed sections.**
-  A script that types into them the ordinary way hangs. Setting the value
-  directly and firing a change event works whether or not the section is open.
-
-Waiting for the page to go network idle is a third trap: this Moodle holds a
-long poll open, so that wait never returns. Wait for the document instead and
-then read the page.
+- **Waiting for the page to go network idle never returns**, because this Moodle
+  holds a long poll open. Wait for the document instead, then read the page.
+  Several settings also sit in collapsed form sections where typing into them
+  hangs; setting the value directly and firing a change event works either way.
