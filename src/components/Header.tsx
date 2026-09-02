@@ -17,6 +17,9 @@ export function Header() {
           <NavLink to="/calendar" className="site-nav__link">
             Calendar
           </NavLink>
+          <NavLink to="/office-hours" className="site-nav__link">
+            Office hours
+          </NavLink>
         </nav>
       </div>
     </header>
