@@ -44,6 +44,24 @@ export const github = (repo: PublicRepo, path: string): string =>
  */
 export const SOON = '#';
 
+/**
+ * A lecture deck hosted by THIS site, from `public/slides/we<n>/`.
+ *
+ * Why not raw(): raw() needs a PUBLIC repository in the org to read from, and
+ * no public repository holds these decks. They live in
+ * `eth-bmai-hs26/w1-lecture-material`, which is private. Serving them from this
+ * repository is what the sibling FDD site does, it needs no new repository and
+ * no visibility change, and it goes live on the next deploy. If a public slides
+ * repo is ever created, switch these to raw('<that-repo>', ...) and delete the
+ * PDFs from public/slides/.
+ *
+ * BASE_URL rather than a bare './' so the link survives a change to `base` in
+ * vite.config.ts. Under hash routing the document URL is always the site root,
+ * so a relative href resolves correctly from any route.
+ */
+export const deck = (n: number, file: string): string =>
+  `${import.meta.env.BASE_URL}slides/we${n}/${file}`;
+
 export const weekends: Weekend[] = [
   {
     id: 'we1',
@@ -56,14 +74,39 @@ export const weekends: Weekend[] = [
     summary:
       "The first weekend builds up the machinery behind neural networks: how first-order methods approach a minimum, why gradient descent works, what a network can approximate, and how Vapnik's theory explains when training generalises. Saturday puts that into PyTorch and looks at how to tell overfitting from real learning.",
     friday: [
-      { time: '08:00', title: 'Intro and onboarding', type: 'lecture' },
-      { time: '09:00', title: 'First-order approximation algorithms', type: 'lecture' },
+      {
+        time: '08:00',
+        title: 'Intro and onboarding',
+        type: 'lecture',
+        links: [
+          { label: 'Slides', url: deck(1, 'intro-and-onboarding.pdf') },
+          { label: 'Cold open', url: deck(1, 'cold-open.pdf') },
+        ],
+      },
+      {
+        time: '09:00',
+        title: 'First-order approximation algorithms',
+        type: 'lecture',
+        links: [{ label: 'Slides', url: deck(1, 'first-order-approximation-algorithms.pdf') }],
+      },
       { time: '10:00', title: 'First-order optimization algorithms', type: 'exercise' },
       { time: '10:30', title: 'Coffee break at Polysnack', type: 'break' },
-      { time: '11:00', title: 'Gradient descent', type: 'lecture' },
+      {
+        time: '11:00',
+        title: 'Gradient descent',
+        type: 'lecture',
+        links: [{ label: 'Slides', url: deck(1, 'gradient-descent.pdf') }],
+      },
       { time: '12:00', title: 'Gradient descent', type: 'exercise' },
       { time: '13:00', title: 'Lunch break at Dozentenfoyer', type: 'break' },
-      { time: '14:00', title: 'Neural networks and universal approximation', type: 'lecture' },
+      {
+        time: '14:00',
+        title: 'Neural networks and universal approximation',
+        type: 'lecture',
+        links: [
+          { label: 'Slides', url: deck(1, 'neural-networks-universal-approximation.pdf') },
+        ],
+      },
       { time: '14:30', title: 'Neural networks', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack', type: 'break' },
       { time: '16:00', title: "Vapnik's statistical learning theory", type: 'lecture' },
@@ -77,9 +120,19 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: LLM routing', type: 'project' },
     ],
     resources: [
-      { group: 'Lecture slides', label: 'First-order approximation algorithms', url: SOON },
-      { group: 'Lecture slides', label: 'Gradient descent', url: SOON },
-      { group: 'Lecture slides', label: 'Neural networks and universal approximation', url: SOON },
+      { group: 'Lecture slides', label: 'Intro and onboarding', url: deck(1, 'intro-and-onboarding.pdf') },
+      { group: 'Lecture slides', label: 'The cold open', url: deck(1, 'cold-open.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'First-order approximation algorithms',
+        url: deck(1, 'first-order-approximation-algorithms.pdf'),
+      },
+      { group: 'Lecture slides', label: 'Gradient descent', url: deck(1, 'gradient-descent.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Neural networks and universal approximation',
+        url: deck(1, 'neural-networks-universal-approximation.pdf'),
+      },
       { group: 'Lecture slides', label: "Vapnik's statistical learning theory", url: SOON },
       { group: 'Lecture slides', label: 'Training neural networks with PyTorch', url: SOON },
       { group: 'Lecture slides', label: 'Validation and overfitting', url: SOON },
