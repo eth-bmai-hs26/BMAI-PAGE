@@ -104,13 +104,20 @@ export const guide = (file: string): string =>
   `${import.meta.env.BASE_URL}guides/${file}`;
 
 /**
- * An exercise notebook hosted by THIS site, from `public/exercises/we<n>/`.
+ * An exercise hosted by THIS site, from `public/exercises/we<n>/`, for the
+ * exercises that Colab cannot carry. Two kinds live here:
  *
- * Why not colab(): colab() opens a notebook in Google Colab, which is right for
- * every other exercise in this course and wrong for this one. The Claude Code
- * exercise drives a terminal program that edits files in a folder the
- * participant owns, and Colab has neither the folder nor the licence, so the
- * notebook is DOWNLOADED and opened locally in VS Code. See the setup guide.
+ * A NOTEBOOK, which the browser downloads. colab() is right for every other
+ * exercise in this course and wrong for the Claude Code one: it drives a
+ * terminal program that edits files in a folder the participant owns, and Colab
+ * has neither the folder nor the licence, so the notebook is opened locally in
+ * VS Code. See the setup guide.
+ *
+ * A self-contained HTML page, which opens in a tab and needs no Python at all.
+ * Why not raw(): raw.githubusercontent.com serves .html as `text/plain` with
+ * `nosniff`, so a participant clicking it reads the source instead of using the
+ * page. The file is copied here from its public repo rather than linked, so
+ * check for a newer copy upstream when the TA edits it.
  */
 export const exercise = (n: number, file: string): string =>
   `${import.meta.env.BASE_URL}exercises/we${n}/${file}`;
@@ -150,7 +157,17 @@ export const weekends: Weekend[] = [
       // Moved from 10:00 to 09:30 by Carlos on 2026-09-03. The coffee break
       // stays at 10:30, so this exercise runs an hour rather than half of one
       // and the 09:00 lecture is the half hour block.
-      { time: '09:30', title: 'First-order optimization algorithms', type: 'exercise' },
+      {
+        time: '09:30',
+        title: 'First-order optimization algorithms',
+        type: 'exercise',
+        links: [
+          {
+            label: 'Open in browser',
+            url: exercise(1, 'cx_robbins-monro.html'),
+          },
+        ],
+      },
       { time: '10:30', title: 'Coffee break at Dozentenfoyer, until 11:00', type: 'break' },
       {
         time: '11:00',
@@ -273,7 +290,11 @@ export const weekends: Weekend[] = [
         url: viz(1, 'un-games'),
       },
       { group: 'Coding exercises', label: "First-order optimization: Heron's algorithm", url: SOON },
-      { group: 'Coding exercises', label: 'First-order optimization: Genie game and Robbins-Monro', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'First-order optimization: Genie game and Robbins-Monro (runs in the browser)',
+        url: exercise(1, 'cx_robbins-monro.html'),
+      },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
       { group: 'Coding exercises', label: 'Gradient descent: grasshopper game', url: SOON },
       { group: 'Coding exercises', label: 'Neural networks: forward pass and universal approximation', url: SOON },
