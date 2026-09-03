@@ -162,9 +162,16 @@ export const weekends: Weekend[] = [
         time: '09:30',
         title: 'First-order optimization algorithms',
         type: 'exercise',
+        // Two browser exercises run in this slot. Both are self-contained
+        // pages, so 'Open in browser' would name them both: the labels say
+        // WHICH game instead, in the order the TA runs them.
         links: [
           {
-            label: 'Open in browser',
+            label: 'Approximation game',
+            url: exercise(1, 'cx_approximation-game.html'),
+          },
+          {
+            label: 'Genie game',
             url: exercise(1, 'cx_robbins-monro.html'),
           },
         ],
@@ -300,7 +307,11 @@ export const weekends: Weekend[] = [
         label: 'The UN games: spurious regression in ten scenes (Saturday, validation and overfitting)',
         url: viz(1, 'un-games'),
       },
-      { group: 'Coding exercises', label: "First-order optimization: Heron's algorithm", url: SOON },
+      {
+        group: 'Coding exercises',
+        label: "First-order optimization: Heron's algorithm (runs in the browser)",
+        url: exercise(1, 'cx_approximation-game.html'),
+      },
       {
         group: 'Coding exercises',
         label: 'First-order optimization: Genie game and Robbins-Monro (runs in the browser)',
