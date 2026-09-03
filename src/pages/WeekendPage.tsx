@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { weekends, getWeekend } from '../data/weekends';
+import { weekends, getWeekend, weekendRoom } from '../data/weekends';
 import { ScheduleTable } from '../components/ScheduleTable';
 import type { Resource } from '../types';
 
@@ -62,6 +62,7 @@ export function WeekendPage() {
       : [weekend.dates, weekend.dates];
 
   const hasRealResources = weekend.resources.some((r) => r.url !== '#');
+  const room = weekendRoom(weekend);
 
   // Group resources by their optional `group`, preserving first-seen order.
   const resourceGroups: { name?: string; items: Resource[] }[] = [];
@@ -97,6 +98,12 @@ export function WeekendPage() {
               <dt>Format</dt>
               <dd>Friday &amp; Saturday</dd>
             </div>
+            {room && (
+              <div>
+                <dt>Room</dt>
+                <dd>{room}</dd>
+              </div>
+            )}
             {weekend.project && (
               <div>
                 <dt>Project</dt>
@@ -108,8 +115,18 @@ export function WeekendPage() {
         </header>
 
         <div className="days">
-          <ScheduleTable day="Friday" date={friDate.trim()} sessions={weekend.friday} />
-          <ScheduleTable day="Saturday" date={satDate.trim()} sessions={weekend.saturday} />
+          <ScheduleTable
+            day="Friday"
+            date={friDate.trim()}
+            sessions={weekend.friday}
+            room={weekend.fridayRoom}
+          />
+          <ScheduleTable
+            day="Saturday"
+            date={satDate.trim()}
+            sessions={weekend.saturday}
+            room={weekend.saturdayRoom}
+          />
         </div>
 
         <section className="resources">

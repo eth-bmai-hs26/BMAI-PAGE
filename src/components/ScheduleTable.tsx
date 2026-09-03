@@ -5,15 +5,17 @@ interface Props {
   day: string;
   date: string;
   sessions: Session[];
+  room?: string;
 }
 
-export function ScheduleTable({ day, date, sessions }: Props) {
+export function ScheduleTable({ day, date, sessions, room }: Props) {
   return (
     <div className="day">
       <div className="day__head">
         <h3>{day}</h3>
         <span className="day__meta">
           <span className="day__date">{date}</span>
+          {room && <span className="day__room">{room}</span>}
         </span>
       </div>
       <div className="schedule">

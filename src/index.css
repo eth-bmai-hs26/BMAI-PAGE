@@ -326,6 +326,11 @@ h3 {
   color: var(--ink-faint);
   font-weight: 400;
 }
+.wcard__room {
+  font-size: 0.82rem;
+  color: var(--ink);
+  font-weight: 600;
+}
 .wcard__title {
   font-size: 1.24rem;
   margin: 0 0 8px;
@@ -593,6 +598,11 @@ h3 {
   font-size: 0.84rem;
   color: var(--ink-faint);
   font-weight: 400;
+}
+.day__room {
+  font-size: 0.84rem;
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* schedule */
