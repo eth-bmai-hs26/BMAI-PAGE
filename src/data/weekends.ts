@@ -309,7 +309,7 @@ export const weekends: Weekend[] = [
       {
         group: 'Coding exercises',
         label: 'Robbins-Monro: Approximation Game (runs in the browser)',
-        url: exercise(1, 'cx-rm/approximation-game.html'),
+        url: github('w1-cx-public', 'cx-rm/approximation-game.html'),
       },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
       { group: 'Coding exercises', label: 'Gradient descent: grasshopper game', url: SOON },
