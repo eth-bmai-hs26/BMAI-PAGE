@@ -111,6 +111,8 @@ export const weekends: Weekend[] = [
     theme: "Optimization, universal approximation and Vapnik's statistical learning theory",
     dates: '4–5 September 2026',
     startISO: '2026-09-04',
+    fridayRoom: 'HG D 7.2',
+    saturdayRoom: 'HG D 7.2',
     project: 'LLM routing',
     summary:
       "The first weekend builds up the machinery behind neural networks: how first-order methods approach a minimum, why gradient descent works, what a network can approximate, and how Vapnik's theory explains when training generalises. Saturday puts that into PyTorch and looks at how to tell overfitting from real learning.",
@@ -270,10 +272,13 @@ export const weekends: Weekend[] = [
   {
     id: 'we2',
     number: 2,
-    title: 'Language Models and Agents',
+    // Renamed by Carlos on 2026-09-03, from 'Language Models and Agents'.
+    title: 'Large Language Models and Their Applications in AI',
     theme: 'Autoencoders, attention, transformers and agentic AI',
     dates: '18–19 September 2026',
     startISO: '2026-09-18',
+    fridayRoom: 'HG D 7.2',
+    saturdayRoom: 'HG D 7.2',
     project: 'Tax agent',
     summary:
       'Friday assembles the transformer piece by piece, starting from autoencoders and attention rather than presenting the finished architecture. Saturday moves on to agentic AI, with a guest lecture and the introduction of the tax agent project.',
@@ -314,10 +319,13 @@ export const weekends: Weekend[] = [
   {
     id: 'we3',
     number: 3,
-    title: 'Computer Vision',
+    // Renamed by Carlos on 2026-09-03, from 'Computer Vision'.
+    title: 'Models for Visual AI Applications',
     theme: 'Convolutional networks, UNets and diffusion',
     dates: '2–3 October 2026',
     startISO: '2026-10-02',
+    fridayRoom: 'HG D 7.2',
+    saturdayRoom: 'HG D 7.2',
     project: 'Fashion magazine editor',
     summary:
       'Two days on models that work on images. Friday covers convolutional networks and UNets and gets them running in PyTorch, Saturday moves to diffusion. A quiz and a Kahoot recap check what actually stuck before the fashion magazine editor project is introduced.',
@@ -357,10 +365,13 @@ export const weekends: Weekend[] = [
   {
     id: 'we4',
     number: 4,
-    title: 'Geometry of Generative Models',
+    // Renamed by Carlos on 2026-09-03, from 'Geometry of Generative Models'.
+    title: 'Riemannian Geometry and Its Applications in AI',
     theme: 'Manifolds, variational autoencoders and adversarial robustness',
     dates: '23–24 October 2026',
     startISO: '2026-10-23',
+    fridayRoom: 'HG D 7.2',
+    saturdayRoom: 'HG D 7.2',
     project: 'To be announced',
     summary:
       'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and age progression, then stable diffusion, CLIP and cross-attention. Saturday turns to the other side of generative models, adversarial attacks and deepfake detection.',
@@ -404,3 +415,14 @@ export const weekends: Weekend[] = [
 
 export const getWeekend = (id: string): Weekend | undefined =>
   weekends.find((w) => w.id === id);
+
+/**
+ * Room label for a weekend. Collapses to a single room when Friday and Saturday
+ * share one, which is the case for all of HS26; keeps the two-room form so a
+ * future split only needs the data file changed.
+ */
+export const weekendRoom = (w: Weekend): string | undefined => {
+  const { fridayRoom: fri, saturdayRoom: sat } = w;
+  if (fri && sat) return fri === sat ? fri : `Fri ${fri} · Sat ${sat}`;
+  return fri ?? sat;
+};
