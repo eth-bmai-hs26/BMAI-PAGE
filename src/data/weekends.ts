@@ -185,7 +185,17 @@ export const weekends: Weekend[] = [
           { label: 'Slides', url: deck(1, 'neural-networks-universal-approximation.pdf') },
         ],
       },
-      { time: '14:30', title: 'Neural networks', type: 'exercise' },
+      {
+        time: '14:30',
+        title: 'Neural networks',
+        type: 'exercise',
+        links: [
+          {
+            label: 'Open in Colab',
+            url: colab('w1-cx-public', 'universal-approximation/universal_approximation.ipynb'),
+          },
+        ],
+      },
       { time: '15:30', title: 'Coffee break at Dozentenfoyer, until 16:00', type: 'break' },
       {
         time: '16:00',
@@ -297,7 +307,11 @@ export const weekends: Weekend[] = [
       },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
       { group: 'Coding exercises', label: 'Gradient descent: grasshopper game', url: SOON },
-      { group: 'Coding exercises', label: 'Neural networks: forward pass and universal approximation', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Neural networks: forward pass and universal approximation (Colab notebook)',
+        url: colab('w1-cx-public', 'universal-approximation/universal_approximation.ipynb'),
+      },
       {
         group: 'Coding exercises',
         label: 'Claude Code: Operation Midnight Launch (notebook, runs locally)',
