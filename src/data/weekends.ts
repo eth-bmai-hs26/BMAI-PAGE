@@ -104,7 +104,10 @@ export const weekends: Weekend[] = [
   {
     id: 'we1',
     number: 1,
-    title: 'Neural Network Foundations',
+    // Renamed by Carlos on 2026-09-03, from 'Neural Network Foundations'.
+    // Title Case to match the other three weekend cards, which sit beside
+    // this one on the home page; he wrote it in sentence case.
+    title: 'The Nature of Modern AI Applications',
     theme: "Optimization, universal approximation and Vapnik's statistical learning theory",
     dates: '4–5 September 2026',
     startISO: '2026-09-04',
