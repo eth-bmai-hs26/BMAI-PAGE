@@ -158,7 +158,14 @@ export const weekends: Weekend[] = [
       },
     ],
     saturday: [
-      { time: '08:00', title: 'Training neural networks with PyTorch', type: 'lecture' },
+      {
+        time: '08:00',
+        title: 'Training neural networks with PyTorch',
+        type: 'lecture',
+        links: [
+          { label: 'Slides', url: deck(1, 'training-neural-networks-with-pytorch.pdf') },
+        ],
+      },
       {
         time: '08:00',
         title: 'Introduction to Claude Code (parallel session)',
@@ -169,7 +176,17 @@ export const weekends: Weekend[] = [
           { label: 'Exercise', url: exercise(1, 'operation-midnight-launch.ipynb') },
         ],
       },
-      { time: '09:00', title: 'Neural networks with PyTorch', type: 'exercise' },
+      {
+        time: '09:00',
+        title: 'Iris PyTorch',
+        type: 'exercise',
+        links: [
+          {
+            label: 'Open in Colab',
+            url: colab('w1-cx-public', 'iris-pytorch/iris_pytorch.ipynb'),
+          },
+        ],
+      },
       { time: '10:00', title: 'Coffee break at Cafebar', type: 'break' },
       {
         time: '10:30',
@@ -206,7 +223,11 @@ export const weekends: Weekend[] = [
         label: 'Introduction to Claude Code (Saturday parallel session)',
         url: deck(1, 'introduction-to-claude-code.pdf'),
       },
-      { group: 'Lecture slides', label: 'Training neural networks with PyTorch', url: SOON },
+      {
+        group: 'Lecture slides',
+        label: 'Training neural networks with PyTorch',
+        url: deck(1, 'training-neural-networks-with-pytorch.pdf'),
+      },
       { group: 'Lecture slides', label: 'Validation and overfitting', url: SOON },
       {
         group: 'Lecture slides',
@@ -228,7 +249,11 @@ export const weekends: Weekend[] = [
         label: 'Claude Code: Operation Midnight Launch (notebook, runs locally)',
         url: exercise(1, 'operation-midnight-launch.ipynb'),
       },
-      { group: 'Coding exercises', label: 'Neural networks with PyTorch', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Iris PyTorch (Colab notebook)',
+        url: colab('w1-cx-public', 'iris-pytorch/iris_pytorch.ipynb'),
+      },
       { group: 'Coding exercises', label: 'Overfitting, validation and regularization', url: SOON },
       {
         group: 'Setup',
