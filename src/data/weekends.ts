@@ -127,7 +127,10 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [{ label: 'Slides', url: deck(1, 'first-order-approximation-algorithms.pdf') }],
       },
-      { time: '10:00', title: 'First-order optimization algorithms', type: 'exercise' },
+      // Moved from 10:00 to 09:30 by Carlos on 2026-09-03. The coffee break
+      // stays at 10:30, so this exercise runs an hour rather than half of one
+      // and the 09:00 lecture is the half hour block.
+      { time: '09:30', title: 'First-order optimization algorithms', type: 'exercise' },
       { time: '10:30', title: 'Coffee break at Polysnack', type: 'break' },
       {
         time: '11:00',
