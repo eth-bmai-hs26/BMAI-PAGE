@@ -116,10 +116,10 @@ export const weekends: Weekend[] = [
         time: '08:00',
         title: 'Intro and onboarding',
         type: 'lecture',
-        links: [
-          { label: 'Slides', url: deck(1, 'intro-and-onboarding.pdf') },
-          { label: 'Cold open', url: deck(1, 'cold-open.pdf') },
-        ],
+        // The intro and administration deck is deliberately NOT linked here.
+        // It is course-wide material rather than weekend-1 material, so it sits
+        // in the hero on the home page and nowhere else. Carlos, 2026-09-02.
+        links: [{ label: 'Cold open', url: deck(1, 'cold-open.pdf') }],
       },
       {
         time: '09:00',
@@ -181,7 +181,6 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: LLM routing', type: 'project' },
     ],
     resources: [
-      { group: 'Lecture slides', label: 'Intro and onboarding', url: deck(1, 'intro-and-onboarding.pdf') },
       { group: 'Lecture slides', label: 'The cold open', url: deck(1, 'cold-open.pdf') },
       {
         group: 'Lecture slides',
