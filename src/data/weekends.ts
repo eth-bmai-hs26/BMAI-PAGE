@@ -317,11 +317,6 @@ export const weekends: Weekend[] = [
         label: 'First-order optimization: Genie game and Robbins-Monro (runs in the browser)',
         url: exercise(1, 'cx_robbins-monro.html'),
       },
-      {
-        group: 'Coding exercises',
-        label: 'Robbins-Monro: Approximation Game (runs in the browser)',
-        url: github('w1-cx-public', 'cx-rm/approximation-game.html'),
-      },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
       { group: 'Coding exercises', label: 'Gradient descent: grasshopper game', url: SOON },
       {
