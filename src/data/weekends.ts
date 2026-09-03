@@ -220,7 +220,17 @@ export const weekends: Weekend[] = [
           { label: 'The UN games', url: viz(1, 'un-games') },
         ],
       },
-      { time: '11:00', title: 'Validation and overfitting', type: 'exercise' },
+      {
+        time: '11:00',
+        title: 'Validation and overfitting',
+        type: 'exercise',
+        links: [
+          {
+            label: 'Open in Colab',
+            url: colab('w1-cx-public', 'cx-validation/cx_validation.ipynb'),
+          },
+        ],
+      },
       { time: '12:00', title: 'Project intro: LLM routing', type: 'project' },
     ],
     resources: [
