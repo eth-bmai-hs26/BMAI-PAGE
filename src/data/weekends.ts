@@ -8,6 +8,21 @@ import type { Weekend } from '../types';
  * Saturday agenda plus a `resources` list.
  */
 
+/**
+ * SCHEDULE FACTS AND WHERE THEY COME FROM.
+ *
+ * Times and rooms are the course unit's own entry in the ETH Vorlesungs-
+ * verzeichnis, 273-0003-00L, autumn semester 2026: Friday 08:15 to 17:00 and
+ * Saturday 08:15 to 13:00, both in HG D 7.2. That is why every day starts at
+ * 08:15 rather than 08:00.
+ *
+ * Catering comes from the CAS AIS HS26 schedule sent by the programme office on
+ * 3 September 2026. THE FRIDAY VENUES ARE NOT THE SAME EVERY WEEKEND, so they
+ * are set per weekend rather than once: weekends 1 and 3 are largely at the
+ * Dozentenfoyer, weekends 2 and 4 at Polysnack, and weekend 3's afternoon
+ * coffee is at the foyer instead. Every Saturday coffee is at HG D30.0075, the
+ * foyer immediately outside the classroom. Do not "tidy" these into one value.
+ */
 const ORG = 'eth-bmai-hs26';
 
 /**
@@ -118,7 +133,7 @@ export const weekends: Weekend[] = [
       "The first weekend builds up the machinery behind neural networks: how first-order methods approach a minimum, why gradient descent works, what a network can approximate, and how Vapnik's theory explains when training generalises. Saturday puts that into PyTorch and looks at how to tell overfitting from real learning.",
     friday: [
       {
-        time: '08:00',
+        time: '08:15',
         title: 'Intro and onboarding',
         type: 'lecture',
         // The intro and administration deck is deliberately NOT linked here.
@@ -136,7 +151,7 @@ export const weekends: Weekend[] = [
       // stays at 10:30, so this exercise runs an hour rather than half of one
       // and the 09:00 lecture is the half hour block.
       { time: '09:30', title: 'First-order optimization algorithms', type: 'exercise' },
-      { time: '10:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '10:30', title: 'Coffee break at Dozentenfoyer, until 11:00', type: 'break' },
       {
         time: '11:00',
         title: 'Gradient descent',
@@ -144,7 +159,7 @@ export const weekends: Weekend[] = [
         links: [{ label: 'Slides', url: deck(1, 'gradient-descent.pdf') }],
       },
       { time: '12:00', title: 'Gradient descent', type: 'exercise' },
-      { time: '13:00', title: 'Lunch break at Dozentenfoyer', type: 'break' },
+      { time: '13:00', title: 'Lunch break at Dozentenfoyer, until 14:00', type: 'break' },
       {
         time: '14:00',
         title: 'Neural networks and universal approximation',
@@ -154,17 +169,20 @@ export const weekends: Weekend[] = [
         ],
       },
       { time: '14:30', title: 'Neural networks', type: 'exercise' },
-      { time: '15:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '15:30', title: 'Coffee break at Dozentenfoyer, until 16:00', type: 'break' },
       {
         time: '16:00',
         title: "Vapnik's statistical learning theory",
         type: 'lecture',
         links: [{ label: 'Slides', url: deck(1, 'statistical-learning-theory.pdf') }],
       },
+      // Weekend 1 only, and after the teaching day: the course unit runs to
+      // 17:00 on a Friday.
+      { time: '17:00', title: 'Welcome apero at Polysnack, until 19:30', type: 'break' },
     ],
     saturday: [
       {
-        time: '08:00',
+        time: '08:15',
         title: 'Training neural networks with PyTorch',
         type: 'lecture',
         links: [
@@ -172,7 +190,7 @@ export const weekends: Weekend[] = [
         ],
       },
       {
-        time: '08:00',
+        time: '08:15',
         title: 'Introduction to Claude Code (parallel session)',
         type: 'lecture',
         links: [
@@ -192,7 +210,7 @@ export const weekends: Weekend[] = [
           },
         ],
       },
-      { time: '10:00', title: 'Coffee break at Cafebar', type: 'break' },
+      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
       {
         time: '10:30',
         title: 'Validation and overfitting',
@@ -283,22 +301,22 @@ export const weekends: Weekend[] = [
     summary:
       'Friday assembles the transformer piece by piece, starting from autoencoders and attention rather than presenting the finished architecture. Saturday moves on to agentic AI, with a guest lecture and the introduction of the tax agent project.',
     friday: [
-      { time: '08:00', title: 'Autoencoders', type: 'lecture' },
+      { time: '08:15', title: 'Autoencoders', type: 'lecture' },
       { time: '09:00', title: 'Autoencoders', type: 'exercise' },
       { time: '10:00', title: 'Attention', type: 'lecture' },
-      { time: '10:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
       { time: '11:00', title: 'Attention', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
-      { time: '13:00', title: 'Lunch break at Dozentenfoyer', type: 'break' },
+      { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
       { time: '14:00', title: 'Transformers', type: 'lecture' },
       { time: '14:30', title: 'Transformers', type: 'exercise' },
-      { time: '15:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       { time: '16:00', title: 'Agentic AI', type: 'lecture' },
     ],
     saturday: [
-      { time: '08:00', title: 'Agentic AI', type: 'lecture' },
+      { time: '08:15', title: 'Agentic AI', type: 'lecture' },
       { time: '09:00', title: 'Agentic AI', type: 'exercise' },
-      { time: '10:00', title: 'Coffee break at Cafebar', type: 'break' },
+      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
       { time: '10:30', title: 'Guest lecture: Christopher Makni', type: 'lecture' },
       { time: '11:00', title: 'Guest lecture continues', type: 'lecture' },
       { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
@@ -330,22 +348,22 @@ export const weekends: Weekend[] = [
     summary:
       'Two days on models that work on images. Friday covers convolutional networks and UNets and gets them running in PyTorch, Saturday moves to diffusion. A quiz and a Kahoot recap check what actually stuck before the fashion magazine editor project is introduced.',
     friday: [
-      { time: '08:00', title: 'CNNs', type: 'lecture' },
+      { time: '08:15', title: 'CNNs', type: 'lecture' },
       { time: '09:00', title: 'CNNs', type: 'exercise' },
       { time: '10:00', title: 'CNNs', type: 'lecture' },
-      { time: '10:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '10:30', title: 'Coffee break at Dozentenfoyer, until 11:00', type: 'break' },
       { time: '11:00', title: 'CNNs in PyTorch', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
-      { time: '13:00', title: 'Lunch break at Dozentenfoyer', type: 'break' },
+      { time: '13:00', title: 'Lunch break at Dozentenfoyer, until 14:00', type: 'break' },
       { time: '14:00', title: 'UNets', type: 'lecture' },
       { time: '14:30', title: 'UNets', type: 'exercise' },
-      { time: '15:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '15:30', title: 'Coffee break at HG D30.0075, until 16:00', type: 'break' },
       { time: '16:00', title: 'Quiz', type: 'quiz' },
     ],
     saturday: [
-      { time: '08:00', title: 'Diffusion', type: 'lecture' },
+      { time: '08:15', title: 'Diffusion', type: 'lecture' },
       { time: '09:00', title: 'Diffusion', type: 'exercise' },
-      { time: '10:00', title: 'Coffee break at Cafebar', type: 'break' },
+      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
       { time: '10:30', title: 'Kahoot recap', type: 'quiz' },
       { time: '11:00', title: 'Extra', type: 'exercise' },
       { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
@@ -376,22 +394,22 @@ export const weekends: Weekend[] = [
     summary:
       'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and age progression, then stable diffusion, CLIP and cross-attention. Saturday turns to the other side of generative models, adversarial attacks and deepfake detection.',
     friday: [
-      { time: '08:00', title: 'Manifolds and VAEs', type: 'lecture' },
+      { time: '08:15', title: 'Manifolds and VAEs', type: 'lecture' },
       { time: '09:00', title: 'Manifold games', type: 'exercise' },
       { time: '10:00', title: 'Conditional VAEs and age progression', type: 'lecture' },
-      { time: '10:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
       { time: '11:00', title: 'Conditional VAE with demo', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
-      { time: '13:00', title: 'Lunch break at Dozentenfoyer', type: 'break' },
+      { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
       { time: '14:00', title: 'Stable diffusion, CLIP, MAE', type: 'lecture' },
       { time: '14:30', title: 'Cross-attention mechanisms', type: 'lecture' },
-      { time: '15:30', title: 'Coffee break at Polysnack', type: 'break' },
+      { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       { time: '16:00', title: 'Quiz', type: 'quiz' },
     ],
     saturday: [
-      { time: '08:00', title: 'Adversarial attacks', type: 'lecture' },
+      { time: '08:15', title: 'Adversarial attacks', type: 'lecture' },
       { time: '09:00', title: 'Adversarial attacks', type: 'exercise' },
-      { time: '10:00', title: 'Coffee break at Cafebar', type: 'break' },
+      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
       { time: '10:30', title: 'Deepfake detection and generation', type: 'lecture' },
       // The syllabus leaves these two slots open for now.
       { time: '11:00', title: '', type: 'tba' },
