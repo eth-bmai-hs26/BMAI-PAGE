@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Approximation Game — Robbins Monroe (Exercise 2)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #111; }
+    header { margin-bottom: 1.25rem; }
+    h1 { margin: 0 0 .25rem 0; font-size: 1.5rem; }
+    p.lead { margin: 0 0 1rem 0; color: #333; }
+    .game { border: 1px solid #e6e6e6; padding: 1rem; border-radius: 8px; background: #fafafa; }
+    .controls { display:flex; gap: 0.5rem; align-items:center; margin-top: .75rem; }
+    .result { margin-top: 1rem; font-weight: 600; }
+    button { background: #0366d6; color: #fff; border: none; padding: .5rem .75rem; border-radius: 6px; cursor: pointer; }
+    button.secondary { background: #6a737d; }
+    .hint { color:#555; font-size:.95rem; margin-top:.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Approximation Game</h1>
+    <p class="lead">Robbins Monroe — Exercise 2. Try to approximate a hidden target number. The closer your guess, the higher your score.</p>
+  </header>
+
+  <main class="game" role="main" aria-labelledby="gameTitle">
+    <div id="gameTitle" hidden>Approximation game</div>
+
+    <div>
+      <strong>Target range:</strong> <span id="rangeText">0 — 100</span>
+    </div>
+
+    <div style="margin-top:.75rem;">
+      <label for="guess">Your guess: <span id="guessValue">50</span></label>
+      <div class="controls">
+        <input id="guess" type="range" min="0" max="100" value="50" step="1" aria-describedby="guessHelp" style="flex:1" />
+        <button id="check">Check</button>
+        <button id="new" class="secondary">New round</button>
+      </div>
+      <div id="guessHelp" class="hint">Use the slider to pick a number between 0 and 100, then press Check.</div>
+    </div>
+
+    <div class="result" id="result" aria-live="polite"></div>
+
+    <div style="margin-top:1rem; font-size:.95rem; color:#444;">
+      <strong>Scoring:</strong> The score is 100 - distance. Closer guesses give higher score; exact match = 100.
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const min = 0, max = 100;
+      let target = randTarget();
+      const guess = document.getElementById('guess');
+      const guessValue = document.getElementById('guessValue');
+      const checkBtn = document.getElementById('check');
+      const newBtn = document.getElementById('new');
+      const result = document.getElementById('result');
+
+      function randTarget() {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function updateGuessDisplay() {
+        guessValue.textContent = guess.value;
+      }
+
+      function computeScore(g, t) {
+        const dist = Math.abs(g - t);
+        const score = Math.max(0, 100 - dist);
+        return { dist, score };
+      }
+
+      guess.addEventListener('input', updateGuessDisplay);
+
+      checkBtn.addEventListener('click', function () {
+        const g = Number(guess.value);
+        const t = target;
+        const { dist, score } = computeScore(g, t);
+        result.innerHTML = `You guessed <strong>${g}</strong>. Target was <strong>${t}</strong>.<br>Distance: ${dist}. Score: ${score}/100.`;
+      });
+
+      newBtn.addEventListener('click', function () {
+        target = randTarget();
+        result.textContent = 'New round started — make a guess!';
+      });
+
+      // initialize
+      document.getElementById('rangeText').textContent = min + ' — ' + max;
+      updateGuessDisplay();
+      result.textContent = 'Make a guess and press Check to see how close you are.';
+    })();
+  </script>
+</body>
+</html>
