@@ -217,14 +217,16 @@ export const weekends: Weekend[] = [
         time: '14:30',
         title: 'Neural networks',
         type: 'exercise',
+        // Both notebooks open in Colab, so the labels name the notebook
+        // rather than saying 'Open in Colab' twice.
         links: [
-          {
-            label: 'Open in Colab',
-            url: colab('w1-cx-public', 'universal-approximation/universal_approximation.ipynb'),
-          },
           {
             label: 'Property valuation notebook',
             url: colab('w1-cx-public', 'cx-nn/nn_base_exercise.ipynb'),
+          },
+          {
+            label: 'universal_approximation',
+            url: colab('w1-cx-public', 'universal-approximation/universal_approximation.ipynb'),
           },
         ],
       },
