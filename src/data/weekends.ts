@@ -322,6 +322,37 @@ export const weekends: Weekend[] = [
         label: 'Validation and overfitting: reference (why regularisation, the four objectives, R squared)',
         url: deck(1, 'validation-reference.pdf'),
       },
+      // ANNOTATED SLIDES, their own group rather than extra chips on the
+      // schedule rows. Those rows already carry up to three chips, and what
+      // happened in the slot is a different thing from the copy that came out
+      // of it. Friday morning only so far; the afternoon and both Saturday
+      // mornings have no annotated copy yet.
+      //
+      // These are Carlos's iPad exports and their embedded fonts are damaged:
+      // the typeface substitutes and the fi/ff ligatures break, so a few words
+      // read as "! ve windows" or "arti\"cial". He asked for them published
+      // anyway on 2026-09-04, with the clean deck staying the primary link
+      // right above them. See ../w1-lecture-material/annotated/CLAUDE.md.
+      {
+        group: 'Annotated slides',
+        label: 'The cold open, annotated in the lecture',
+        url: deck(1, 'cold-open-annotated.pdf'),
+      },
+      {
+        group: 'Annotated slides',
+        label: 'Intro and onboarding, annotated in the lecture',
+        url: deck(1, 'intro-and-onboarding-annotated.pdf'),
+      },
+      {
+        group: 'Annotated slides',
+        label: 'First-order approximation algorithms, annotated in the lecture',
+        url: deck(1, 'first-order-approximation-algorithms-annotated.pdf'),
+      },
+      {
+        group: 'Annotated slides',
+        label: 'Gradient descent, annotated in the lecture',
+        url: deck(1, 'gradient-descent-annotated.pdf'),
+      },
       {
         group: 'Visualizations',
         label: 'The UN games: spurious regression in ten scenes (Saturday, validation and overfitting)',
