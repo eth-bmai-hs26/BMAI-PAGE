@@ -183,7 +183,17 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [{ label: 'Slides', url: deck(1, 'gradient-descent.pdf') }],
       },
-      { time: '12:00', title: 'Gradient descent', type: 'exercise' },
+      {
+        time: '12:00',
+        title: 'Gradient descent',
+        type: 'exercise',
+        links: [
+          {
+            label: 'Grasshopper game',
+            url: exercise(1, 'cx_grasshopper.html'),
+          },
+        ],
+      },
       { time: '13:00', title: 'Lunch break at Dozentenfoyer, until 14:00', type: 'break' },
       {
         time: '14:00',
@@ -318,7 +328,11 @@ export const weekends: Weekend[] = [
         url: exercise(1, 'cx_robbins-monro.html'),
       },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
-      { group: 'Coding exercises', label: 'Gradient descent: grasshopper game', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Gradient descent: grasshopper game (runs in the browser)',
+        url: exercise(1, 'cx_grasshopper.html'),
+      },
       {
         group: 'Coding exercises',
         label: 'Neural networks: forward pass and universal approximation (Colab notebook)',
