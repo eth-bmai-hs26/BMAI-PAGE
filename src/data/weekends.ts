@@ -173,12 +173,12 @@ export const weekends: Weekend[] = [
         // Robbins-Monro page stays in Materials rather than in this slot.
         links: [
           {
-            label: 'Genie game',
-            url: exercise(1, 'cx_genie-game.html'),
-          },
-          {
             label: 'Approximation game',
             url: exercise(1, 'cx_approximation-game.html'),
+          },
+          {
+            label: 'Genie game',
+            url: exercise(1, 'cx_genie-game.html'),
           },
         ],
       },

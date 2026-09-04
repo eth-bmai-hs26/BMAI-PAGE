@@ -1702,6 +1702,161 @@ input[type="number"].ms-answer {
 
 
 </style>
+  <style>/* assets/mission-code.css */
+/* ============================================================================
+   mission-code.css : the last station, "Write the method yourself".
+
+   Three short functions with one blank each. A blank is graded by running it,
+   not by matching its text, so its colour is the only feedback that matters:
+   red until the running code agrees with the formula, green the moment it
+   does. Every colour here is one of the status tokens already defined in
+   style.css (--bad/--bad-bg, --good/--good-bg, --warn/--warn-bg) so both
+   themes follow for free, and hints borrow the same amber used everywhere
+   else on the page for "a truth being revealed to you".
+   ============================================================================ */
+
+/* The station uses the same game-grid every other mission uses: a fluid main
+   column plus a sticky 330px sidebar, rather than a narrow reading column.
+   The code itself still caps out at a comfortable measure (nothing about
+   reading `theta - alpha * grad` improves by stretching it across a 27"
+   monitor) but the cards around it, and the page as a whole, fill the
+   window the same way the descent and every mission before this one do. */
+.cx-card + .cx-card {
+  margin-top: 18px;
+}
+
+.cx-code {
+  max-width: 640px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 14.5px;
+  line-height: 1.9;
+  background: var(--panel-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+/* === sidebar: progress and the two formulas to check work against === */
+.cx-progress-list { display: flex; flex-direction: column; gap: 10px; }
+.cx-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15px;
+}
+.cx-progress-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--panel-3);
+  border: 1px solid var(--rule-strong);
+  transition: background 0.2s, border-color 0.2s;
+}
+.cx-progress-row.is-right .cx-progress-dot {
+  background: var(--good);
+  border-color: var(--good);
+}
+.cx-progress-name { flex: 1; color: var(--ink); }
+.cx-progress-state {
+  font-size: 12.5px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.cx-progress-row.is-right .cx-progress-state { color: var(--good); font-weight: 600; }
+
+.cx-ref .ms-formula:last-child { margin-bottom: 0; }
+
+.cx-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: pre;
+}
+.cx-line.cx-blankline {
+  white-space: normal;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cx-code-text {
+  white-space: pre;
+  color: var(--ink);
+}
+
+input[type="text"].cx-blank {
+  font: inherit;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  flex: 1 1 220px;
+  min-width: 140px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  border: 1.5px solid var(--bad);
+  background: var(--bad-bg);
+  color: var(--ink);
+}
+input[type="text"].cx-blank::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
+input[type="text"].cx-blank:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+input[type="text"].cx-blank.is-right {
+  border-color: var(--good);
+  background: var(--good-bg);
+}
+
+.cx-hint-btn {
+  margin-left: auto;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  background: var(--panel);
+  color: var(--muted);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.cx-hint-btn:hover { background: var(--panel-3); color: var(--ink); }
+.cx-hint-btn.is-open {
+  border-color: var(--warn);
+  color: var(--warn);
+  background: var(--warn-bg);
+}
+.cx-hint-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.cx-hint {
+  margin: 6px 0 4px;
+  padding: 8px 11px;
+  border-radius: 6px;
+  border-left: 3px solid var(--warn);
+  background: var(--warn-bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.cx-hint.is-hidden { display: none; }
+
+.cx-status {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+.cx-status.is-right { color: var(--good); font-weight: 600; }
+
+</style>
 </head>
 <body>
   <header class="topbar">
@@ -5501,6 +5656,361 @@ input[type="number"].ms-answer {
 })();
 
 </script>
+  <script>/* assets/mission-code.js */
+/* ============================================================================
+   mission-code.js : the sixth station, "Write the method yourself".
+
+   Everything before this station was read off a picture: a slope felt
+   underfoot, a step taken by hand or handed to an autopilot. This is the one
+   place the reader writes the arithmetic themselves, as three short JavaScript
+   functions with one blank apiece:
+
+     estimateSlope   the Measure/Shrink formula   (b - a) / eps
+     gradientStep     the one-line rule            theta - alpha * grad
+     descend          the two combined, in a loop
+
+   A blank is graded by RUNNING it against a handful of fixed number triples
+   and comparing the result to the formula, not by matching its text against a
+   stored answer. "b-a", "b - a" and "(0-a)+b" all pass; "a-b" does not, and
+   neither does leaving Math out of scope reach for something that was never
+   given a name. That is also why the field starts red: an empty box really
+   has not been checked yet, and turns green the instant a keystroke makes it
+   agree with the formula everywhere it was tried, not just once.
+
+   Hints sit next to individual lines, not just under the blank: the two
+   lines that build "a" and "b" get their own button, because misreading those
+   is usually why the blank comes out wrong.
+
+   API : the station contract in stations.js
+     window.MissionCode.mount(host, ctx) -> { show, hide }
+   ============================================================================ */
+(function () {
+  "use strict";
+
+  /* === grading === */
+
+  /* Runs `expr` as a JS expression with exactly the names in `scope` in
+     reach, nothing else: writing `theta` inside estimateSlope's blank is a
+     ReferenceError here exactly as it would be in the real function, because
+     `theta` was never one of estimateSlope's parameters. */
+  function evalExpr(expr, scope) {
+    var keys = Object.keys(scope);
+    try {
+      /* eslint-disable no-new-func */
+      var fn = new Function(keys.join(","), '"use strict"; return (' + expr + ");");
+      var val = fn.apply(null, keys.map(function (k) { return scope[k]; }));
+      return typeof val === "number" && isFinite(val) ? val : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function closeEnough(actual, expected) {
+    if (actual === null) return false;
+    var tol = Math.max(1e-6, Math.abs(expected) * 1e-6);
+    return Math.abs(actual - expected) <= tol;
+  }
+
+  function correctGradientStep(theta, alpha, grad) {
+    return theta - alpha * grad;
+  }
+
+  /* === the three exercises ===
+     Each `vectors` entry is a complete scope for one trial: exactly the
+     variables that function's blank is allowed to see. A blank has to survive
+     every trial listed, including the zero-slope and zero-gap-height cases,
+     which is what stops "always return 0.4" from slipping through. */
+
+  var EXERCISES = [
+    {
+      id: "slope",
+      short: "The slope",
+      title: "One: the slope, in code",
+      blurb: "This is the Measure/Shrink station again, as a function instead of a " +
+        "reading off a picture. It takes a position and a gap and gives back a " +
+        "slope.",
+      lines: [
+        { text: "function estimateSlope(theta, eps) {" },
+        { text: "  const a = J(theta - eps / 2);",
+          hint: "theta minus half the gap: the left probe. This is the same “a” " +
+            "from the Measure station." },
+        { text: "  const b = J(theta + eps / 2);",
+          hint: "theta plus half the gap: the right probe, the same “b” as before." },
+        { blank: true, before: "  return ", after: ";", placeholder: "your expression here",
+          hint: "slope = (b − a) / gap, and the gap here is called eps. Write it as " +
+            "(b - a) / eps." },
+        { text: "}" }
+      ],
+      vectors: [
+        { a: 2, b: 5, eps: 0.5 },
+        { a: -3, b: 1, eps: 0.2 },
+        { a: 0.7, b: 0.7, eps: 1 },
+        { a: -1, b: -4, eps: 2 }
+      ],
+      expected: function (v) { return (v.b - v.a) / v.eps; }
+    },
+    {
+      id: "step",
+      short: "The step",
+      title: "Two: the update rule, in code",
+      blurb: "The one line the whole page has been building towards. It takes where " +
+        "you stand, the learning rate, and the slope you already measured, and " +
+        "gives back where to stand next.",
+      lines: [
+        { text: "function gradientStep(theta, alpha, grad) {",
+          hint: "theta is where you stand, alpha is the learning rate you chose, and " +
+            "grad is the ∇J(θ) that estimateSlope already gave you." },
+        { blank: true, before: "  return ", after: ";", placeholder: "your expression here",
+          hint: "θ ← θ − α∇J(θ). Combine theta, alpha and grad the same way: " +
+            "theta - alpha * grad." },
+        { text: "}" }
+      ],
+      vectors: [
+        { theta: 2, alpha: 0.1, grad: 3 },
+        { theta: -1, alpha: 0.5, grad: -2 },
+        { theta: 0, alpha: 1, grad: 0 },
+        { theta: 5, alpha: 0.05, grad: 10 }
+      ],
+      expected: function (v) { return v.theta - v.alpha * v.grad; }
+    },
+    {
+      id: "loop",
+      short: "The loop",
+      title: "Three: put it together",
+      blurb: "The two functions above, called in a loop. This IS the autopilot: it " +
+        "never sees the valley, it only ever runs these two lines, over and over, " +
+        "from wherever the last step left it.",
+      lines: [
+        { text: "function descend(theta0, alpha, eps, steps) {" },
+        { text: "  let theta = theta0;" },
+        { text: "  for (let i = 0; i < steps; i++) {" },
+        { text: "    const grad = estimateSlope(theta, eps);",
+          hint: "Re-measured on every pass, at the new theta — that is why this line " +
+            "lives inside the loop and not above it." },
+        { blank: true, before: "    theta = ", after: ";", placeholder: "your expression here",
+          hint: "Call the function from Two: gradientStep(theta, alpha, grad). Writing " +
+            "theta - alpha * grad again also works — it is the same formula either " +
+            "way." },
+        { text: "  }" },
+        { text: "  return theta;" },
+        { text: "}" }
+      ],
+      vectors: [
+        { theta: 2, alpha: 0.1, grad: 3, gradientStep: correctGradientStep },
+        { theta: -1, alpha: 0.5, grad: -2, gradientStep: correctGradientStep },
+        { theta: 0, alpha: 1, grad: 0, gradientStep: correctGradientStep },
+        { theta: 5, alpha: 0.05, grad: 10, gradientStep: correctGradientStep }
+      ],
+      expected: function (v) { return v.theta - v.alpha * v.grad; }
+    }
+  ];
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function lineRow(line, exId, li) {
+    var hintKey = exId + "-" + li;
+    var hintBtn = line.hint
+      ? '<button type="button" class="cx-hint-btn" data-hint="' + hintKey + '" ' +
+        'aria-expanded="false" aria-label="Show a hint for this line">?</button>'
+      : "";
+    var hintBody = line.hint
+      ? '<div class="cx-hint is-hidden" data-hint-body="' + hintKey + '">&#128161; ' +
+        line.hint + "</div>"
+      : "";
+
+    if (line.blank) {
+      return '<div class="cx-line cx-blankline">' +
+        '<span class="cx-code-text">' + escapeHtml(line.before) + "</span>" +
+        '<input type="text" class="cx-blank" data-blank="' + exId + '" ' +
+        'autocomplete="off" autocapitalize="off" spellcheck="false" ' +
+        'placeholder="' + escapeHtml(line.placeholder || "") + '" ' +
+        'aria-label="Fill in the blank for ' + escapeHtml(exId) + '">' +
+        '<span class="cx-code-text">' + escapeHtml(line.after) + "</span>" +
+        hintBtn + "</div>" + hintBody;
+    }
+    return '<div class="cx-line">' +
+      '<span class="cx-code-text">' + escapeHtml(line.text) + "</span>" +
+      hintBtn + "</div>" + hintBody;
+  }
+
+  function exerciseCard(ex) {
+    return [
+      '<div class="card cx-card">',
+      '<div class="card-head"><h3 class="card-title">' + ex.title + "</h3>",
+      '<span class="card-note cx-status" data-el="status-' + ex.id + '">not yet</span></div>',
+      '<div class="card-body">',
+      '<p class="exp-p quiet">' + ex.blurb + "</p>",
+      '<div class="cx-code">' +
+        ex.lines.map(function (line, li) { return lineRow(line, ex.id, li); }).join("") +
+        "</div>",
+      "</div>",
+      "</div>"
+    ].join("");
+  }
+
+  /* the sidebar: a live progress list (so a reader who scrolled past the
+     first exercise can still see all three at a glance) plus the two
+     formulas the blanks are graded against, pinned in view the same way
+     every mission's controls stay pinned while the main column scrolls */
+  function progressCard() {
+    return [
+      '<div class="card" data-el="progresscard">',
+      '<div class="card-head"><h3 class="card-title">Progress</h3>',
+      '<span class="card-note" data-el="progresscount">0 / ' + EXERCISES.length + "</span></div>",
+      '<div class="card-body">',
+      '<div class="cx-progress-list">',
+      EXERCISES.map(function (ex) {
+        return '<div class="cx-progress-row" data-el="progress-' + ex.id + '">' +
+          '<span class="cx-progress-dot" aria-hidden="true"></span>' +
+          '<span class="cx-progress-name">' + ex.short + "</span>" +
+          '<span class="cx-progress-state">not yet</span></div>';
+      }).join(""),
+      "</div>",
+      "</div>",
+      "</div>"
+    ].join("");
+  }
+
+  function referenceCard() {
+    return [
+      '<div class="card">',
+      '<div class="card-head"><h3 class="card-title">The two formulas</h3></div>',
+      '<div class="card-body cx-ref">',
+      '<div class="ms-formula">',
+      "<span>slope =</span>",
+      '<span class="ms-frac"><span class="ms-frac-num">b &minus; a</span>',
+      '<span class="ms-frac-den">eps</span></span>',
+      "</div>",
+      '<div class="ms-formula"><span class="mono">',
+      "&theta; &larr; &theta; &minus; &alpha;&middot;grad</span></div>",
+      "</div>",
+      "</div>"
+    ].join("");
+  }
+
+  function template() {
+    return [
+      '<div class="game-grid">',
+      '<div class="game-main">',
+
+      '<div class="card">',
+      '<div class="card-head"><h3 class="card-title">Write the method yourself</h3></div>',
+      '<div class="card-body">',
+      '<p class="exp-p">You already found the number the grasshopper needs, and you ',
+      "already found the step it takes with that number. Now write both as code — the ",
+      "same code an autopilot would run. Each blank below is graded by actually running ",
+      "it against a handful of numbers, not by matching your exact wording, so any ",
+      "expression that computes the right value passes.</p>",
+      "</div>",
+      "</div>",
+
+      EXERCISES.map(exerciseCard).join(""),
+
+      '<div class="card verdict-card is-hidden" data-el="verdictcard">',
+      '<div class="card-body"><div class="verdict" data-el="verdict"></div></div>',
+      "</div>",
+
+      "</div>",
+
+      '<aside class="game-side">',
+      progressCard(),
+      referenceCard(),
+      "</aside>",
+
+      "</div>"
+    ].join("");
+  }
+
+  function mount(root, ctx) {
+    ctx = ctx || {};
+    root.innerHTML = template();
+
+    var solved = {};
+    var finished = false;
+
+    function el(name) {
+      return root.querySelector('[data-el="' + name + '"]');
+    }
+
+    function checkOne(ex, inputEl) {
+      var expr = inputEl.value;
+      var ok = expr.trim().length > 0 && ex.vectors.every(function (v) {
+        var actual = evalExpr(expr, v);
+        return closeEnough(actual, ex.expected(v));
+      });
+      inputEl.classList.toggle("is-right", ok);
+      solved[ex.id] = ok;
+
+      var status = el("status-" + ex.id);
+      status.textContent = ok ? "✓ correct" : "not yet";
+      status.classList.toggle("is-right", ok);
+
+      var row = el("progress-" + ex.id);
+      row.classList.toggle("is-right", ok);
+      row.querySelector(".cx-progress-state").textContent = ok ? "✓ correct" : "not yet";
+      var solvedCount = EXERCISES.filter(function (e) { return solved[e.id]; }).length;
+      el("progresscount").textContent = solvedCount + " / " + EXERCISES.length;
+
+      return ok;
+    }
+
+    function allSolved() {
+      return EXERCISES.every(function (ex) { return solved[ex.id]; });
+    }
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      if (ctx.done) ctx.done();
+      var card = el("verdictcard");
+      card.classList.remove("is-hidden");
+      card.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      el("verdict").className = "verdict good";
+      el("verdict").innerHTML =
+        '<p class="verdict-title">That is gradient descent, in code you wrote.</p>' +
+        '<p class="verdict-body">Three functions: one that reads the ground, one that ' +
+        "takes a single step away from it, and one that repeats the second by feeding " +
+        "it the first, over and over. Nothing else in the autopilot was hiding from " +
+        "you.</p>";
+    }
+
+    EXERCISES.forEach(function (ex) {
+      var input = root.querySelector('[data-blank="' + ex.id + '"]');
+      if (!input) return;
+      input.addEventListener("input", function () {
+        checkOne(ex, input);
+        if (allSolved()) finish();
+      });
+      /* a mouse scroll over a focused input should not do anything odd, but
+         text inputs already ignore wheel events; nothing to guard here */
+      checkOne(ex, input);
+    });
+
+    root.addEventListener("click", function (e) {
+      var btn = e.target.closest(".cx-hint-btn");
+      if (!btn) return;
+      var key = btn.getAttribute("data-hint");
+      var body = root.querySelector('[data-hint-body="' + key + '"]');
+      if (!body) return;
+      var open = !body.classList.contains("is-hidden");
+      body.classList.toggle("is-hidden");
+      var nowOpen = !open;
+      btn.classList.toggle("is-open", nowOpen);
+      btn.setAttribute("aria-expanded", String(nowOpen));
+    });
+
+    return {
+      show: function () {},
+      hide: function () {}
+    };
+  }
+
+  window.MissionCode = { mount: mount };
+})();
+
+</script>
   <script>/* assets/stations.js */
 /* ============================================================================
    stations.js : the spine of the session.
@@ -5585,6 +6095,18 @@ input[type="number"].ms-answer {
       name: "After the descent",
       title: "What you were doing has a name",
       teaches: "The method you have been using, written down: four symbols and one line."
+    },
+    {
+      /* The last stop. Everything before this was read off a picture; here
+         the reader writes the arithmetic themselves, as code, and the page
+         checks it by running it rather than by matching what they typed. */
+      id: "write-the-code",
+      module: "MissionCode",
+      group: "after",
+      name: "Code it",
+      title: "Write the method yourself",
+      teaches: "The slope, the step, and the loop that repeats it: the same three " +
+        "things, this time as code you write and the page runs."
     }
   ];
 
