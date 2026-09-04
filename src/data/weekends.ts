@@ -225,7 +225,7 @@ export const weekends: Weekend[] = [
             url: colab('w1-cx-public', 'cx-nn/nn_base_exercise.ipynb'),
           },
           {
-            label: 'universal_approximation',
+            label: 'Universal approximation',
             url: colab('w1-cx-public', 'universal-approximation/universal_approximation.ipynb'),
           },
         ],
