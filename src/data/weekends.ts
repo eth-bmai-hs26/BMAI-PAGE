@@ -222,6 +222,10 @@ export const weekends: Weekend[] = [
             label: 'Open in Colab',
             url: colab('w1-cx-public', 'universal-approximation/universal_approximation.ipynb'),
           },
+          {
+            label: 'Property valuation notebook',
+            url: colab('w1-cx-public', 'cx-nn/nn_base_exercise.ipynb'),
+          },
         ],
       },
       { time: '15:30', title: 'Coffee break at Dozentenfoyer, until 16:00', type: 'break' },
