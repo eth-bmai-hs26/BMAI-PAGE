@@ -164,15 +164,21 @@ export const weekends: Weekend[] = [
         type: 'exercise',
         // Two browser exercises run in this slot. Both are self-contained
         // pages, so 'Open in browser' would name them both: the labels say
-        // WHICH game instead, in the order the TA runs them.
+        // WHICH exercise instead, in the order the TA runs them.
+        //
+        // The genie chip pointed at cx_robbins-monro.html until 2026-09-04,
+        // which was the wrong page: that one is titled 'Two Problems, Done by
+        // Hand' and has no genie in it. The riddle is its own page upstream,
+        // cx-rm/cx_genie-game.html, and that is what hangs here now. The
+        // Robbins-Monro page stays in Materials rather than in this slot.
         links: [
+          {
+            label: 'Genie game',
+            url: exercise(1, 'cx_genie-game.html'),
+          },
           {
             label: 'Approximation game',
             url: exercise(1, 'cx_approximation-game.html'),
-          },
-          {
-            label: 'Genie game',
-            url: exercise(1, 'cx_robbins-monro.html'),
           },
         ],
       },
@@ -324,7 +330,12 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Coding exercises',
-        label: 'First-order optimization: Genie game and Robbins-Monro (runs in the browser)',
+        label: "First-order optimization: the genie's riddle (runs in the browser)",
+        url: exercise(1, 'cx_genie-game.html'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'First-order optimization: Robbins-Monro (runs in the browser)',
         url: exercise(1, 'cx_robbins-monro.html'),
       },
       { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
