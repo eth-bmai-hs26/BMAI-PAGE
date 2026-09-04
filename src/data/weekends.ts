@@ -162,8 +162,8 @@ export const weekends: Weekend[] = [
         time: '09:30',
         title: 'First-order optimization algorithms',
         type: 'exercise',
-        // Two browser exercises run in this slot. Both are self-contained
-        // pages, so 'Open in browser' would name them both: the labels say
+        // Three browser exercises run in this slot. All are self-contained
+        // pages, so 'Open in browser' would name them all: the labels say
         // WHICH exercise instead, in the order the TA runs them.
         //
         // The genie chip pointed at cx_robbins-monro.html until 2026-09-04,
@@ -179,6 +179,10 @@ export const weekends: Weekend[] = [
           {
             label: 'Genie game',
             url: exercise(1, 'cx_genie-game.html'),
+          },
+          {
+            label: 'Housing prediction',
+            url: exercise(1, 'cx_house-pricing-game.html'),
           },
         ],
       },
@@ -338,7 +342,11 @@ export const weekends: Weekend[] = [
         label: 'First-order optimization: Robbins-Monro (runs in the browser)',
         url: exercise(1, 'cx_robbins-monro.html'),
       },
-      { group: 'Coding exercises', label: 'First-order optimization: house price prediction', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'First-order optimization: house price prediction (runs in the browser)',
+        url: exercise(1, 'cx_house-pricing-game.html'),
+      },
       {
         group: 'Coding exercises',
         label: 'Gradient descent: grasshopper game (runs in the browser)',
