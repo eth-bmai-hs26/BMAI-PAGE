@@ -329,7 +329,13 @@ export const weekends: Weekend[] = [
         // github() rather than raw(): the deck is the project brief, and
         // participants read it in the room off this chip. GitHub's viewer opens
         // it in the browser, where raw() would hand them a download instead.
-        links: [{ label: 'Slides', url: github('w1-project-public', 'Project1-LLM_Routing.pdf') }],
+        links: [
+          { label: 'Slides', url: github('w1-project-public', 'Project1-LLM_Routing.pdf') },
+          {
+            label: 'Notebook',
+            url: github('w1-project-public', 'project1_RelayAI_student.ipynb'),
+          },
+        ],
       },
     ],
     resources: [
@@ -481,6 +487,11 @@ export const weekends: Weekend[] = [
         group: 'Project',
         label: 'LLM routing: project description',
         url: github('w1-project-public', 'Project1-LLM_Routing.pdf'),
+      },
+      {
+        group: 'Project',
+        label: 'LLM routing: RelayAI student notebook',
+        url: github('w1-project-public', 'project1_RelayAI_student.ipynb'),
       },
       { group: 'Project', label: 'LLM routing: grading scheme', url: SOON },
     ],
