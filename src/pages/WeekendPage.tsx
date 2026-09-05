@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { weekends, getWeekend, weekendRoom } from '../data/weekends';
 import { ScheduleTable } from '../components/ScheduleTable';
 import type { Resource } from '../types';
+import { downloadKind } from '../lib/links';
 
 function ResourceLink({ resource }: { resource: Resource }) {
   const isPlaceholder = resource.url === '#';
@@ -16,7 +17,7 @@ function ResourceLink({ resource }: { resource: Resource }) {
       </li>
     );
   }
-  const isPdf = resource.url.toLowerCase().endsWith('.pdf');
+  const kind = downloadKind(resource.url);
   return (
     <li>
       <a
@@ -24,10 +25,12 @@ function ResourceLink({ resource }: { resource: Resource }) {
         href={resource.url}
         target="_blank"
         rel="noopener noreferrer"
-        {...(isPdf ? { download: '' } : {})}
+        {...(kind ? { download: '' } : {})}
       >
         {resource.label}
-        <span className="reslink__arrow">{isPdf ? 'PDF ↓' : '↗'}</span>
+        <span className="reslink__arrow">
+          {kind === 'pdf' ? 'PDF ↓' : kind === 'notebook' ? 'Notebook ↓' : '↗'}
+        </span>
       </a>
     </li>
   );

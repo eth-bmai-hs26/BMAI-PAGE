@@ -326,15 +326,14 @@ export const weekends: Weekend[] = [
         time: '12:00',
         title: 'Project intro: LLM routing',
         type: 'project',
-        // github() rather than raw(): the deck is the project brief, and
-        // participants read it in the room off this chip. GitHub's viewer opens
-        // it in the browser, where raw() would hand them a download instead.
+        // Both chips DOWNLOAD rather than open, which is why they are served
+        // from this site instead of github()/raw() on w1-project-public. The
+        // download attribute is same-origin only, so a github.com link would
+        // open in GitHub's viewer and raw() would render the notebook as a wall
+        // of text/plain JSON. Copies, so check upstream when the TA edits them.
         links: [
-          { label: 'Slides', url: github('w1-project-public', 'Project1-LLM_Routing.pdf') },
-          {
-            label: 'Notebook',
-            url: github('w1-project-public', 'project1_RelayAI_student.ipynb'),
-          },
+          { label: 'Slides', url: deck(1, 'llm-routing-project.pdf') },
+          { label: 'Notebook', url: exercise(1, 'project1_RelayAI_student.ipynb') },
         ],
       },
     ],
@@ -486,12 +485,12 @@ export const weekends: Weekend[] = [
       {
         group: 'Project',
         label: 'LLM routing: project description',
-        url: github('w1-project-public', 'Project1-LLM_Routing.pdf'),
+        url: deck(1, 'llm-routing-project.pdf'),
       },
       {
         group: 'Project',
         label: 'LLM routing: RelayAI student notebook',
-        url: github('w1-project-public', 'project1_RelayAI_student.ipynb'),
+        url: exercise(1, 'project1_RelayAI_student.ipynb'),
       },
       { group: 'Project', label: 'LLM routing: grading scheme', url: SOON },
     ],
