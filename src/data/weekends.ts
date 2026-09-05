@@ -326,14 +326,19 @@ export const weekends: Weekend[] = [
         time: '12:00',
         title: 'Project intro: LLM routing',
         type: 'project',
-        // Both chips DOWNLOAD rather than open, which is why they are served
-        // from this site instead of github()/raw() on w1-project-public. The
-        // download attribute is same-origin only, so a github.com link would
-        // open in GitHub's viewer and raw() would render the notebook as a wall
-        // of text/plain JSON. Copies, so check upstream when the TA edits them.
+        // The two chips deliberately behave differently. The brief DOWNLOADS,
+        // so it is served from this site: the download attribute is same-origin
+        // only, and a github.com link would open in GitHub's viewer instead.
+        // That PDF is a copy, so check upstream when the TA edits it. The
+        // notebook OPENS IN COLAB, which is where participants work on it and
+        // which reads w1-project-public directly, so there is nothing to copy
+        // and nothing to go stale.
         links: [
           { label: 'Slides', url: deck(1, 'llm-routing-project.pdf') },
-          { label: 'Notebook', url: exercise(1, 'project1_RelayAI_student.ipynb') },
+          {
+            label: 'Project Notebook',
+            url: colab('w1-project-public', 'project1_RelayAI_student.ipynb'),
+          },
         ],
       },
     ],
@@ -489,8 +494,8 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Project',
-        label: 'LLM routing: RelayAI student notebook',
-        url: exercise(1, 'project1_RelayAI_student.ipynb'),
+        label: 'LLM routing: RelayAI student notebook (Colab notebook)',
+        url: colab('w1-project-public', 'project1_RelayAI_student.ipynb'),
       },
       { group: 'Project', label: 'LLM routing: grading scheme', url: SOON },
     ],
