@@ -301,7 +301,15 @@ export const weekends: Weekend[] = [
           },
         ],
       },
-      { time: '12:00', title: 'Project intro: LLM routing', type: 'project' },
+      {
+        time: '12:00',
+        title: 'Project intro: LLM routing',
+        type: 'project',
+        // github() rather than raw(): the deck is the project brief, and
+        // participants read it in the room off this chip. GitHub's viewer opens
+        // it in the browser, where raw() would hand them a download instead.
+        links: [{ label: 'Slides', url: github('w1-project-public', 'Project1-LLM_Routing.pdf') }],
+      },
     ],
     resources: [
       { group: 'Lecture slides', label: 'The cold open', url: deck(1, 'cold-open.pdf') },
@@ -424,7 +432,11 @@ export const weekends: Weekend[] = [
         label: 'Setting up Claude Code: VS Code, a terminal, and your licence',
         url: guide('claude-code-setup.html'),
       },
-      { group: 'Project', label: 'LLM routing: project description', url: SOON },
+      {
+        group: 'Project',
+        label: 'LLM routing: project description',
+        url: github('w1-project-public', 'Project1-LLM_Routing.pdf'),
+      },
       { group: 'Project', label: 'LLM routing: grading scheme', url: SOON },
     ],
   },
