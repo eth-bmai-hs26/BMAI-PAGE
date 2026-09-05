@@ -123,17 +123,6 @@ export const guide = (file: string): string =>
 export const exercise = (n: number, file: string): string =>
   `${import.meta.env.BASE_URL}exercises/we${n}/${file}`;
 
-/**
- * The marble jar guessing sheet, Carlos's own Google Sheet, created 2026-09-05
- * from `w1-lecture-material/marble-jar/marble-jar-guesses.tsv`. Anyone with
- * the link can edit: each participant types one guess next to their surname,
- * and the sheet scores every guess against the crowd's average once the true
- * count is typed in. It is edited in place, so a change there needs no deploy.
- * The jar itself is the page served by viz(1, 'marble-jar').
- */
-const MARBLE_JAR_SHEET =
-  'https://docs.google.com/spreadsheets/d/17Y9G240aa5rfKEdMGi3R2vJck2sFVpSVfJQ8qwImkrM/edit?usp=sharing';
-
 export const weekends: Weekend[] = [
   {
     id: 'we1',
@@ -299,8 +288,6 @@ export const weekends: Weekend[] = [
         links: [
           { label: 'Reference', url: deck(1, 'validation-reference.pdf') },
           { label: 'The UN games', url: viz(1, 'un-games') },
-          { label: 'The marble jar', url: viz(1, 'marble-jar') },
-          { label: 'Guessing sheet', url: MARBLE_JAR_SHEET },
         ],
       },
       {
@@ -385,16 +372,6 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'The UN games: spurious regression in ten scenes (Saturday, validation and overfitting)',
         url: viz(1, 'un-games'),
-      },
-      {
-        group: 'Visualizations',
-        label: 'The marble jar: how many marbles? The wisdom of the crowd (Saturday, validation and overfitting)',
-        url: viz(1, 'marble-jar'),
-      },
-      {
-        group: 'Visualizations',
-        label: 'The marble jar: the guessing sheet, one row per participant (Google Sheets, anyone with the link can edit)',
-        url: MARBLE_JAR_SHEET,
       },
       {
         group: 'Coding exercises',
