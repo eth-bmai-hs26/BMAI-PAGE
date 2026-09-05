@@ -262,12 +262,21 @@ export const weekends: Weekend[] = [
       },
       {
         time: '09:00',
-        title: 'Iris PyTorch',
+        // Was titled 'Iris PyTorch' while Iris was the only exercise here. The
+        // teaching assistants' property-valuation notebook now runs in the same
+        // slot, so the row carries the slot's name and each chip names its own
+        // exercise. The Claude Code session it has to stay distinguishable from
+        // is its own row at 08:15.
+        title: 'Neural networks with PyTorch',
         type: 'exercise',
         links: [
           {
-            label: 'Open in Colab',
+            label: 'Iris',
             url: colab('w1-cx-public', 'iris-pytorch/iris_pytorch.ipynb'),
+          },
+          {
+            label: 'Property valuation',
+            url: colab('w1-cx-public', 'cx-nn/nn_base_exercise.ipynb'),
           },
         ],
       },
@@ -403,6 +412,11 @@ export const weekends: Weekend[] = [
         group: 'Coding exercises',
         label: 'Iris PyTorch (Colab notebook)',
         url: colab('w1-cx-public', 'iris-pytorch/iris_pytorch.ipynb'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Neural networks with PyTorch: property valuation (Colab notebook)',
+        url: colab('w1-cx-public', 'cx-nn/nn_base_exercise.ipynb'),
       },
       { group: 'Coding exercises', label: 'Overfitting, validation and regularization', url: SOON },
       {
