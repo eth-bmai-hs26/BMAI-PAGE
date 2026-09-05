@@ -218,6 +218,15 @@ h3 {
   flex-wrap: wrap;
   gap: 12px;
 }
+/* One line under the hero buttons, for the recordings note. Same rule as the
+   FDD site. */
+.hero__note {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 720px;
+}
 /* ---------- Section ---------- */
 .section {
   padding: 64px 0;

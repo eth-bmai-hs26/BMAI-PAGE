@@ -3,6 +3,18 @@ import { weekends, deck } from '../data/weekends';
 import { WeekendCard } from '../components/WeekendCard';
 import { CalendarStrip } from '../components/CalendarStrip';
 
+/**
+ * The lecture recordings of the course unit, 273-0003-00L, on the ETH video
+ * portal. Password protected; the credentials are on Moodle. Carlos, 2026-09-05.
+ */
+const RECORDINGS = 'https://video.ethz.ch/lectures/d-infk/2026/autumn/273-0003-00L';
+
+/**
+ * The course Moodle. The same address the intro and administration deck prints
+ * on its "The course website" frame (\moodleurl in admin-slides.tex).
+ */
+const MOODLE = 'https://moodle-app2.let.ethz.ch/course/view.php?id=28802';
+
 export function HomePage() {
   return (
     <>
@@ -52,7 +64,41 @@ export function HomePage() {
               >
                 Course intro &amp; administration slides (PDF)
               </a>
+              {/*
+                The same deck as Carlos wrote on it in the weekend 1 lecture. It
+                sits beside the clean deck because this is where the clean deck
+                lives: every other annotated copy sits beside its deck on the
+                weekend 1 schedule. Carlos, 2026-09-05.
+              */}
+              <a
+                className="btn btn--ghost"
+                href={deck(1, 'intro-and-onboarding-annotated.pdf')}
+                target="_blank"
+                rel="noopener noreferrer"
+                download=""
+              >
+                Intro slides, annotated in the lecture (PDF)
+              </a>
+              {/*
+                The recordings of the whole course unit, 273-0003-00L, on the ETH
+                video portal. Same button as on the FDD site. Carlos, 2026-09-05.
+              */}
+              <a
+                className="btn btn--ghost"
+                href={RECORDINGS}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Lecture recordings (video.ethz.ch)
+              </a>
             </div>
+            <p className="hero__note">
+              The recordings are password protected. The credentials can be found in the{' '}
+              <a href={MOODLE} target="_blank" rel="noopener noreferrer">
+                course Moodle
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>

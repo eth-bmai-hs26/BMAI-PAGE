@@ -147,13 +147,25 @@ export const weekends: Weekend[] = [
         // The intro and administration deck is deliberately NOT linked here.
         // It is course-wide material rather than weekend-1 material, so it sits
         // in the hero on the home page and nowhere else. Carlos, 2026-09-02.
-        links: [{ label: 'Cold open', url: deck(1, 'cold-open.pdf') }],
+        //
+        // "Annotated" is the same deck as Carlos wrote on it in the lecture, an
+        // iPad export, and it sits right after the deck it annotates on every
+        // lecture row, as on the FDD site. Carlos asked for that on 2026-09-05,
+        // when the last four copies arrived. Their embedded fonts are damaged,
+        // see the note on the Materials list below.
+        links: [
+          { label: 'Cold open', url: deck(1, 'cold-open.pdf') },
+          { label: 'Annotated', url: deck(1, 'cold-open-annotated.pdf') },
+        ],
       },
       {
         time: '09:00',
         title: 'First-order approximation algorithms',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(1, 'first-order-approximation-algorithms.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(1, 'first-order-approximation-algorithms.pdf') },
+          { label: 'Annotated', url: deck(1, 'first-order-approximation-algorithms-annotated.pdf') },
+        ],
       },
       // Moved from 10:00 to 09:30 by Carlos on 2026-09-03. The coffee break
       // stays at 10:30, so this exercise runs an hour rather than half of one
@@ -191,7 +203,10 @@ export const weekends: Weekend[] = [
         time: '11:00',
         title: 'Gradient descent',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(1, 'gradient-descent.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(1, 'gradient-descent.pdf') },
+          { label: 'Annotated', url: deck(1, 'gradient-descent-annotated.pdf') },
+        ],
       },
       {
         time: '12:00',
@@ -211,6 +226,7 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [
           { label: 'Slides', url: deck(1, 'neural-networks-universal-approximation.pdf') },
+          { label: 'Annotated', url: deck(1, 'neural-networks-universal-approximation-annotated.pdf') },
         ],
       },
       {
@@ -235,7 +251,10 @@ export const weekends: Weekend[] = [
         time: '16:00',
         title: "Vapnik's statistical learning theory",
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(1, 'statistical-learning-theory.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(1, 'statistical-learning-theory.pdf') },
+          { label: 'Annotated', url: deck(1, 'statistical-learning-theory-annotated.pdf') },
+        ],
       },
       // Weekend 1 only, and after the teaching day: the course unit runs to
       // 17:00 on a Friday.
@@ -248,6 +267,7 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [
           { label: 'Slides', url: deck(1, 'training-neural-networks-with-pytorch.pdf') },
+          { label: 'Annotated', url: deck(1, 'training-neural-networks-with-pytorch-annotated.pdf') },
         ],
       },
       {
@@ -287,6 +307,7 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [
           { label: 'Reference', url: deck(1, 'validation-reference.pdf') },
+          { label: 'Annotated', url: deck(1, 'validation-reference-annotated.pdf') },
           { label: 'The UN games', url: viz(1, 'un-games') },
         ],
       },
@@ -312,13 +333,48 @@ export const weekends: Weekend[] = [
       },
     ],
     resources: [
+      // Each annotated copy sits directly under the deck it annotates, and each
+      // lecture row above carries an "Annotated" chip beside its deck chip, as
+      // on the FDD site. Carlos asked for that arrangement on 2026-09-05, when
+      // the last four copies arrived; until then the four Friday morning copies
+      // were a group of their own down here.
+      //
+      // The annotated copies are Carlos's iPad exports and their embedded fonts
+      // are damaged: the typeface substitutes and the fi/ff ligatures break, so
+      // a few words read as "! ve windows" or "arti\"cial". He asked for them
+      // published anyway on 2026-09-04, with the clean deck staying the primary
+      // link right above each one. See ../w1-lecture-material/annotated/CLAUDE.md.
       { group: 'Lecture slides', label: 'The cold open', url: deck(1, 'cold-open.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'The cold open, annotated in the lecture',
+        url: deck(1, 'cold-open-annotated.pdf'),
+      },
+      // The clean intro and administration deck is course-wide material and
+      // lives in the hero on the home page, where its annotated copy is linked
+      // beside it. The copy is listed here as well because it was written on in
+      // this weekend's 08:15 block.
+      {
+        group: 'Lecture slides',
+        label: 'Intro and onboarding, annotated in the lecture',
+        url: deck(1, 'intro-and-onboarding-annotated.pdf'),
+      },
       {
         group: 'Lecture slides',
         label: 'First-order approximation algorithms',
         url: deck(1, 'first-order-approximation-algorithms.pdf'),
       },
+      {
+        group: 'Lecture slides',
+        label: 'First-order approximation algorithms, annotated in the lecture',
+        url: deck(1, 'first-order-approximation-algorithms-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Gradient descent', url: deck(1, 'gradient-descent.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Gradient descent, annotated in the lecture',
+        url: deck(1, 'gradient-descent-annotated.pdf'),
+      },
       {
         group: 'Lecture slides',
         label: 'Neural networks and universal approximation',
@@ -326,8 +382,18 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Lecture slides',
+        label: 'Neural networks and universal approximation, annotated in the lecture',
+        url: deck(1, 'neural-networks-universal-approximation-annotated.pdf'),
+      },
+      {
+        group: 'Lecture slides',
         label: "Vapnik's statistical learning theory",
         url: deck(1, 'statistical-learning-theory.pdf'),
+      },
+      {
+        group: 'Lecture slides',
+        label: "Vapnik's statistical learning theory, annotated in the lecture",
+        url: deck(1, 'statistical-learning-theory-annotated.pdf'),
       },
       {
         group: 'Lecture slides',
@@ -339,42 +405,21 @@ export const weekends: Weekend[] = [
         label: 'Training neural networks with PyTorch',
         url: deck(1, 'training-neural-networks-with-pytorch.pdf'),
       },
+      {
+        group: 'Lecture slides',
+        label: 'Training neural networks with PyTorch, annotated in the lecture',
+        url: deck(1, 'training-neural-networks-with-pytorch-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Validation and overfitting', url: SOON },
       {
         group: 'Lecture slides',
         label: 'Validation and overfitting: reference (why regularisation, the four objectives, R squared)',
         url: deck(1, 'validation-reference.pdf'),
       },
-      // ANNOTATED SLIDES, their own group rather than extra chips on the
-      // schedule rows. Those rows already carry up to three chips, and what
-      // happened in the slot is a different thing from the copy that came out
-      // of it. Friday morning only so far; the afternoon and both Saturday
-      // mornings have no annotated copy yet.
-      //
-      // These are Carlos's iPad exports and their embedded fonts are damaged:
-      // the typeface substitutes and the fi/ff ligatures break, so a few words
-      // read as "! ve windows" or "arti\"cial". He asked for them published
-      // anyway on 2026-09-04, with the clean deck staying the primary link
-      // right above them. See ../w1-lecture-material/annotated/CLAUDE.md.
       {
-        group: 'Annotated slides',
-        label: 'The cold open, annotated in the lecture',
-        url: deck(1, 'cold-open-annotated.pdf'),
-      },
-      {
-        group: 'Annotated slides',
-        label: 'Intro and onboarding, annotated in the lecture',
-        url: deck(1, 'intro-and-onboarding-annotated.pdf'),
-      },
-      {
-        group: 'Annotated slides',
-        label: 'First-order approximation algorithms, annotated in the lecture',
-        url: deck(1, 'first-order-approximation-algorithms-annotated.pdf'),
-      },
-      {
-        group: 'Annotated slides',
-        label: 'Gradient descent, annotated in the lecture',
-        url: deck(1, 'gradient-descent-annotated.pdf'),
+        group: 'Lecture slides',
+        label: 'Validation and overfitting: reference, annotated in the lecture',
+        url: deck(1, 'validation-reference-annotated.pdf'),
       },
       {
         group: 'Visualizations',
