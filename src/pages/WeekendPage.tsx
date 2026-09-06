@@ -29,7 +29,13 @@ function ResourceLink({ resource }: { resource: Resource }) {
       >
         {resource.label}
         <span className="reslink__arrow">
-          {kind === 'pdf' ? 'PDF ↓' : kind === 'notebook' ? 'Notebook ↓' : '↗'}
+          {kind === 'pdf'
+            ? 'PDF ↓'
+            : kind === 'notebook'
+              ? 'Notebook ↓'
+              : kind === 'archive'
+                ? 'ZIP ↓'
+                : '↗'}
         </span>
       </a>
     </li>

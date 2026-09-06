@@ -123,6 +123,18 @@ export const guide = (file: string): string =>
 export const exercise = (n: number, file: string): string =>
   `${import.meta.env.BASE_URL}exercises/we${n}/${file}`;
 
+/**
+ * A runnable APPLICATION hosted by this site, from `public/apps/we<n>/`, as a
+ * zip the participant unpacks and starts on their own laptop.
+ *
+ * Same reasoning as deck(): it has to DOWNLOAD, and the download attribute is
+ * same-origin only, so linking w1-project-public directly would leave the chip
+ * at the mercy of whatever GitHub decides to serve. A copy, so re-export it
+ * when the app changes upstream.
+ */
+export const app = (n: number, file: string): string =>
+  `${import.meta.env.BASE_URL}apps/we${n}/${file}`;
+
 export const weekends: Weekend[] = [
   {
     id: 'we1',
@@ -339,6 +351,11 @@ export const weekends: Weekend[] = [
             label: 'Project Notebook',
             url: colab('w1-project-public', 'project1_RelayAI_student.ipynb'),
           },
+          { label: 'App', url: app(1, 'relayai-router-explorer.zip') },
+          {
+            label: 'App installation guide',
+            url: guide('relayai-installation-guide.pdf'),
+          },
         ],
       },
     ],
@@ -496,6 +513,16 @@ export const weekends: Weekend[] = [
         group: 'Project',
         label: 'LLM routing: RelayAI student notebook (Colab notebook)',
         url: colab('w1-project-public', 'project1_RelayAI_student.ipynb'),
+      },
+      {
+        group: 'Project',
+        label: 'RelayAI Router Explorer: the app, to unpack and run on your own laptop',
+        url: app(1, 'relayai-router-explorer.zip'),
+      },
+      {
+        group: 'Project',
+        label: 'RelayAI Router Explorer: installation guide, macOS and Windows',
+        url: guide('relayai-installation-guide.pdf'),
       },
       { group: 'Project', label: 'LLM routing: grading scheme', url: SOON },
     ],

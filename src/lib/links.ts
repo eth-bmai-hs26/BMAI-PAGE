@@ -12,7 +12,7 @@
  * than github()/raw(). If a file has to stay on GitHub, expect it to open, not
  * to download, whatever this returns.
  */
-export type DownloadKind = 'pdf' | 'notebook';
+export type DownloadKind = 'pdf' | 'notebook' | 'archive';
 
 export function downloadKind(url: string): DownloadKind | null {
   // Absolute URL means somebody else's server, so the download attribute would
@@ -24,5 +24,6 @@ export function downloadKind(url: string): DownloadKind | null {
   const u = url.toLowerCase();
   if (u.endsWith('.pdf')) return 'pdf';
   if (u.endsWith('.ipynb')) return 'notebook';
+  if (u.endsWith('.zip')) return 'archive';
   return null;
 }
