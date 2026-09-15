@@ -541,7 +541,20 @@ export const weekends: Weekend[] = [
     summary:
       'Friday assembles the transformer piece by piece, starting from autoencoders and attention rather than presenting the finished architecture. Saturday moves on to agentic AI, with a guest lecture and practical exercises.',
     friday: [
-      { time: '08:15', title: 'Autoencoders', type: 'lecture' },
+      {
+        time: '08:15',
+        title: 'Autoencoders',
+        type: 'lecture',
+        // The block opens with the yogurt cup game, played in pairs on two
+        // laptops: the room invents an autoencoder before anyone says the
+        // word. Copied on 2026-09-15 from w2-lecture-material/autoencoders/
+        // yogurt-cup-game/web/, plus the catalogue and card SVGs from its
+        // build/, so the "printed catalogues and cards" page resolves. The
+        // deck for this block is deliberately NOT linked yet: the only deck
+        // that exists is the FDD one whose frames name the encoder, the code
+        // and the decoder, and publishing it before Friday spoils the game.
+        links: [{ label: 'Yogurt cup game', url: viz(2, 'yogurt-cups') }],
+      },
       { time: '09:00', title: 'Autoencoders', type: 'exercise' },
       { time: '10:00', title: 'Attention', type: 'lecture' },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
@@ -566,6 +579,11 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Attention', url: SOON },
       { group: 'Lecture slides', label: 'Transformers', url: SOON },
       { group: 'Lecture slides', label: 'Agentic AI', url: SOON },
+      {
+        group: 'Visualizations',
+        label: 'The yogurt cup game: invent an autoencoder in pairs (Friday, autoencoders)',
+        url: viz(2, 'yogurt-cups'),
+      },
       { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
       { group: 'Coding exercises', label: 'Attention', url: SOON },
       { group: 'Coding exercises', label: 'Transformers', url: SOON },
