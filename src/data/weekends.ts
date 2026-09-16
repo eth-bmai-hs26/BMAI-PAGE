@@ -549,11 +549,23 @@ export const weekends: Weekend[] = [
         // laptops: the room invents an autoencoder before anyone says the
         // word. Copied on 2026-09-15 from w2-lecture-material/autoencoders/
         // yogurt-cup-game/web/, plus the catalogue and card SVGs from its
-        // build/, so the "printed catalogues and cards" page resolves. The
-        // deck for this block is deliberately NOT linked yet: the only deck
-        // that exists is the FDD one whose frames name the encoder, the code
-        // and the decoder, and publishing it before Friday spoils the game.
-        links: [{ label: 'Yogurt cup game', url: viz(2, 'yogurt-cups') }],
+        // build/, so the "printed catalogues and cards" page resolves.
+        //
+        // The HS26 deck and the notebook it walks through went up on
+        // 2026-09-16, on Carlos's instruction, before the lecture. The deck is
+        // w2-lecture-material/autoencoders/autoencoders-deck/
+        // autoencoders-slides.pdf, copied here under a shorter name. The
+        // notebook is byte for byte the file every listing of its section 4 is
+        // copied from, hosted in w2-cx-public like the weekend-1 Iris notebook.
+        // The 09:00 exercise below is a separate thing and is still to come.
+        links: [
+          { label: 'Slides', url: deck(2, 'autoencoders.pdf') },
+          { label: 'Yogurt cup game', url: viz(2, 'yogurt-cups') },
+          {
+            label: 'Notebook',
+            url: colab('w2-cx-public', 'autoencoders-basic/autoencoders_basic.ipynb'),
+          },
+        ],
       },
       { time: '09:00', title: 'Autoencoders', type: 'exercise' },
       {
@@ -590,7 +602,7 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
     ],
     resources: [
-      { group: 'Lecture slides', label: 'Autoencoders', url: SOON },
+      { group: 'Lecture slides', label: 'Autoencoders', url: deck(2, 'autoencoders.pdf') },
       { group: 'Lecture slides', label: 'Attention', url: SOON },
       { group: 'Lecture slides', label: 'Transformers', url: SOON },
       { group: 'Lecture slides', label: 'Agentic AI', url: SOON },
@@ -608,6 +620,11 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'The attention mechanism worked out, with the softmax (Friday, attention)',
         url: viz(2, 'attention-walkthrough', 'softmax.html'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Autoencoders in PyTorch: the notebook from the lecture (Colab notebook)',
+        url: colab('w2-cx-public', 'autoencoders-basic/autoencoders_basic.ipynb'),
       },
       { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
       { group: 'Coding exercises', label: 'Attention', url: SOON },
