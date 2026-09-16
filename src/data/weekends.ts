@@ -31,7 +31,10 @@ import type { Weekend } from '../types';
  * the foyer and not the Cafebar, although the coffee comes from there. The
  * Friday afternoon coffee of weekend 3 is catering delivered to the same foyer.
  * The rows name the foyer in words beside HG D30.0075, since the code alone
- * does not tell a participant where to walk.
+ * does not tell a participant where to walk. The space inside the code is a
+ * no-break space, \u00a0, because the longer label otherwise wraps between "HG"
+ * and "D30.0075" in the two-column schedule on a laptop, and no word order
+ * avoids that at every width.
  */
 const ORG = 'eth-bmai-hs26';
 
@@ -324,7 +327,7 @@ export const weekends: Weekend[] = [
       },
       {
         time: '10:00',
-        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
         type: 'break',
       },
       {
@@ -623,7 +626,7 @@ export const weekends: Weekend[] = [
       { time: '09:00', title: 'Agentic AI', type: 'exercise' },
       {
         time: '10:00',
-        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
         type: 'break',
       },
       { time: '10:30', title: 'Guest lecture: Christopher Makni', type: 'lecture' },
@@ -688,7 +691,7 @@ export const weekends: Weekend[] = [
       { time: '14:30', title: 'UNets', type: 'exercise' },
       {
         time: '15:30',
-        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 16:00',
+        title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 16:00',
         type: 'break',
       },
       { time: '16:00', title: 'Quiz', type: 'quiz' },
@@ -698,7 +701,7 @@ export const weekends: Weekend[] = [
       { time: '09:00', title: 'Diffusion', type: 'exercise' },
       {
         time: '10:00',
-        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
         type: 'break',
       },
       { time: '10:30', title: 'Kahoot recap', type: 'quiz' },
@@ -748,7 +751,7 @@ export const weekends: Weekend[] = [
       { time: '09:00', title: 'Adversarial attacks', type: 'exercise' },
       {
         time: '10:00',
-        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
         type: 'break',
       },
       { time: '10:30', title: 'Deepfake detection and generation', type: 'lecture' },
