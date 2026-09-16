@@ -578,8 +578,10 @@ export const weekends: Weekend[] = [
         // attention-walkthrough/ (the page files, css, js, data and vendored
         // fonts only). Carlos asked for them to go up that day, before the
         // lecture, which he chose over the weekend's spoiler rule when asked.
-        // The deck itself stays SOON.
+        // The deck followed the same day, on his instruction: attention.pdf is
+        // w2-lecture-material/attention-deck/attention-slides.pdf, copied.
         links: [
+          { label: 'Slides', url: deck(2, 'attention.pdf') },
           { label: 'Walkthrough, simple normalization', url: viz(2, 'attention-walkthrough', 'normalized.html') },
           { label: 'Walkthrough, softmax', url: viz(2, 'attention-walkthrough', 'softmax.html') },
         ],
@@ -588,7 +590,16 @@ export const weekends: Weekend[] = [
       { time: '11:00', title: 'Attention', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
-      { time: '14:00', title: 'Transformers', type: 'lecture' },
+      {
+        time: '14:00',
+        title: 'Transformers',
+        type: 'lecture',
+        // Published 2026-09-16 on Carlos's instruction. transformers.pdf is
+        // w2-lecture-material/attention-deck/transformer-slides.pdf, copied:
+        // the second half of the FS26 attention deck, split off as its own deck
+        // that day so each lecture row carries one.
+        links: [{ label: 'Slides', url: deck(2, 'transformers.pdf') }],
+      },
       { time: '14:30', title: 'Transformers', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       { time: '16:00', title: 'Agentic AI', type: 'lecture' },
@@ -603,8 +614,8 @@ export const weekends: Weekend[] = [
     ],
     resources: [
       { group: 'Lecture slides', label: 'Autoencoders', url: deck(2, 'autoencoders.pdf') },
-      { group: 'Lecture slides', label: 'Attention', url: SOON },
-      { group: 'Lecture slides', label: 'Transformers', url: SOON },
+      { group: 'Lecture slides', label: 'Attention', url: deck(2, 'attention.pdf') },
+      { group: 'Lecture slides', label: 'Transformers', url: deck(2, 'transformers.pdf') },
       { group: 'Lecture slides', label: 'Agentic AI', url: SOON },
       {
         group: 'Visualizations',
