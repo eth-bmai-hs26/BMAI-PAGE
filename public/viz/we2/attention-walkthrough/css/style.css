@@ -1,0 +1,193 @@
+/* style.css : the Paper and Grid look of the attention walkthrough.
+ *
+ * The page is projected in the same lecture as the Beamer deck, so it takes
+ * the deck's theme (attention-deck/beamer-preamble.tex) rather than the
+ * course-viz editorial one: warm paper, a faint squared grid, a sepia margin
+ * rule, near-black ink, brand ink blue as the one accent, Okabe-Ito blue and
+ * vermillion for the sign of a number, Libertinus everywhere. Light only, as
+ * the deck is.
+ *
+ * Every colour lives here as a token. The drawing code sets classes and, for
+ * shaded cells, a fill-opacity; it never writes a colour.
+ */
+
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Italic.otf") format("opentype");
+  font-weight: 400; font-style: italic;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-BoldItalic.otf") format("opentype");
+  font-weight: 700; font-style: italic;
+}
+@font-face {
+  font-family: "Libertinus Math";
+  src: url("../vendor/fonts/LibertinusMath-Regular.otf") format("opentype");
+}
+
+:root {
+  --paper: #FBF8F2;       /* the warm ground */
+  --grid: #000000;        /* drawn at 7 percent, see .grid */
+  --ink: #212121;         /* black 87 percent, the deck's ink */
+  --muted: #737373;       /* black 55 percent, the legible floor */
+  --rule: #B9B5AE;        /* inner cell dividers */
+  --brand: #26456E;       /* ink blue, the one accent */
+  --sepia: #8A6D3B;       /* chrome only: rules, step numerals, indices */
+  --pos: #0072B2;         /* Okabe-Ito blue: a positive number */
+  --neg: #D55E00;         /* Okabe-Ito vermillion: a negative number */
+  --train: #212121;       /* a trainable box: ink ground ... */
+  --train-dot: #CBC9C4;   /* ... with a dot grid of paper 78 percent over ink */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
+}
+
+/* The canvas is a fixed size in CSS pixels, set from the layout in
+   js/walkthrough.js. It never looks at the window: the browser zoom scales it
+   and the window scrolls. */
+#page { position: relative; }
+#page > svg { position: absolute; left: 0; top: 0; display: block; }
+
+/* SVG: ground and chrome */
+.ground { fill: var(--paper); }
+.grid { stroke: var(--grid); stroke-opacity: 0.07; stroke-width: 1; fill: none; }
+.margin-rule { stroke: var(--sepia); stroke-opacity: 0.55; stroke-width: 1.2; }
+.title-rule { stroke: var(--sepia); stroke-width: 1.2; }
+.bracket { stroke: var(--sepia); stroke-width: 1.2; fill: none; }
+.sum-rule { stroke: var(--ink); stroke-width: 1.2; }
+
+/* SVG: text */
+text { font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif; fill: var(--ink); }
+.muted { fill: var(--muted); }
+.sepia { fill: var(--sepia); }
+.on-train { fill: var(--paper); }
+.it { font-style: italic; }
+.b { font-weight: 700; }
+.fs-title { font-size: 34px; font-weight: 700; }
+.fs-sentence { font-size: 22px; }
+.fs-name { font-size: 20px; }
+.fs-label { font-size: 17px; }
+.fs-num { font-size: 17px; }
+.fs-small { font-size: 14px; }
+.fs-index { font-size: 13px; }
+.fs-train { font-size: 26px; }
+.fs-op { font-size: 24px; }
+
+/* SVG: cells. A matrix is ink outlines on a paper backing, so the grid does
+   not run through the numbers; a shaded cell adds a tint on top. */
+.backing { fill: var(--paper); stroke: none; }
+.outline { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+.divider { fill: none; stroke: var(--rule); stroke-width: 1; }
+.tint-pos { fill: var(--pos); }
+.tint-neg { fill: var(--neg); }
+.tint-brand { fill: var(--brand); }
+
+/* SVG: flow */
+.arrow { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.arrowhead { fill: var(--ink); stroke: none; }
+.dot { fill: var(--ink); }
+.step-ring { fill: none; stroke: var(--sepia); stroke-width: 1.3; }
+
+/* SVG: trainable parameters, and nothing else */
+.train { fill: var(--train); stroke: var(--train); stroke-width: 1.2; }
+.train-dot { fill: var(--train-dot); }
+
+/* Selection: a word's row, followed through every matrix */
+[data-word] { cursor: pointer; }
+.hl { fill: none; stroke: var(--brand); stroke-width: 2.6; visibility: hidden; pointer-events: none; }
+.hl.on { visibility: visible; }
+text.on { fill: var(--brand); font-weight: 700; }
+
+/* HTML overlays: formulas and short notes, set in Libertinus Math */
+.fm {
+  position: absolute;
+  color: var(--ink);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.fm math { font-family: "Libertinus Math", math; }
+.fm.formula { font-size: 28px; text-align: center; }
+.fm.instance { font-size: 24px; }
+.fm.note { font-size: 18px; text-align: center; }
+.fm.note math { font-size: 20px; }
+/* a label with scripts, right-aligned against a cell and centred on its row */
+.fm.rlabel { display: flex; align-items: center; justify-content: flex-end; font-size: 19px; }
+.fm.rlabel math { font-size: 21px; }
+.fm.clabel { display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.fm.clabel math { font-size: 22px; }
+.fm .wug { font-style: italic; }
+
+/* The two small links at the top right of a walkthrough: the overview and the
+   other walkthrough. Above the SVG, which is appended after them. */
+.pagelinks {
+  position: absolute;
+  top: 38px;
+  right: 48px;
+  z-index: 3;
+  font-size: 17px;
+  white-space: nowrap;
+}
+.pagelinks a {
+  color: var(--brand);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brand-rule);
+  margin-left: 28px;
+}
+.pagelinks a:hover { border-bottom-color: var(--brand); }
+
+/* The landing page: the same paper, grid and margin rule, drawn in CSS. */
+:root {
+  --grid-line: rgba(0, 0, 0, 0.07);
+  --brand-rule: rgba(38, 69, 110, 0.35);
+}
+body.landing {
+  min-height: 100vh;
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+body.landing::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 36px;
+  border-left: 1.2px solid var(--sepia);
+  opacity: 0.55;
+}
+.landing main { padding: 36px 48px 60px 60px; max-width: 980px; }
+.landing h1 {
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 1.2px solid var(--sepia);
+}
+.landing .sentence { font-size: 22px; font-style: italic; margin: 18px 0 40px; }
+.landing .walkthroughs { list-style: none; margin: 0; padding: 0; }
+.landing .walkthroughs li { margin: 0 0 28px; }
+.landing .walkthroughs a {
+  font-size: 26px;
+  color: var(--brand);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brand-rule);
+}
+.landing .walkthroughs a:hover { border-bottom-color: var(--brand); }
+.landing .what { display: block; font-size: 18px; color: var(--muted); margin-top: 6px; }

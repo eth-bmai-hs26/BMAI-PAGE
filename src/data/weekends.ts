@@ -91,8 +91,8 @@ export const deck = (n: number, file: string): string =>
  * network, and carries its own vendored libraries, so it works from this
  * subpath exactly as it works from a file:// URL on a laptop.
  */
-export const viz = (n: number, name: string): string =>
-  `${import.meta.env.BASE_URL}viz/we${n}/${name}/index.html`;
+export const viz = (n: number, name: string, page = 'index.html'): string =>
+  `${import.meta.env.BASE_URL}viz/we${n}/${name}/${page}`;
 
 /**
  * A participant-facing HOW-TO page hosted by this site, from `public/guides/`.
@@ -556,7 +556,22 @@ export const weekends: Weekend[] = [
         links: [{ label: 'Yogurt cup game', url: viz(2, 'yogurt-cups') }],
       },
       { time: '09:00', title: 'Autoencoders', type: 'exercise' },
-      { time: '10:00', title: 'Attention', type: 'lecture' },
+      {
+        time: '10:00',
+        title: 'Attention',
+        type: 'lecture',
+        // The attention mechanism worked out on the Wuggish sentence, twice: a
+        // first pass that divides each row of inner products by its sum, and
+        // the real softmax. Copied on 2026-09-16 from w2-lecture-material/
+        // attention-walkthrough/ (the page files, css, js, data and vendored
+        // fonts only). Carlos asked for them to go up that day, before the
+        // lecture, which he chose over the weekend's spoiler rule when asked.
+        // The deck itself stays SOON.
+        links: [
+          { label: 'Walkthrough, simple normalization', url: viz(2, 'attention-walkthrough', 'normalized.html') },
+          { label: 'Walkthrough, softmax', url: viz(2, 'attention-walkthrough', 'softmax.html') },
+        ],
+      },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
       { time: '11:00', title: 'Attention', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
@@ -583,6 +598,16 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'The yogurt cup game: invent an autoencoder in pairs (Friday, autoencoders)',
         url: viz(2, 'yogurt-cups'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'The attention mechanism worked out, with a simple normalization (Friday, attention)',
+        url: viz(2, 'attention-walkthrough', 'normalized.html'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'The attention mechanism worked out, with the softmax (Friday, attention)',
+        url: viz(2, 'attention-walkthrough', 'softmax.html'),
       },
       { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
       { group: 'Coding exercises', label: 'Attention', url: SOON },
