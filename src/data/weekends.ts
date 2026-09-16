@@ -22,6 +22,16 @@ import type { Weekend } from '../types';
  * Dozentenfoyer, weekends 2 and 4 at Polysnack, and weekend 3's afternoon
  * coffee is at the foyer instead. Every Saturday coffee is at HG D30.0075, the
  * foyer immediately outside the classroom. Do not "tidy" these into one value.
+ *
+ * The programme office sent the breaks for weekends 2 to 4 again by e-mail,
+ * transcribed here on 16 September 2026. All twelve match what was already
+ * here, time and venue. What it adds is how the foyer is served. On a Saturday
+ * the Cafebar prepares a coffee trolley, which a teaching assistant collects
+ * before the break, brings to the foyer and returns afterwards, so the venue is
+ * the foyer and not the Cafebar, although the coffee comes from there. The
+ * Friday afternoon coffee of weekend 3 is catering delivered to the same foyer.
+ * The rows name the foyer in words beside HG D30.0075, since the code alone
+ * does not tell a participant where to walk.
  */
 const ORG = 'eth-bmai-hs26';
 
@@ -312,7 +322,11 @@ export const weekends: Weekend[] = [
           },
         ],
       },
-      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
+      {
+        time: '10:00',
+        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        type: 'break',
+      },
       {
         time: '10:30',
         title: 'Validation and overfitting',
@@ -607,7 +621,11 @@ export const weekends: Weekend[] = [
     saturday: [
       { time: '08:15', title: 'Agentic AI', type: 'lecture' },
       { time: '09:00', title: 'Agentic AI', type: 'exercise' },
-      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
+      {
+        time: '10:00',
+        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        type: 'break',
+      },
       { time: '10:30', title: 'Guest lecture: Christopher Makni', type: 'lecture' },
       { time: '11:00', title: 'Guest lecture continues', type: 'lecture' },
       { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
@@ -668,13 +686,21 @@ export const weekends: Weekend[] = [
       { time: '13:00', title: 'Lunch break at Dozentenfoyer, until 14:00', type: 'break' },
       { time: '14:00', title: 'UNets', type: 'lecture' },
       { time: '14:30', title: 'UNets', type: 'exercise' },
-      { time: '15:30', title: 'Coffee break at HG D30.0075, until 16:00', type: 'break' },
+      {
+        time: '15:30',
+        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 16:00',
+        type: 'break',
+      },
       { time: '16:00', title: 'Quiz', type: 'quiz' },
     ],
     saturday: [
       { time: '08:15', title: 'Diffusion', type: 'lecture' },
       { time: '09:00', title: 'Diffusion', type: 'exercise' },
-      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
+      {
+        time: '10:00',
+        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        type: 'break',
+      },
       { time: '10:30', title: 'Kahoot recap', type: 'quiz' },
       { time: '11:00', title: 'Extra', type: 'exercise' },
       { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
@@ -720,7 +746,11 @@ export const weekends: Weekend[] = [
     saturday: [
       { time: '08:15', title: 'Adversarial attacks', type: 'lecture' },
       { time: '09:00', title: 'Adversarial attacks', type: 'exercise' },
-      { time: '10:00', title: 'Coffee break at HG D30.0075, until 10:30', type: 'break' },
+      {
+        time: '10:00',
+        title: 'Coffee break in the foyer outside the classroom (HG D30.0075), until 10:30',
+        type: 'break',
+      },
       { time: '10:30', title: 'Deepfake detection and generation', type: 'lecture' },
       // The syllabus leaves these two slots open for now.
       { time: '11:00', title: '', type: 'tba' },
