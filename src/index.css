@@ -152,12 +152,37 @@ h3 {
   color: var(--ink);
   border-bottom-color: var(--eth-blue);
 }
-@media (max-width: 560px) {
+/* On a phone the logo and the three links do not fit on one row (at 375px they
+   needed 437px, and the whole page panned sideways), so the links move to a
+   second row of their own, each on one line. 600px is also where .container
+   narrows its padding. */
+@media (max-width: 600px) {
+  .site-header__inner {
+    flex-wrap: wrap;
+  }
+  .brand {
+    min-height: 56px;
+  }
+  .brand__divider,
   .brand__course {
     display: none;
   }
   .site-nav {
-    gap: 18px;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 12px;
+  }
+  .site-nav__link {
+    min-height: 44px;
+    white-space: nowrap;
+  }
+}
+/* A 320px phone: one step smaller, so the row still fits. */
+@media (max-width: 359px) {
+  .site-nav__link {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
   }
 }
 
@@ -554,7 +579,8 @@ h3 {
 }
 .wdetail-meta {
   display: flex;
-  gap: 36px;
+  flex-wrap: wrap;
+  gap: 14px 36px;
   margin-bottom: 24px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
