@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE HIDDEN LAYER</title>
+  <meta name="description" content="A browser-only spy infiltration game for teaching AI agents: play by hand, or watch an LLM play through your own OpenRouter key.">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-container">
+
+  <!-- Title Bar -->
+  <header id="title-bar" class="title-bar">
+    <h1 id="title-text">&#x1F575;&#xFE0F; THE HIDDEN LAYER</h1>
+    <nav class="mode-buttons">
+      <select id="mission-select" class="input-field" style="width:auto;padding:4px 8px;font-size:11px;">
+        <option value="micro">Micro Mission (3&times;3)</option>
+        <option value="training">Training Mission (5&times;5)</option>
+      </select>
+      <button id="btn-manual" class="btn" tabindex="10">Manual</button>
+      <button id="btn-auto" class="btn" tabindex="11">Auto</button>
+      <button id="btn-reset" class="btn btn--warning" tabindex="12">Reset</button>
+      <button id="btn-download-log" class="btn" tabindex="13">&#x1F4BE; Download Log</button>
+    </nav>
+  </header>
+
+  <!-- Main Layout: Game + Action Log side by side -->
+  <div class="main-layout">
+
+    <!-- Left Column: Game + Controls -->
+    <div class="left-column">
+
+      <!-- Game Area: Map + Stats -->
+      <section id="game-area" class="game-area">
+        <div id="game-map" class="game-grid"></div>
+
+        <div id="stats-panel" class="stats-panel">
+          <div id="turn-bar" class="turn-bar">
+            <div class="turn-bar__fill"></div>
+            <span class="turn-bar__text"></span>
+          </div>
+
+          <div id="health-bar" class="health-bar"></div>
+
+          <div id="dossier-bar" class="dossier-bar">
+            <div class="dossier-bar__fill"></div>
+            <span class="dossier-bar__text"></span>
+          </div>
+
+          <div id="inventory" class="inventory">
+            <span class="bar-label">Inventory</span>
+            <div class="inventory-items"></div>
+          </div>
+
+          <div id="narrator-panel" class="narrator-panel">
+            <span class="bar-label">&#x1F4D6; Narrator</span>
+            <div class="narrator-text"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Controls Area -->
+      <section id="controls-area" class="controls-area">
+        <div class="controls-row">
+          <!-- D-Pad -->
+          <div class="dpad">
+            <div></div>
+            <button id="dpad-north" class="btn btn--primary" tabindex="1">&uarr;</button>
+            <div></div>
+            <button id="dpad-west" class="btn btn--primary" tabindex="2">&larr;</button>
+            <div class="dpad-center"></div>
+            <button id="dpad-east" class="btn btn--primary" tabindex="3">&rarr;</button>
+            <div></div>
+            <button id="dpad-south" class="btn btn--primary" tabindex="4">&darr;</button>
+            <div></div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="action-controls">
+            <button id="btn-collect" class="btn btn--success" tabindex="5">&#x270B; Collect</button>
+
+            <div class="input-group">
+              <input type="text" id="talk-input" class="input-field" placeholder="Message..." tabindex="6">
+              <button id="talk-send" class="btn btn--primary" tabindex="7">&#x1F4AC; Send</button>
+            </div>
+
+            <div class="auto-controls">
+              <button id="btn-run" class="btn btn--success">&#x25B6; Run Agent</button>
+              <button id="btn-stop" class="btn btn--danger">&#x23F9; Stop</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- System Prompt Editor + OpenRouter key -->
+      <section id="editor-area" class="editor-panel">
+        <div class="editor-header">
+          <span>&#x1F4DD; SYSTEM PROMPT</span>
+          <button id="editor-toggle" class="btn">&#x25BC; collapse</button>
+        </div>
+
+        <div class="api-key-row">
+          <label for="api-key">&#x1F511; OpenRouter API Key:</label>
+          <div class="input-group">
+            <input type="password" id="api-key" class="input-field" placeholder="Paste your OpenRouter key here...">
+            <button id="btn-save-key" class="btn btn--primary">Save</button>
+            <button id="btn-forget-key" class="btn btn--warning">Forget key</button>
+          </div>
+          <span id="api-key-status" class="api-key-status"></span>
+        </div>
+        <p class="key-disclosure">
+          Your key stays only in this browser (local storage), is sent only to openrouter.ai when the agent
+          or an informant needs to think, and is never logged or sent anywhere else. Get a key at
+          <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a>.
+          No key: manual play still works.
+        </p>
+
+        <label for="system-prompt">Tell the LLM who it is, what tools it has, and how to respond:</label>
+        <textarea id="system-prompt" class="prompt-textarea" rows="12">You are a spy. Collect 3 classified dossiers within 30 turns.
+
+On the island there are dossier caches. Use collect() to grab them.
+Throughout the grid you can use collect() to grab items.
+Talk to informants and ask about "jobs" or "deliveries" to get quest items. If you have an item to deliver, mention it by name.
+
+Available tools (use exactly one per turn):
+TOOL: move(direction="north|south|east|west")
+TOOL: talk(message="your message")
+TOOL: collect()
+
+Respond with exactly one TOOL: line, no other text.</textarea>
+        <div class="prompt-actions">
+          <button id="btn-prompt-reset" class="btn">Reset to default</button>
+        </div>
+      </section>
+
+      <!-- Game Over Panel (inline, non-blocking) -->
+      <div id="game-over-overlay" class="game-over-overlay"></div>
+
+    </div>
+
+    <!-- Right Column: Action Log -->
+    <section id="action-log" class="action-log">
+      <div class="log-header">Action Log</div>
+    </section>
+
+  </div><!-- .main-layout -->
+
+  <footer class="footer">BMAI HS26, ETH Zurich. Runs entirely in your browser: no server, no install.</footer>
+
+</div><!-- .app-container -->
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -659,9 +659,12 @@ export const weekends: Weekend[] = [
         type: 'exercise',
         // The Hidden Layer, ported to OpenRouter keys (Colab secret
         // OPENROUTER_API_KEY), published in w2-cx-public/spy-game/.
+        // The browser game (no install, key pasted into the page) is the primary
+        // link since 2026-09-17; the Colab notebook stays as a fallback.
         links: [
+          { label: 'Spy game', url: viz(2, 'spy-game') },
           {
-            label: 'Spy game',
+            label: 'Colab notebook',
             url: colab('w2-cx-public', 'spy-game/the_hidden_layer_micro_mission.ipynb'),
           },
         ],
@@ -717,6 +720,11 @@ export const weekends: Weekend[] = [
       { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
       { group: 'Coding exercises', label: 'Attention', url: SOON },
       { group: 'Coding exercises', label: 'Transformers', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Agentic AI: The Hidden Layer spy game in your browser, no install (bring your OpenRouter key)',
+        url: viz(2, 'spy-game'),
+      },
       {
         group: 'Coding exercises',
         label: 'Agentic AI: The Hidden Layer spy game, micro mission (Colab notebook, OpenRouter key)',
