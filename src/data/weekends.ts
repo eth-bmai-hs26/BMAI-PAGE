@@ -620,7 +620,21 @@ export const weekends: Weekend[] = [
         ],
       },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
-      { time: '11:00', title: 'Attention', type: 'exercise' },
+      {
+        time: '11:00',
+        title: 'Attention',
+        type: 'exercise',
+        // attention/cx_attention.ipynb in the public w2-cx-public, linked
+        // rather than copied, so the TA's edits reach the room without a
+        // deploy here. Opened through colab() like every other exercise
+        // notebook: GitHub's own viewer would only show it, not run it.
+        links: [
+          {
+            label: 'Notebook',
+            url: colab('w2-cx-public', 'attention/cx_attention.ipynb'),
+          },
+        ],
+      },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
       {
@@ -717,7 +731,11 @@ export const weekends: Weekend[] = [
         url: colab('w2-cx-public', 'autoencoders-basic/autoencoders_basic.ipynb'),
       },
       { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
-      { group: 'Coding exercises', label: 'Attention', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Attention (Colab notebook)',
+        url: colab('w2-cx-public', 'attention/cx_attention.ipynb'),
+      },
       { group: 'Coding exercises', label: 'Transformers', url: SOON },
       {
         group: 'Coding exercises',
