@@ -633,7 +633,6 @@ export const weekends: Weekend[] = [
         // that day so each lecture row carries one.
         links: [{ label: 'Slides', url: deck(2, 'transformers.pdf') }],
       },
-      { time: '14:30', title: 'Transformers', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       {
         time: '16:00',
