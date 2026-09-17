@@ -619,11 +619,37 @@ export const weekends: Weekend[] = [
       },
       { time: '14:30', title: 'Transformers', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
-      { time: '16:00', title: 'Agentic AI', type: 'lecture' },
+      {
+        time: '16:00',
+        title: 'Agentic AI, part 1: From LLMs to reasoning models',
+        type: 'lecture',
+        // agentic-ai-part1-llms-to-reasoning/agentic-ai-part1-slides.pdf in the
+        // private w2-lecture-material, copied here on 2026-09-17.
+        links: [{ label: 'Slides', url: deck(2, 'agentic-ai-part1.pdf') }],
+      },
     ],
     saturday: [
-      { time: '08:15', title: 'Agentic AI', type: 'lecture' },
-      { time: '09:00', title: 'Agentic AI', type: 'exercise' },
+      {
+        time: '08:15',
+        title: 'Agentic AI, part 2: Agents',
+        type: 'lecture',
+        // agentic-ai-part2-agents/agentic-ai-part2-slides.pdf, copied 2026-09-17.
+        // Its last content frame prints the spy game's QR code.
+        links: [{ label: 'Slides', url: deck(2, 'agentic-ai-part2.pdf') }],
+      },
+      {
+        time: '09:00',
+        title: 'Agentic AI',
+        type: 'exercise',
+        // The Hidden Layer, ported to OpenRouter keys (Colab secret
+        // OPENROUTER_API_KEY), published in w2-cx-public/spy-game/.
+        links: [
+          {
+            label: 'Spy game',
+            url: colab('w2-cx-public', 'spy-game/the_hidden_layer_micro_mission.ipynb'),
+          },
+        ],
+      },
       {
         time: '10:00',
         title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
@@ -637,7 +663,16 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Autoencoders', url: deck(2, 'autoencoders.pdf') },
       { group: 'Lecture slides', label: 'Attention', url: deck(2, 'attention.pdf') },
       { group: 'Lecture slides', label: 'Transformers', url: deck(2, 'transformers.pdf') },
-      { group: 'Lecture slides', label: 'Agentic AI', url: SOON },
+      {
+        group: 'Lecture slides',
+        label: 'Agentic AI, part 1: From LLMs to reasoning models',
+        url: deck(2, 'agentic-ai-part1.pdf'),
+      },
+      {
+        group: 'Lecture slides',
+        label: 'Agentic AI, part 2: Agents',
+        url: deck(2, 'agentic-ai-part2.pdf'),
+      },
       {
         group: 'Visualizations',
         label: 'The yogurt cup game: invent an autoencoder in pairs (Friday, autoencoders)',
@@ -661,7 +696,21 @@ export const weekends: Weekend[] = [
       { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
       { group: 'Coding exercises', label: 'Attention', url: SOON },
       { group: 'Coding exercises', label: 'Transformers', url: SOON },
-      { group: 'Coding exercises', label: 'Agentic AI', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Agentic AI: The Hidden Layer spy game, micro mission (Colab notebook, OpenRouter key)',
+        url: colab('w2-cx-public', 'spy-game/the_hidden_layer_micro_mission.ipynb'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Agentic AI: The Hidden Layer spy game, training mission (Colab notebook)',
+        url: colab('w2-cx-public', 'spy-game/the_hidden_layer_training_mission.ipynb'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Agentic AI: The Hidden Layer spy game, full mission (Colab notebook)',
+        url: colab('w2-cx-public', 'spy-game/the_hidden_layer_full_mission.ipynb'),
+      },
       { group: 'Project', label: 'Tax agent: project description', url: SOON },
       { group: 'Project', label: 'Tax agent: grading scheme', url: SOON },
     ],
