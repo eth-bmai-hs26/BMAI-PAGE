@@ -584,7 +584,21 @@ export const weekends: Weekend[] = [
           },
         ],
       },
-      { time: '09:00', title: 'Autoencoders', type: 'exercise' },
+      {
+        time: '09:00',
+        title: 'Autoencoders',
+        type: 'exercise',
+        // autoencoder/cx-autoencoder.ipynb in the public w2-cx-public, linked
+        // not copied, like the attention exercise. NOT the same notebook as
+        // the lecture's autoencoders-basic/autoencoders_basic.ipynb above: the
+        // two folders are a letter apart and this is the exercise of the pair.
+        links: [
+          {
+            label: 'Notebook',
+            url: colab('w2-cx-public', 'autoencoder/cx-autoencoder.ipynb'),
+          },
+        ],
+      },
       {
         time: '10:00',
         title: 'Attention',
@@ -730,7 +744,11 @@ export const weekends: Weekend[] = [
         label: 'Autoencoders in PyTorch: the notebook from the lecture (Colab notebook)',
         url: colab('w2-cx-public', 'autoencoders-basic/autoencoders_basic.ipynb'),
       },
-      { group: 'Coding exercises', label: 'Autoencoders', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Autoencoders (Colab notebook)',
+        url: colab('w2-cx-public', 'autoencoder/cx-autoencoder.ipynb'),
+      },
       {
         group: 'Coding exercises',
         label: 'Attention (Colab notebook)',
