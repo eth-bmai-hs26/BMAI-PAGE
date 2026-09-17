@@ -597,8 +597,24 @@ export const weekends: Weekend[] = [
         // lecture, which he chose over the weekend's spoiler rule when asked.
         // The deck followed the same day, on his instruction: attention.pdf is
         // w2-lecture-material/attention-deck/attention-slides.pdf, copied.
+        //
+        // The Wuggish game is the cold open for this block, copied on
+        // 2026-09-17 from w2-lecture-material/attention-game/ (index.html,
+        // css, js and data; not its dev, precompute or images folders, which
+        // the page never loads). The room learns eight words of a made-up
+        // sister language of English from pictures, then decodes scrambled
+        // bags of them, and only the reveal at the end says that binding a
+        // word to a thing is attention. It goes up named, like the decks: the
+        // topic is public already and this row is called Attention.
+        //
+        // ?dev=0 hides the fast-forward button, which jumps straight to the
+        // reveal with the game counted as solved. It is on by default so the
+        // lecturer can rehearse the reveal without playing 18 items; a
+        // participant who finds it skips the whole point of the block. Keep
+        // the query on both links.
         links: [
           { label: 'Slides', url: deck(2, 'attention.pdf') },
+          { label: 'Wuggish attention game', url: `${viz(2, 'wuggish')}?dev=0` },
           { label: 'Walkthrough, simple normalization', url: viz(2, 'attention-walkthrough', 'normalized.html') },
           { label: 'Walkthrough, softmax', url: viz(2, 'attention-walkthrough', 'softmax.html') },
         ],
@@ -677,6 +693,11 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'The yogurt cup game: invent an autoencoder in pairs (Friday, autoencoders)',
         url: viz(2, 'yogurt-cups'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'The Wuggish attention game: bind the words yourself (Friday, attention)',
+        url: `${viz(2, 'wuggish')}?dev=0`,
       },
       {
         group: 'Visualizations',
