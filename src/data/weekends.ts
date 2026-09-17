@@ -575,7 +575,13 @@ export const weekends: Weekend[] = [
         // notebook is byte for byte the file every listing of its section 4 is
         // copied from, hosted in w2-cx-public like the weekend-1 Iris notebook.
         // The 09:00 exercise below is a separate thing and is still to come.
+        //
+        // The weekend's cold open comes first, as on weekend 1: two slides,
+        // Wittgenstein's language games and the weekend's agenda, projected in
+        // front of the autoencoders deck. It is w2-lecture-material/cold-intro/
+        // slides.pdf, copied here on 2026-09-17 on Carlos's instruction.
         links: [
+          { label: 'Cold open', url: deck(2, 'cold-open.pdf') },
           { label: 'Slides', url: deck(2, 'autoencoders.pdf') },
           { label: 'Yogurt cup game', url: viz(2, 'yogurt-cups') },
           {
@@ -706,6 +712,7 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
     ],
     resources: [
+      { group: 'Lecture slides', label: 'The cold open', url: deck(2, 'cold-open.pdf') },
       { group: 'Lecture slides', label: 'Autoencoders', url: deck(2, 'autoencoders.pdf') },
       { group: 'Lecture slides', label: 'Attention', url: deck(2, 'attention.pdf') },
       { group: 'Lecture slides', label: 'Transformers', url: deck(2, 'transformers.pdf') },
