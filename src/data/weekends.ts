@@ -736,7 +736,28 @@ export const weekends: Weekend[] = [
         links: [{ label: 'Slides', url: deck(2, 'agentic-ai-in-practice.pdf') }],
       },
       { time: '11:00', title: 'Guest lecture continues', type: 'lecture' },
-      { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
+      {
+        time: '12:00',
+        title: 'Project intro: Tax agent',
+        type: 'project',
+        // Same split as weekend 1. The notebook OPENS IN COLAB, which reads
+        // w2-project-public directly, so there is nothing to copy and nothing
+        // to go stale. Everything else is a copy served from this site,
+        // because <a download> is same-origin only: a raw() PDF would open in
+        // GitHub's viewer, and raw() hands .html back as text/plain, so the
+        // field guide would be read as source instead of used. Re-export the
+        // deck, the field guide and the app zip when they change upstream in
+        // w2-project-public.
+        links: [
+          { label: 'Slides', url: deck(2, 'tax-agent-project.pdf') },
+          {
+            label: 'Project Notebook',
+            url: colab('w2-project-public', 'project2_agentic_tax_filler_student.ipynb'),
+          },
+          { label: 'Field guide', url: exercise(2, 'tax-agent-field-guide.html') },
+          { label: 'App', url: app(2, 'agentekki-demo.zip') },
+        ],
+      },
     ],
     resources: [
       // Each annotated copy sits directly under the deck it annotates, as on
@@ -843,7 +864,36 @@ export const weekends: Weekend[] = [
         label: 'Agentic AI: The Hidden Layer spy game, full mission (Colab notebook)',
         url: colab('w2-cx-public', 'spy-game/the_hidden_layer_full_mission.ipynb'),
       },
-      { group: 'Project', label: 'Tax agent: project description', url: SOON },
+      {
+        group: 'Project',
+        label: 'Tax agent: project description',
+        url: deck(2, 'tax-agent-project-brief.pdf'),
+      },
+      {
+        group: 'Project',
+        label: 'Tax agent: project intro slides',
+        url: deck(2, 'tax-agent-project.pdf'),
+      },
+      {
+        group: 'Project',
+        label: 'Tax agent: AgenTekki student notebook (Colab notebook)',
+        url: colab('w2-project-public', 'project2_agentic_tax_filler_student.ipynb'),
+      },
+      {
+        group: 'Project',
+        label: 'Tax agent: field guide, the plain-language companion to the notebook',
+        url: exercise(2, 'tax-agent-field-guide.html'),
+      },
+      {
+        group: 'Project',
+        label: 'AgenTekki: the demo app, to unpack and run on your own laptop',
+        url: app(2, 'agentekki-demo.zip'),
+      },
+      {
+        group: 'Project',
+        label: 'AgenTekki: the demo app, walkthrough slides',
+        url: deck(2, 'tax-agent-demo-app.pdf'),
+      },
       { group: 'Project', label: 'Tax agent: grading scheme', url: SOON },
     ],
   },

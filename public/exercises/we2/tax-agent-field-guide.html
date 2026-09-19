@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Student companion to the AgenTekki tax-agent Colab notebook: what each notebook section does, what the AI sees and decides, and how the result is scored, explained in plain words and pictures.">
+  <meta name="theme-color" content="#174f3f">
+  <title>AgenTekki Field Guide — Build a Tax Agent</title>
+  <style>
+    :root {
+      --ink: #172821;
+      --muted: #65726b;
+      --paper: #f1eee4;
+      --cream: #fffdf7;
+      --green: #174f3f;
+      --green-2: #26705a;
+      --lime: #c9f26b;
+      --orange: #ff6b35;
+      --blue: #2b6ef2;
+      --violet: #7157d9;
+      --yellow: #ffd95a;
+      --red: #d94b45;
+      --line: #cbc8bd;
+      --shadow: 0 18px 55px rgba(23, 40, 33, .13);
+      --radius: 28px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 184px; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+    .skip-link {
+      position: fixed;
+      z-index: 1000;
+      top: .75rem;
+      left: .75rem;
+      padding: .7rem 1rem;
+      transform: translateY(-150%);
+      border-radius: 999px;
+      background: white;
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 30px max(24px, calc((100vw - 1220px) / 2)) 150px;
+      background: var(--green);
+      color: var(--cream);
+      isolation: isolate;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 110px;
+      right: max(-100px, calc((100vw - 1450px) / 2));
+      width: clamp(370px, 42vw, 660px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 50%;
+      box-shadow: 0 0 0 70px rgba(255,255,255,.035), 0 0 0 140px rgba(255,255,255,.025);
+    }
+    .hero::after {
+      content: "AI";
+      position: absolute;
+      z-index: -1;
+      right: clamp(10px, 8vw, 130px);
+      bottom: -45px;
+      color: var(--lime);
+      font-size: clamp(250px, 35vw, 540px);
+      font-weight: 950;
+      line-height: .78;
+      letter-spacing: -.12em;
+      opacity: .96;
+    }
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding-bottom: 60px;
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+    .eth-logo-link {
+      display: inline-flex;
+      flex: 0 0 auto;
+      padding: 8px 11px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 8px 22px rgba(0,0,0,.12);
+    }
+    .eth-logo { display: block; width: clamp(142px, 13vw, 168px); height: auto; }
+    .masthead-right { display: flex; align-items: center; gap: 22px; }
+    .brand { display: flex; gap: 10px; align-items: center; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 50% 50% 50% 12%;
+      background: var(--orange);
+      color: white;
+      font-size: .72rem;
+      letter-spacing: 0;
+      transform: rotate(-8deg);
+    }
+    .edition { color: rgba(255,255,255,.58); }
+    .hero-content { position: relative; z-index: 2; max-width: 870px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .48rem .78rem;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(201,242,107,.14); }
+    h1 {
+      max-width: 870px;
+      margin: 22px 0 24px;
+      font-size: clamp(3.4rem, 8.5vw, 7.6rem);
+      font-weight: 930;
+      line-height: .86;
+      letter-spacing: -.07em;
+    }
+    h1 em { color: var(--lime); font-style: normal; }
+    .hero-copy {
+      max-width: 660px;
+      margin: 0 0 14px;
+      color: rgba(255,255,255,.74);
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      line-height: 1.5;
+    }
+    .hero-copy strong, .hero-copy code { color: white; }
+    .hero-copy code { font-size: .85em; }
+    .simple-architecture {
+      max-width: 870px;
+      margin-top: 40px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 24px;
+      background: rgba(8,33,25,.58);
+      box-shadow: 0 18px 45px rgba(0,0,0,.14);
+      backdrop-filter: blur(10px);
+    }
+    .simple-architecture-head { display: grid; grid-template-columns: .75fr 1.7fr; gap: 24px; margin-bottom: 20px; align-items: start; }
+    .simple-architecture-head span { color: var(--lime); font-size: .68rem; font-weight: 950; letter-spacing: .15em; text-transform: uppercase; }
+    .simple-architecture-head p { margin: 0; color: rgba(255,255,255,.78); font-size: .95rem; line-height: 1.55; }
+    .simple-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .simple-step { position: relative; min-height: 162px; padding: 15px; border-radius: 16px; background: rgba(255,255,255,.09); }
+    .simple-step::after { content: "→"; position: absolute; z-index: 2; top: 67px; right: -13px; color: var(--lime); font-size: 1.2rem; font-weight: 950; }
+    .simple-step:last-child::after { display: none; }
+    .simple-step b { display: block; margin-bottom: 8px; font-size: .85rem; }
+    .simple-step p { margin: 0; color: rgba(255,255,255,.66); font-size: .74rem; line-height: 1.48; }
+    .simple-step code { color: var(--lime); font-size: .9em; }
+    .simple-num { display: grid; width: 27px; height: 27px; margin-bottom: 18px; place-items: center; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: .65rem; font-weight: 950; }
+    .simple-summary { margin: 15px 0 0; color: white; font-size: .78rem; font-weight: 700; text-align: center; }
+    .simple-summary code { color: var(--lime); }
+    .source-note {
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+      margin-top: 12px;
+      color: #617068;
+      font-size: .63rem;
+      font-weight: 720;
+      line-height: 1.35;
+    }
+    .source-note::before { content: "⚙️"; flex: 0 0 auto; font-size: .9rem; line-height: 1; }
+    .source-note.ai-one::before, .source-note.ai-two::before { content: "🤖"; }
+    .source-note .call-id {
+      flex: 0 0 auto;
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: var(--note-bg, #dce7ff);
+      color: var(--note-color, #16489e);
+      font-size: .55rem;
+      font-weight: 950;
+      letter-spacing: .07em;
+      white-space: nowrap;
+    }
+    .source-note.ai-one { --note-bg: #dce7ff; --note-color: #174da9; }
+    .source-note.code-note { --note-bg: #e6eadf; --note-color: #4f6050; }
+    .source-note.ai-two { --note-bg: #e9defe; --note-color: #5e3db3; }
+    .source-note.on-dark { color: rgba(255,255,255,.68); }
+    .source-note.on-dark.code-note { --note-bg: rgba(255,255,255,.14); --note-color: var(--lime); }
+    .source-note.on-dark.ai-one { --note-bg: rgba(126,181,255,.2); --note-color: #b8d5ff; }
+    .source-note.on-dark.ai-two { --note-bg: rgba(216,202,250,.18); --note-color: #e4d7ff; }
+    .simple-step .source-note { margin-top: 16px; color: rgba(255,255,255,.65); }
+    .simple-step .source-note .call-id { background: rgba(255,255,255,.14); color: white; }
+
+    .map-wrap { position: sticky; z-index: 100; top: 0; padding: 10px 12px 0; pointer-events: none; }
+    .metro {
+      position: relative;
+      width: min(1220px, 100%);
+      margin: -74px auto 0;
+      overflow: hidden;
+      border: 1px solid rgba(23,40,33,.18);
+      border-radius: 24px;
+      background: rgba(255,253,247,.94);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      pointer-events: auto;
+    }
+    .metro-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; padding: 9px 18px; border-bottom: 1px solid var(--line); }
+    .map-label { color: var(--muted); font-size: .65rem; font-weight: 900; letter-spacing: .16em; }
+    .where-label { display: inline-flex; align-items: center; gap: 7px; font-size: .72rem; font-weight: 850; }
+    .where-label::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+    .map-viewport { overflow-x: auto; scrollbar-width: none; }
+    .map-viewport::-webkit-scrollbar { display: none; }
+    .metro-track { --pin-index: 0; --progress: 0%; position: relative; min-width: 1010px; padding: 28px 24px 12px; }
+    .metro-track::before, .metro-track::after { content: ""; position: absolute; top: 45px; left: calc(24px + (100% - 48px) / 18); height: 5px; border-radius: 999px; }
+    .metro-track::before { right: calc(24px + (100% - 48px) / 18); background: #d9d6cc; }
+    .metro-track::after { width: var(--progress); max-width: calc(100% - 48px - (100% - 48px) / 9); background: var(--orange); transition: width .35s ease; }
+    .metro ol { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(9, 1fr); margin: 0; padding: 0; list-style: none; }
+    .metro a { display: grid; gap: 7px; justify-items: center; color: #7e8b84; font-size: .66rem; font-weight: 850; line-height: 1.1; text-align: center; text-decoration: none; }
+    .station-dot { display: grid; width: 37px; height: 37px; place-items: center; border: 4px solid #d9d6cc; border-radius: 50%; background: var(--cream); color: #7e8b84; font-size: .7rem; transition: .25s ease; }
+    .metro li.visited .station-dot { border-color: var(--orange); background: #fff4ef; color: var(--ink); }
+    .metro li.active a { color: var(--ink); }
+    .metro li.active .station-dot { border-color: var(--orange); background: var(--orange); color: white; box-shadow: 0 0 0 6px rgba(255,107,53,.14); transform: scale(1.08); }
+    .metro-pin {
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      left: calc(24px + ((100% - 48px) / 9) * (var(--pin-index) + .5));
+      display: grid;
+      width: 29px;
+      height: 29px;
+      place-items: center;
+      transform: translateX(-50%) rotate(-45deg);
+      border-radius: 50% 50% 50% 6px;
+      background: var(--ink);
+      color: white;
+      box-shadow: 0 7px 14px rgba(23,40,33,.23);
+      transition: left .4s cubic-bezier(.2,.8,.2,1);
+    }
+    .metro-pin span { transform: rotate(45deg); font-size: .58rem; font-weight: 950; }
+    .reading-progress { height: 3px; background: rgba(23,40,33,.08); }
+    .reading-progress span { display: block; width: 0; height: 100%; background: var(--blue); transition: width .1s linear; }
+
+    .guide { width: min(1120px, calc(100% - 40px)); margin: 110px auto 0; }
+    .chapter { position: relative; margin: 0 0 110px; scroll-margin-top: 178px; }
+    .chapter-head { display: grid; grid-template-columns: 115px minmax(0, 1fr); gap: 26px; margin-bottom: 36px; align-items: start; }
+    .stop-sign {
+      display: grid;
+      width: 96px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 6px solid var(--chapter-color, var(--green));
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--chapter-color, var(--green));
+      font-size: 2.3rem;
+      font-weight: 950;
+      box-shadow: 0 0 0 8px var(--paper), 0 0 0 9px var(--line);
+    }
+    .kicker { color: var(--chapter-color, var(--green)); font-size: .7rem; font-weight: 950; letter-spacing: .16em; text-transform: uppercase; }
+    .chapter h2 { margin: 5px 0 10px; font-size: clamp(2.3rem, 4.4vw, 4.6rem); line-height: .94; letter-spacing: -.055em; }
+    .chapter-lead { max-width: 760px; margin: 0; color: var(--muted); font-size: 1.08rem; }
+    .chapter-lead code { font-size: .85em; color: var(--ink); }
+    .cell-badge { display: inline-flex; margin-top: 14px; padding: .42rem .65rem; border-radius: 7px; background: var(--ink); color: white; font-family: var(--mono); font-size: .72rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .panel {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(20px, 3vw, 32px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--cream);
+      box-shadow: 0 9px 30px rgba(23,40,33,.07);
+    }
+    .panel.dark { border-color: transparent; background: var(--ink); color: white; }
+    .panel.green { border-color: transparent; background: var(--green); color: white; }
+    .panel.blue { border-color: transparent; background: var(--blue); color: white; }
+    .panel.lime { border-color: transparent; background: var(--lime); }
+    .panel h3 { margin: 0 0 12px; font-size: 1.3rem; line-height: 1.15; letter-spacing: -.025em; }
+    .panel p:last-child { margin-bottom: 0; }
+    .panel-label { display: inline-block; margin-bottom: 15px; color: var(--muted); font-size: .65rem; font-weight: 950; letter-spacing: .15em; text-transform: uppercase; }
+    .dark .panel-label, .green .panel-label, .blue .panel-label { color: rgba(255,255,255,.65); }
+    .soft { color: var(--muted); }
+    .dark .soft, .green .soft, .blue .soft { color: rgba(255,255,255,.72); }
+    .micro { font-size: .8rem; }
+    code, .code-chip { font-family: var(--mono); }
+    code { font-size: .88em; }
+    .code-chip { display: inline-block; margin: 3px 3px 3px 0; padding: .32rem .48rem; border-radius: 6px; background: #e8eee9; color: var(--ink); font-size: .72rem; font-weight: 750; }
+    .dark .code-chip, .green .code-chip, .blue .code-chip { background: rgba(255,255,255,.12); color: white; }
+    .step-stack { display: grid; gap: 10px; margin-top: 16px; }
+    .stack-row { display: grid; grid-template-columns: 38px 1fr auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid #d8d5cb; border-radius: 14px; background: white; }
+    .stack-row .num { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--ink); color: white; font-size: .75rem; font-weight: 900; }
+    .stack-row b { display: block; font-size: .88rem; }
+    .stack-row small { color: var(--muted); }
+    .stack-row .status { color: var(--green-2); font-size: .65rem; font-weight: 900; letter-spacing: .08em; }
+    .warning { display: flex; gap: 12px; margin-top: 15px; padding: 14px; border-left: 5px solid var(--orange); border-radius: 0 12px 12px 0; background: #fff1e9; color: #6b3321; font-size: .86rem; }
+    .warning b { color: #572615; }
+    .warning code { color: #572615; }
+    .done-check { display: flex; gap: 12px; align-items: flex-start; margin-top: 16px; padding: 12px 14px; border: 1px solid rgba(23,40,33,.14); border-radius: 13px; background: rgba(255,255,255,.7); cursor: pointer; }
+    .done-check input { width: 19px; height: 19px; flex: 0 0 auto; accent-color: var(--green); }
+    .done-check span { font-size: .86rem; font-weight: 750; }
+
+    .terminal { overflow: hidden; border-radius: 18px; background: #101914; color: #e9f5ee; font-family: var(--mono); box-shadow: 0 14px 32px rgba(16,25,20,.18); }
+    .terminal-bar { display: flex; gap: 7px; padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .terminal-bar i { width: 10px; height: 10px; border-radius: 50%; background: #f36a5a; }
+    .terminal-bar i:nth-child(2) { background: #efc34e; }
+    .terminal-bar i:nth-child(3) { background: #56c271; }
+    .terminal-body { padding: 18px; font-size: .76rem; line-height: 1.7; overflow-x: auto; }
+    .terminal .prompt { color: var(--lime); }
+    .terminal .comment { color: #7f9489; }
+    .terminal .output { color: #77a7ff; }
+    .spotlight { color: var(--lime); }
+
+    .portal { display: grid; grid-template-columns: 130px 1fr; min-height: 390px; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: var(--shadow); }
+    .portal-nav { padding: 18px 12px; background: #edf1ee; }
+    .portal-logo { margin-bottom: 20px; color: var(--green); font-size: .75rem; font-weight: 950; }
+    .portal-nav span { display: block; margin: 5px 0; padding: 8px; border-radius: 8px; color: #65726b; font-size: .67rem; font-weight: 800; }
+    .portal-nav span.active { background: var(--green); color: white; }
+    .portal-nav small { display: block; padding: 2px 8px 2px 18px; color: #8a958f; font-size: .58rem; }
+    .portal-main { padding: 22px; }
+    .portal-top { height: 9px; width: 40%; margin-bottom: 26px; border-radius: 99px; background: #dde4df; }
+    .fake-field { margin-bottom: 13px; }
+    .fake-field label { display: block; margin-bottom: 5px; color: #67736d; font-size: .62rem; font-weight: 850; }
+    .fake-input { display: flex; align-items: center; height: 35px; padding: 0 10px; border: 1px solid #d3d8d5; border-radius: 8px; background: #fafcfb; color: #9aa39e; font-family: var(--mono); font-size: .62rem; }
+    .portal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+    .fake-button { padding: 8px 15px; border-radius: 8px; background: var(--blue); color: white; font-size: .68rem; font-weight: 850; }
+    .fake-button.ghost { background: #e6ebe7; color: #56635c; }
+
+    .mission-list { display: grid; gap: 11px; margin-top: 18px; }
+    .mission-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid rgba(23,40,33,.12); }
+    .mission-item:first-child { border-top: 0; }
+    .mission-icon { display: grid; width: 31px; height: 31px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: var(--lime); font-weight: 950; }
+    .mission-item b { display: block; font-size: .88rem; }
+    .mission-item span { color: var(--muted); font-size: .8rem; }
+    .mission-item code { font-size: .8em; }
+
+    .evidence-stage { display: grid; grid-template-columns: 1fr 88px 1fr; gap: 10px; align-items: stretch; }
+    .cabinet { padding: 20px; border-radius: 20px; background: #e9e6dc; }
+    .cabinet h3 { margin: 0 0 14px; font-size: 1rem; }
+    .file-card { margin: 8px 0; padding: 11px; border: 1px solid #cfccc1; border-radius: 10px; background: var(--cream); }
+    .file-card b { display: block; font-family: var(--mono); font-size: .72rem; }
+    .file-card small { display: block; margin-top: 4px; color: var(--muted); font-size: .67rem; }
+    .locked { position: relative; }
+    .locked::after { content: "CONTENT NOT SENT"; float: right; color: var(--red); font-family: var(--sans); font-size: .52rem; font-weight: 950; letter-spacing: .08em; }
+    .file-card.ai-selected { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(43,110,242,.08); }
+    .retrieval-arrow { display: grid; place-items: center; color: var(--orange); font-size: 2.7rem; font-weight: 950; }
+    .open-file { padding: 20px; border-radius: 20px; background: var(--ink); color: white; }
+    .open-file h3 { margin: 0 0 14px; font-size: 1rem; }
+    .open-file pre { margin: 0; white-space: pre-wrap; color: #cce5d7; font-family: var(--mono); font-size: .68rem; line-height: 1.6; }
+
+    .plan-card { overflow: hidden; border: 1px solid var(--line); border-radius: 23px; background: white; }
+    .plan-top { display: flex; justify-content: space-between; padding: 15px 18px; background: var(--blue); color: white; }
+    .plan-top span { font-size: .68rem; font-weight: 900; letter-spacing: .12em; }
+    .plan-top b { font-family: var(--mono); font-size: .75rem; }
+    .plan-fields { display: grid; grid-template-columns: repeat(2,1fr); }
+    .plan-field { min-height: 118px; padding: 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .plan-field:nth-child(even) { border-right: 0; }
+    .plan-field:nth-last-child(-n+2) { border-bottom: 0; }
+    .plan-field small { display: block; margin-bottom: 7px; color: var(--blue); font-family: var(--mono); font-size: .62rem; font-weight: 950; }
+    .plan-field p { margin: 0; color: var(--muted); font-size: .8rem; }
+    .lock-banner { display: flex; gap: 12px; align-items: center; margin-top: 15px; padding: 14px; border-radius: 14px; background: #edf3ff; color: #17469d; }
+    .lock-symbol { font-size: 1.5rem; }
+    .lock-banner b { display: block; font-size: .82rem; }
+    .lock-banner span { display: block; font-size: .72rem; }
+
+    .tool-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+    .tool { min-height: 150px; padding: 17px; border: 1px solid var(--line); border-radius: 18px; background: white; }
+    .tool-icon { display: grid; width: 38px; height: 38px; margin-bottom: 14px; place-items: center; border-radius: 11px; background: var(--tool-color, var(--lime)); font-weight: 950; }
+    .tool code { display: block; font-weight: 900; line-height: 1.2; font-size: .8rem; overflow-wrap: anywhere; }
+    .tool p { margin: 8px 0 0; color: var(--muted); font-size: .76rem; }
+    .tool p code { display: inline; font-weight: 700; font-size: .85em; }
+    .locator-demo { display: grid; gap: 12px; margin-top: 15px; }
+    .locator-row { display: grid; grid-template-columns: 1fr 30px 1.6fr 30px .7fr; gap: 8px; align-items: center; font-size: .77rem; }
+    .locator-box { padding: 11px; border-radius: 10px; background: #edf0ed; }
+    .locator-box.mono { font-family: var(--mono); font-size: .66rem; word-break: break-all; }
+    .arrow { color: var(--orange); text-align: center; font-weight: 950; }
+
+    .phase-flow { display: grid; grid-template-columns: 1fr 54px 1fr 54px 1fr; align-items: stretch; margin-bottom: 20px; }
+    .phase { min-height: 265px; padding: 21px; border-radius: 22px; color: white; }
+    .phase:nth-child(1) { background: var(--green-2); }
+    .phase:nth-child(3) { background: var(--orange); }
+    .phase:nth-child(5) { background: var(--violet); }
+    .phase-num { display: grid; width: 34px; height: 34px; margin-bottom: 30px; place-items: center; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; font-weight: 900; }
+    .phase h3 { margin: 0 0 8px; font-size: 1.35rem; }
+    .phase p { margin: 0; color: rgba(255,255,255,.8); font-size: .83rem; }
+    .phase .phase-io { margin-top: 20px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.22); font-family: var(--mono); font-size: .65rem; line-height: 1.6; }
+    .phase .source-note { margin-top: 16px; }
+    .flow-arrow { display: grid; place-items: center; color: var(--ink); font-size: 2.2rem; font-weight: 950; }
+    .prompt-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .prompt-card { padding: 20px; border-radius: 18px; background: #e6e3da; }
+    .prompt-card b { display: block; margin-bottom: 8px; }
+    .prompt-card p { margin: 0; color: var(--muted); font-size: .82rem; }
+    .prompt-card .analogy { display: block; margin-top: 13px; padding: 9px 10px; border-radius: 9px; background: var(--cream); font-size: .72rem; font-weight: 800; }
+
+    .code-anatomy { display: grid; gap: 14px; }
+    .code-task { display: grid; grid-template-columns: 84px 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: white; }
+    .code-task .cell { display: grid; place-items: center; background: var(--ink); color: white; font-family: var(--mono); font-size: .72rem; font-weight: 900; text-align: center; }
+    .code-task-body { padding: 16px 18px; }
+    .code-task-body b { display: block; margin-bottom: 4px; }
+    .code-task-body p { margin: 0; color: var(--muted); font-size: .81rem; }
+    .formula { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin-top: 10px; }
+    .formula span { padding: 5px 7px; border-radius: 6px; background: #ebefec; font-family: var(--mono); font-size: .64rem; }
+    .formula i { color: var(--orange); font-style: normal; font-weight: 950; }
+
+    .visual-plan { padding: 22px; border: 2px solid var(--blue); border-radius: 22px; background: linear-gradient(135deg,#f9fbff,#eaf1ff); box-shadow: 0 14px 35px rgba(43,110,242,.12); }
+    .visual-plan h3 { margin: 0 0 15px; color: var(--blue); }
+    .reasoning-box { margin-bottom: 12px; padding: 13px; border-left: 4px solid var(--blue); border-radius: 0 10px 10px 0; background: white; color: var(--muted); font-size: .8rem; }
+    .doc-choice { display: flex; gap: 9px; align-items: center; margin: 7px 0; padding: 9px 11px; border-radius: 9px; background: rgba(255,255,255,.74); font-family: var(--mono); font-size: .69rem; }
+    .doc-choice.yes { color: var(--green); font-weight: 850; }
+    .doc-choice.no { color: #8d9691; }
+    .checkbox-icon { display: grid; width: 18px; height: 18px; flex: 0 0 auto; place-items: center; border: 2px solid currentColor; border-radius: 4px; font-family: var(--sans); font-size: .67rem; }
+    .debug-lights { display: grid; gap: 10px; margin-top: 15px; }
+    .debug-light { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; font-size: .8rem; }
+    .light { width: 13px; height: 13px; margin-top: 4px; border-radius: 50%; background: var(--light); box-shadow: 0 0 0 4px color-mix(in srgb,var(--light) 18%, transparent); }
+
+    .loop-board { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; padding: 22px; border-radius: 25px; background: var(--ink); color: white; }
+    .loop-step { position: relative; min-height: 150px; padding: 15px 10px; border: 1px solid rgba(255,255,255,.16); border-radius: 15px; background: rgba(255,255,255,.06); text-align: center; }
+    .loop-step::after { content: "→"; position: absolute; top: 57px; right: -13px; z-index: 2; color: var(--lime); font-size: 1.3rem; font-weight: 950; }
+    .loop-step:last-child::after { display: none; }
+    .loop-step i { display: grid; width: 34px; height: 34px; margin: 0 auto 20px; place-items: center; border-radius: 50%; background: var(--step-color,var(--lime)); color: var(--ink); font-style: normal; font-weight: 950; }
+    .loop-step b { display: block; font-size: .75rem; }
+    .loop-step small { display: block; margin-top: 5px; color: rgba(255,255,255,.6); font-family: var(--mono); font-size: .58rem; word-break: break-all; }
+    .loop-return { grid-column: 2 / 7; display: flex; justify-content: center; align-items: center; height: 36px; border-right: 3px solid var(--lime); border-bottom: 3px solid var(--lime); border-left: 3px solid var(--lime); border-radius: 0 0 18px 18px; color: var(--lime); font-size: .65rem; font-weight: 900; letter-spacing: .1em; }
+    .branch { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-top: 18px; padding: 17px; border: 1px dashed var(--orange); border-radius: 18px; background: #fff4ef; }
+    .branch-card { text-align: center; }
+    .branch-card b { display: block; font-family: var(--mono); font-size: .74rem; }
+    .branch-card span { display: block; color: var(--muted); font-size: .72rem; }
+
+    table.facts { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .8rem; }
+    table.facts th, table.facts td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.facts th { color: var(--muted); font-size: .62rem; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+    table.facts code { font-size: .8em; white-space: nowrap; }
+    table.facts td.mono { font-family: var(--mono); font-size: .72rem; }
+    .table-scroll { overflow-x: auto; }
+    .dark table.facts th, .dark table.facts td { border-color: rgba(255,255,255,.14); }
+    .dark table.facts th { color: rgba(255,255,255,.6); }
+    .formula-line { margin: 14px 0 0; padding: 14px 16px; border-radius: 12px; background: var(--ink); color: var(--lime); font-family: var(--mono); font-size: .8rem; overflow-x: auto; }
+    .formula-line small { display: block; margin-top: 6px; color: rgba(255,255,255,.62); font-family: var(--sans); font-size: .72rem; }
+
+    .decision-tree { display: grid; gap: 8px; margin-top: 15px; }
+    .decision { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: center; padding: 12px; border-radius: 12px; background: rgba(255,255,255,.08); }
+    .decision b { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: var(--lime); color: var(--ink); }
+    .decision span { font-size: .8rem; }
+
+    details { margin-top: 16px; overflow: hidden; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.7); }
+    summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; font-size: .8rem; font-weight: 900; cursor: pointer; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--orange); font-size: 1.2rem; }
+    details[open] summary::after { content: "−"; }
+    .details-body { padding: 0 16px 16px; color: var(--muted); font-size: .83rem; }
+    .details-body ul, .details-body ol { margin: 8px 0 0; padding-left: 1.1rem; }
+    .details-body li { margin-bottom: 5px; }
+    .details-body p { margin: 0 0 8px; }
+    .details-body p:last-child { margin-bottom: 0; }
+    .details-body code { color: var(--ink); }
+    details.qa { border-color: #b9c9ec; background: #f5f8ff; box-shadow: 0 8px 22px rgba(43,110,242,.06); }
+    details.qa summary { justify-content: flex-start; color: #173d86; font-size: .86rem; }
+    details.qa summary::before { content: "?"; display: grid; width: 25px; height: 25px; flex: 0 0 auto; place-items: center; border-radius: 8px; background: var(--blue); color: white; font-size: .72rem; font-weight: 950; }
+    details.qa summary::after { margin-left: auto; }
+    details.qa .details-body { margin: 0 16px 16px; padding: 14px 15px; border-left: 3px solid var(--blue); border-radius: 0 10px 10px 0; background: white; color: #53625b; }
+    details.qa .details-body::before { content: "ANSWER"; display: block; margin-bottom: 7px; color: var(--blue); font-size: .58rem; font-weight: 950; letter-spacing: .12em; }
+    details.qa.takeaway { margin-top: 22px; border-color: #a9c9ba; background: #f2f8f4; box-shadow: 0 8px 22px rgba(23,79,63,.07); }
+    details.qa.takeaway summary { color: var(--green); }
+    details.qa.takeaway summary::before { content: "✓"; background: var(--green); }
+    details.qa.takeaway .details-body { border-left-color: var(--green); }
+    details.qa.takeaway .details-body::before { content: "WHAT TO TAKE AWAY"; color: var(--green); }
+    details.qa.pitfall { border-color: #f1c2ad; background: #fff6f1; box-shadow: 0 8px 22px rgba(255,107,53,.07); }
+    details.qa.pitfall summary { color: #8a3d1f; }
+    details.qa.pitfall summary::before { content: "!"; background: var(--orange); }
+    details.qa.pitfall .details-body { border-left-color: var(--orange); }
+    details.qa.pitfall .details-body::before { content: "PITFALL"; color: var(--orange); }
+
+    .final-card { position: relative; overflow: hidden; margin: 20px 0 120px; padding: clamp(30px, 6vw, 70px); border-radius: 34px; background: var(--green); color: white; }
+    .final-card::after { content: "✓"; position: absolute; right: 20px; bottom: -130px; color: var(--lime); font-size: 390px; font-weight: 950; line-height: 1; opacity: .9; }
+    .final-card > * { position: relative; z-index: 1; }
+    .final-card h2 { max-width: 760px; margin: 0 0 18px; font-size: clamp(2.4rem, 5.5vw, 5.2rem); line-height: .9; letter-spacing: -.06em; }
+    .final-card p { max-width: 640px; color: rgba(255,255,255,.72); font-size: 1rem; }
+    .final-card ul { max-width: 720px; margin: 20px 0 0; padding-left: 1.2rem; color: rgba(255,255,255,.85); font-size: .92rem; }
+    .final-card li { margin-bottom: 9px; }
+    .final-card li b { color: white; }
+    .final-card code { color: var(--lime); }
+    footer { padding: 0 20px 46px; color: var(--muted); font-size: .72rem; text-align: center; }
+
+    @media (max-width: 900px) {
+      .hero::after { opacity: .28; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .phase-flow { grid-template-columns: 1fr; gap: 10px; }
+      .flow-arrow { min-height: 35px; transform: rotate(90deg); }
+      .phase { min-height: auto; }
+      .phase-num { margin-bottom: 20px; }
+      .loop-board { grid-template-columns: repeat(4,1fr); }
+      .tool-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .loop-return { display: none; }
+      .loop-step:nth-child(4)::after { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      html { scroll-padding-top: 165px; }
+      .hero { padding-top: 22px; }
+      .masthead { padding-bottom: 50px; }
+      .edition { display: none; }
+      .masthead-right { gap: 10px; }
+      .brand span:last-child { display: none; }
+      .eth-logo { width: 130px; }
+      h1 { font-size: clamp(2.8rem, 15vw, 4.6rem); }
+      .simple-architecture { padding: 17px; }
+      .simple-architecture-head, .simple-grid { grid-template-columns: 1fr; }
+      .simple-architecture-head { gap: 9px; }
+      .simple-step { min-height: auto; }
+      .simple-step::after { display: none; }
+      .map-wrap { padding-inline: 7px; }
+      .metro { border-radius: 18px; }
+      .metro-head { padding-inline: 13px; }
+      .where-label { max-width: 52%; font-size: .63rem; text-align: right; }
+      .chapter { scroll-margin-top: 165px; }
+      .chapter-head { grid-template-columns: 70px 1fr; gap: 15px; }
+      .stop-sign { width: 62px; border-width: 4px; font-size: 1.5rem; box-shadow: 0 0 0 5px var(--paper),0 0 0 6px var(--line); }
+      .chapter h2 { font-size: clamp(2rem, 11vw, 3.4rem); }
+      .guide { width: min(100% - 24px, 1120px); }
+      .grid-3, .prompt-pair, .plan-fields { grid-template-columns: 1fr; }
+      .plan-field { border-right: 0; border-bottom: 1px solid var(--line) !important; }
+      .plan-field:last-child { border-bottom: 0 !important; }
+      .evidence-stage { grid-template-columns: 1fr; }
+      .retrieval-arrow { min-height: 64px; transform: rotate(90deg); }
+      .tool-grid { grid-template-columns: 1fr 1fr; }
+      .locator-row { grid-template-columns: 1fr; }
+      .locator-row .arrow { transform: rotate(90deg); }
+      .loop-board { grid-template-columns: repeat(2,1fr); }
+      .loop-step:nth-child(even)::after { display: none; }
+      .loop-step:nth-child(4)::after { display: none; }
+      .code-task { grid-template-columns: 1fr; }
+      .code-task .cell { min-height: 44px; }
+      .branch { grid-template-columns: 1fr; }
+      .branch .arrow { transform: rotate(90deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+
+    /* ── added for the plain-language edition ─────────────────────── */
+    .fig { margin: 18px 0 0; padding: 18px 18px 8px; border-radius: 22px; background: var(--cream); border: 1px solid var(--line); }
+    .fig svg { display: block; width: 100%; height: auto; }
+    .fig-cap { margin: 10px 4px 8px; font-size: .9rem; color: var(--muted); line-height: 1.5; }
+    .hero-fig { margin: 18px 0 8px; padding: 6px 0 0; background: transparent; border: 0; }
+    .setup-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .setup-step { background: var(--cream); border: 1px solid var(--line); border-radius: 22px; padding: 20px; }
+    .setup-step b { display: block; font-size: 1.05rem; margin: 12px 0 6px; }
+    .setup-step p { margin: 0; color: #3f4d46; font-size: .93rem; }
+    .setup-icon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; }
+    .mono-soft { font-family: var(--mono); font-size: .86em; background: rgba(23,40,33,.07); padding: 1px 6px; border-radius: 6px; }
+    .secrets-mock { display: grid; grid-template-columns: 44px 1fr; background: #1f2430; color: #e8ebf2; border-radius: 18px; overflow: hidden; border: 1px solid #2f3646; box-shadow: var(--shadow); }
+    .secrets-side { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 16px 0; background: #171b25; font-size: 18px; opacity: .55; }
+    .secrets-side .active-key { opacity: 1; filter: drop-shadow(0 0 6px #ffd95a); transform: scale(1.25); }
+    .secrets-body { padding: 18px 20px 20px; }
+    .secrets-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 6px; }
+    .secrets-hint { margin: 0 0 14px; font-size: .82rem; color: #aab2c4; }
+    .secret-row { display: grid; grid-template-columns: 110px 1fr 1fr; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid #2f3646; font-size: .86rem; }
+    .secret-row.head { color: #aab2c4; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; border-top: 0; padding-top: 0; }
+    .secret-name, .secret-value { font-family: var(--mono); font-size: .82rem; background: #2a3040; border-radius: 8px; padding: 6px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .toggle { width: 38px; height: 22px; border-radius: 999px; background: #4a5266; position: relative; display: inline-block; }
+    .toggle.on { background: #c9f26b; }
+    .toggle i { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: left .2s; }
+    .toggle.on i { left: 19px; }
+    .secret-add { margin-top: 14px; color: #8ab4ff; font-weight: 700; font-size: .88rem; }
+    .fake-input.plain { font-family: var(--sans); color: var(--ink); }
+    .ai-view { margin-top: 14px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.15); font-size: .84rem; }
+    .ai-row { display: grid; grid-template-columns: 1.1fr 1.4fr .7fr; gap: 10px; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); }
+    .ai-row:first-child { border-top: 0; }
+    .ai-label { font-weight: 700; color: #fffdf7; }
+    .ai-type { color: rgba(255,255,255,.72); }
+    .ai-val { color: #c9f26b; font-family: var(--mono); font-size: .8rem; }
+    @media (max-width: 900px) {
+      .setup-steps { grid-template-columns: 1fr; }
+      .secret-row { grid-template-columns: 90px 1fr; }
+      .secret-row .secret-value, .secret-row.head span:last-child { display: none; }
+    }
+
+    .equation { display: grid; grid-template-columns: 1fr auto 1fr auto 1.15fr; gap: 14px; align-items: stretch; }
+    .eq-card { border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; justify-content: center; min-width: 0; }
+    .eq-card b { font-size: 1.02rem; line-height: 1.35; overflow-wrap: anywhere; }
+    .eq-card.fact { background: #fff1e8; border: 2px solid var(--orange); }
+    .eq-card.fact .eq-label { color: #7a3413; }
+    .eq-card.rule { background: #eef3ff; border: 2px solid var(--blue); }
+    .eq-card.rule .eq-label { color: #1d3f8f; }
+    .eq-card.result { background: var(--green); color: var(--cream); }
+    .eq-card.result .eq-label { color: var(--lime); }
+    .eq-label { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .eq-label.blue { color: #1d3f8f; }
+    .eq-op { align-self: center; font-size: 2rem; color: var(--muted); font-weight: 600; }
+    .prompt-anatomy { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: stretch; padding: 8px 6px 4px; }
+    .sticky { background: var(--yellow); border-radius: 8px; padding: 22px 24px 20px; transform: rotate(-1.2deg); box-shadow: 0 12px 30px rgba(23,40,33,.12); color: var(--ink); }
+    .sticky .eq-label { color: #6b4e00; }
+    .sticky .sub, .packet .sub { margin: 6px 0 14px; font-size: .84rem; color: #3f4d46; }
+    .sticky .quote { margin: 0; font-weight: 700; font-size: .95rem; line-height: 1.4; }
+    .sticky .who { margin: 4px 0 14px; font-size: .78rem; color: #6b4e00; font-style: italic; }
+    .sticky .who:last-child { margin-bottom: 0; }
+    .packet { background: var(--cream); border: 2px solid var(--blue); border-radius: 14px; padding: 22px 24px 20px; }
+    .packet-row { background: #eef3ff; border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: .9rem; }
+    @media (max-width: 900px) {
+      .equation, .prompt-anatomy { grid-template-columns: 1fr; }
+      .eq-op { text-align: center; }
+      .sticky { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#guide">Skip to the guide</a>
+
+  <header class="hero">
+    <div class="masthead">
+      <a class="eth-logo-link" href="https://ethz.ch/" aria-label="Visit ETH Zürich">
+        <img class="eth-logo" src="data:image/png;base64,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BEwgGhkYAoaAIWAIGAJCwASikYEhYAgYAoaAISAETCAaGRgChoAhYAgYAkKgqQTiWWed5a6++mr3448/urHGGssWsIAIsC4HHnig69Onj5t00kkzjfDxxx93Z5xxhnv11Vdzret///3nunTp4vr16+fWWGMNN84442R6bjNc9MILL7iTTz7Zvfjii27ssccOQwbjAw44wG255ZZukkkmqTmNG2+80Q0aNMh99NFH7n//+5/7999/3fTTT+8OO+wwt+aaa7pxxx235r1F/cfff//tLrvsMjdkyBD3zTffhHmx/nPPPbc79NBD3YorrpiLhsbUfP/880934YUXuiuuuCLwtWSdFlxwQXfwwQe7FVZYYUwNrVM+t2kE4l9//eWOOuooN3ToUPfzzz83FdF3JsqaeOKJ3bHHHus233xzx+cs7ZZbbnEDBgxwb7zxRq519d4HhnjiiSe6nj17BiaZ5bnNcM3999/vmNfLL79cmteEE07ojjnmGLfVVlu5iSaaqOo0wARheO6557rPP/884IrgmHPOOd3xxx/vevXqVeqvagcF/fK3334LtDJ48GD3008/lea17LLLuv79+7vll1++oCOvPqwffvjBnXrqqe6qq65yv/zyS2k+PXr0cEceeaRjXtbaEQG9OE3R9FL7zTbbzI8//vhe8NhPQTGYffbZ/U033eS1gclEVzq1+DPPPNPPMsssDa3paqut5p966qlMz2yWiyTAvISan2OOOcqwmW222fx1111XF2MxV68Thp9yyinL7u3evbt/9NFHmwWCFuP84osv/DbbbON1ui2bF7xh5MiRLa4v+hfvvvuu1+bRS6tRNh9tdvxrr71W9OF3uPG5ZpmRVEd+5ZVX9lIplBGOCcdibQ6WW265wHBh5lmaTvteKtYWjDt2Xfv27evfeuutLI9smmukTvNSA/opppiijOaXXnpp/9BDD/l6GH/44YdeKtUWG8gtttjCjxo1qmkwqByoTspe6t4yPKRK9vvvv7+Xarjy8sL//eSTT/pVV121xXyk1vZffvll4cff0QbYNALxzjvv9N26dSsjnFimade3vfBkp/7KK69kfk9gYtwz3njj5V5b7pW6zHN66EgNrQhCrfI0tOGGG3rZFOtO9ZlnngmMVvbGEq58htHSb7O222+/3S+++OKlOfFOTz755P7000/3Uj823bRuuOEGv8gii5TNhw3QwIED/a+//tp082n2ATeFQEStdt555/muXbuWEY4JuLYXcDEYo/Y55JBD/CeffJL5vXj22WfDyT/NuGOeybVTTTWVv+iiizxqwo7Uqgk1TkN77723/+CDD+pO9eabb26xgZQDjj/nnHM8p/JmbJyIZRP1qIzTNMLf1157rZfDTVNNi/kgyGecccay+chByCMom20+TQV+jcE2hUD8/fffvbzqGlarpV8i+zz6ham8Sv0FF1wQJZiwN1bukGPXZq655vJ33HGHZ+PUkZqcjfySSy4ZTs/YzvlB+J999tlentY1pwqjRfDJgSbcw32coueZZx4vz9O6tseanRbgH3Ko8XKs8/KULc2LucmRxg8fPrwAI4wbAhuTfffd18v5rEwgNut84mZfzKubwstUunS3xx57ODE9h9u1tWIiIOcPJ0bs1lprrcwejNohOznVuE8//TT3pGRbDqEJHc0jT6dnN2zYMPftt9+WsMGrdP3113eLLrpoKQyj9M///yCB6B544AE3YsQIh1cmTezHzTTTTG6dddYJHrmEbjRbYy543T733HOOcIWkzTvvvCHcZtZZZ02+aorf77zzjjv88MMdXtaExNBYl0033TR4mGqj2BTz6EiDbAqBSCzWPvvs45544omOhH2Hm4ucA4JgktNHprn98ccfISaOuDJCafK27bffPjAWnYDydlHI+2RDcvwkzJJBEos42WSTuQkmmKDmmBF+4IkA4XPSdEoMsaH8bsYGDswLuknPizAU4jGbLf5Up9oQSgZfS+bD2sDr9ttvv7CBacZ1auoxayEK366//nq/wAILlKkVBLr9XTAMYj09cajRbrghhxpsaqjRzCOv8K+xDbACAcUe+vnnn7+Mj+FQg50U9bC19keAnUmhG/aQ0047zUvdU0Y4JhCLtSHARoVgivH0fPrpp0eLQ40yfUTZLQtN8Da4ToEAITUKyG/hUIM9HIco+J619keg8AIRz0EMz5WxWCYQiyUQp556an/xxRdHCaZqnpCx6yr7kccV3zzy2p952BPzI/Ddd98Fb+FKh5pVVlnFK5Vh/o7tzoYQKLxA/Pjjj33v3r1bBBjHMk67vm0FKB6MxIr+888/mQgSAab8pV6OEA2d/FdaaSUvG0ymZ9pFhkBRECBDzSabbNIi0QhZeF5//fWiDLPTjaPwTjU41GBgJgG0VkdyLb7huYXBHYeEIjYJkeA4kXd+zImkwMyR37ENz92040bs/VyvnW1wqFlmmWUy3U7eRpJMk9Q4r0MN60o+T3I+zjfffJmeaxcZAkVAAH4G3SqNXmk4ONSQtF0asZCEvfQP+9BuCBReIOKSTFJvKiHkbQp8dWuvvbZTvsy8XbTZfbjIP/zww8GVHI/CvA0XbZ2W3DTTTBPVBcL47rvvDsmj+Zy37bDDDsHTUzaQTF0otVjwptOp0oFBnsYGALf1Pffc00033XR5urB7DIExggBVe0jartNg6fm8u0cffbTDa7peFZPSDfZhtCNQeIFInBpln5T9JPfkV1999UBoRYzr4aREdYhrrrkmZO/PM0lOSjvvvHMQMLGxWF999VUom0OMJxVF8jROpceo+sLuu++eWSCzM+aEqFyOeR4Z7lHKLgd9cEqsF4aQ+wF2oyHQBgigjUnib+WEVnoCJawo9aXUfIXVZpUG21E/FFlJTMUE0lQp7qohO9Nuu+3m33vvvUJOFRvpxhtv3CJfpegt85wlDLx2m/7rr7+OniPpwRTY3sKWEfN8HJ4uvfTSKFfxyy+/3OMQE/OcymuxW+p02+Ey1EQvYoFvwFsSu7KEQFN6TraFtycONYo19KTSS9O0ah96aYvqriY4Yn8H07YYW92Hd4J/FvqESB03CcSQoSbv6QW1GvXfOEHJE1L0V6xGNhLsBtgU8jZULRTYJcNF7EmJIrKcUBtRSWO/Y8dL0dksdlpUs9SAo1ZfeoccO3+KAZ9wwgluqaWWir3Vff/99+79998PNeiib464ATX9zDPPXLMYL6eFzz77LBS75XPSCL4ns0zWmpLJfenf9IdmhUw3abU0hZvpO6taTnwwZBJCm5DuRxshhzkiXZOR+n4UJEYlzvuLfZh3Fy0Gc+F6ajKS1Yhx8H1rjUB8OaGUZezhHnDlZ3QkGiDzDQWHWQuyJmlzGcaO9oO1ACvmS4Fl5sBneEue9vbbb7sjjjjC3XrrrS5tplAlkmBXpDgwjTGBufLWOm2cw/iUxjLY+8EN3GeYYYYSnowpC555xtxZ7im0QHz++edLwiL9IsYsDkKQ1GDy6HJktChaU9KBIJBU+yz30BBIpExTTcCoFwJMlRcz4MMLl7eRoeakk05yWR1qtEMOL35SFDXvc3faaaeg7s1qt0w/hywhV155ZWA2bclEsAehAoP5V2sIEDL1oELGuSlpVEqHQXbt2jX5Kvq38p065ZYNm630+8M6oWZGMGVp2LYZo0pOlanVqU7fp08fp+TagVmrAkfIJqVqJ0Eowsy5F6YPxmzWpp12WqeamU45WgO9Lrzwwq0KfZX1ckre7nCwS9aKjRdzAFtU53kbRYax49E340b4kCqSTQRjRyAiyPlBMDJ+VJtLLLGEIyMTG55YwUhmGhxqHnnkkdKweY7qVzqVsQrzYc6q7xnGRYo3hDSbOIQkGxRwUB5X16VLl4A/ePIektKPcVrLiUCRT8HElzWa+JkMN/fdd1/mcID2xuOUU05pEZyrpSxTpbT2N/XhlN8xeuh64UPSdO0so56XHo9eTL/tttt6VbvP/HzqFq633nqeLDPpvmI+k9RZDgi5MtSgdiJBdqMhH62Nl7JE559/ft3YTJ0WAhZiiGVYKHev1wk2M6bVLnzzzTe98sqW9ct6yQEqqnYk4yCjkBh/qS/6kTOTF7P21CiUlsGj8iP5eOVcKnHiXjFyv+6663ptSsIaSmBXm0L47q677gpJztP9EPdKBZy8FU506gwltAiOl8NdqKSD6SH9jFqfSWIPX5LN3N9zzz3RZaco7qyNQNmzKOTMfMATTLTRCMnZs44JPKQx8dq45HonaoLfyf5R2DhEdORk7Ke0Sy3CzPI9RKKTZiGXFYEEU+EFyzKXWtfktZFSF49ahJX19mo9p9r3vLBSSXudBjJjTMV2CglX6y/rdzDUSy65JFfNONJiUVBWO+mGxtDaWLGR3nbbbXWTBoAF1Q3SfYEpGyVsTY00Jfj2Og226Dt2I6GTSovaimxIEIJU5Nhuu+1CBQoEXXoerX2G7qhtSOmmeoJt0KBBXqfKsr7BVirHXBtd0vzxTCrVS/2Ze2OGDVCn5FB6LGuNSfgaQliqzrL5SMsT3iOpUoOwzCoI0xizYUFQI1hjMkY1QmMd7d7CqkxJTIxLPXFqqJXytl69ejlCAvC+1OLl7abmfag6sMfg9h+rOsHOgv2Q0IO8NlIxlaBy3WWXXaJtpC+99FJQ0RD2kbehCiROFHVtVlsOqjc54Tg5OuV9rBNDDHZT1pc1iGnY1RgzNpy03S6mjyzXEgaDKrl79+41L0dtyzU6YZeugZ4kEIOaX4yx9H3sB20Ygq0WlVvSUPnxPBUezmxCACfszNBL0lDL6YQX3k3s36gek8Z6QJeYKFBtYgPkpxJr/rfYYos51dAMYVHV7KXcR3iCTtoOVXvSVlaFE+zH2kwkX2X6jX1TtQadBKIbNWqUwyZXrUm4h7HzG77B2KvxD+aqfKRu1113ddpcthr+gxobdSkq6PSzUb1in8R0gco2/SxwAk/4C+NBBQ2/qMSTefB/vOlRv1IVpZaqvtqc7TvhJ+BHv5QYDchikMeNX+qSMsNzbNcQGgb8RhhLvWeix8dhp2fPnpkZTNKfcnkGwm0k6QA2BOV6DQ41aeeG5Bn1fhPjeYzCJUaOHFnvsrr/QwhKLR1sK7yMWRoCSWq4UmmiLPdUXgPeMMqsdsv0/QhipZkLsZfp72M+J4ySvrA7YdtJN9YCuiDIGptZtYZdjzngXIS9LWkICZyOmGOssE/6gGHiwq/TQnAQSb6HeUMvWUt0wXzpA6cthEnSEHYIRcKGsLXRmDP2RGza2HVh8DByBBnCh7JNrD22UuiGcl077rhjGAuOYdXoBz6AACEsCeGYNKnpg2MKG6OsjXVig80mBPqrFCgInsQmx6YE/wPebzDAyYa1xrknLfx5NuPGEYYwog022KCusxK2Qa6T5qDMQQmcoIdkTIyFTTZ2XrBkPODN9xwQpA4P9kXWpHIzjeAk7hrcslaeyYphh78OgVjERjhAo2o1LV6ZWqIt/hbRhurWIspoGCmOW2lLiB3jQgstlMtGis1GzkZeG4Y2xyh2TlmuFyP12N/yNDE0L69ajyqwkR+qFUho+Ur1FupEbKQ6CXuKW9dqctzwEppegqRsDbBp5bEJp5+DCrta34xXsZ/pS+t+lpeo12m6rlpfzNxLIAT1vwLOg4mC52uTEFSaFDPW6TKYQFAPYy/DlAH9i7nXfT72SfDQxqCEkYSC79evX5SaHhUioUnanHgJsFJf0Bp9Y5pBhco7QSiPHIRCqJYEuJcmJ/yNeljCLKh5K9dc3q5+4MCBXo4vdefz4IMPemkMyp5fSe/wFDkLecVfe66HzsEJHkPIBZ/BhaT2rKdO1i36w6RAakRrcQhwNC9k047Qo1evJJai/U1F88ceeywaQ2wJClXwvEiNzElJB7xCN6Kfjx1N6tqmTJoOQzzuuONyxV1GA1XjBnJRSqUfHHMqmbW8/UJe13p2MbqFqeH0wnwSGqAvnDV0Gqnx5Gxf60QWnFbSffOM2I2ETlUhl3B6jslY+Y0dDYE1ZMgQr1NXYNq1Rggjx6EEYYYzCsK2tXbvvfd6nXJK+PBMHEgQBllLJLEOxMmyeaych066vkePHkH4SFMSbJm1HHx0egu2OeyPCPREEOkEF+bEJqvexph+wQn7ZxrD5DNjY2OBjZd3ujX64f84HiIU2YQl/fAboU98s7U4BAopECGc0eF9mSaQtvqMUwrMJ7ZBzHgSNuJQA9Er9CB4psU+X7aKsCOufJHaCqfR2S+ejDA4nJLGRFOsWnAo4VSRPm3A0NggDR061HMqaq2RDF3u+2WMjJMHThetnTRa63vYsGFeKsmyvhGOUpFHbSSkzg+OI9XWD4GA9ymnmNaYdzJeTuc4tWQRZvABhVsEb8v089GqKLNSJoca+lB4QxBgUtOW4YEwxNOVk18M3oyde2QjDqdFNracIhGY9ZpUvl722+CAlJ4Pn6EjHGKohQh9Me4sDdzxZFYoSNnc6LNr165ZurBrUggUUiCyc9xrr708buuVhFOkv2GABx10kEetEtt4gRoNPcCrjBdMAcWxjw9qLUrNVO6Yi4RvrbFQVBVXfE7Z7d3AmpANtBdp7GBoMGoYeJb1gHlyypGNqIzGZXcLArXeSSPLnAcPHuzJ5JPGkI0E48sijJJnINw5taT74TNqUoQJgreeWjjpJ89vBAhel6hY08/nVE0tzSyNjR9ZYZh7ug82B5ysoKOswjz9PDY8SmoRfrJ6dEIXbIKTk2V6PNAB6lo2C7GNk2m1bFdsAKzFIVBIgYiaRsbphiqpp4mtrT6jLoI5xuwuk+VBzVq5g48dJ6ojbDbYamIb4QDdunUrYxKxzx9T16OSxPbX3g0myMlUTi9lMXnggPCBFrIyNIQIqkM5k5StgbLuBNtj1hNCNQzYKKB2q+ybjQQqtqwbCa4bMGBA1eLcYKCkErmESbUxV/uOUAbKISF8E1pj44Hal1jW1hr2Nuy8qErTJ3n6AgvUl1lO8rWewxrGvHvEhW600UZlGynGgoAkDOh9qZzzNMJzMH9UCyPK019nvqeQApHdH4bnSiJOXoqi/CawG8eAmJciITZ5u9W0JWSdHyoWduixzJPr2yMwPes8Yq6DJmITASSYN/KbUxUCALqsVL1BBwoB8JxGsq4FpwXi9ypV1tTIw7bYSMNZh+D7yr7RCMTUjsTmR3HuSkaLmh9hjmqvLRuORdjI03yAOfXv3z/TxgMtTN++fVs4LXHi5OTJerVnGz58eEheUEnvxIpiK0WA52mccMGEDXJl33n668z3FFIgooogw0zl4hbtb3bzBFZnZYIJoUH4eLxVBufGzk9xRsF7L+k3629UUXgOVjK62OePiesRRkfr9JP1JJYVk3rXob6EYcGcsTul541HIM41ONnE0AF2Z8VQljF7VLAIIBh5Iw3nEPpOq3T5vPXWW3ulCMzcNY49COj0CY25Q/ftkf0JO51SkZXhjTBD1dyampa1gI9UakEQrmDDxqA1m19moDJeWM2hBnpSzGBDwhm7LAK+Ui3MulmLQ6CQAhGnAjJIpBlPET/37t3bK/9hHOK6GhUrnoSNOtRgZ82jZlFexOA5iA2yiLjWGxMvPYylNYYYvSg1bkBtiHobVRcq8vTYYM7YhBAyscwV134ccNL90b9iBBvOUFPNWSc5WWW1dwHHiBEjguNIeowI1tHhBVsD7tLX4ImDCY4h6eejmkbd39rmI1EjVqYlZANDOEMeM0dpcDk+sAlGi0A4RHo+2A7xqM+jZUqGgUaAjVQlP2Gu1uIQ+D8AAAD//0geGj4AABp4SURBVO2dBZDjNhfHdWVmxiszM16ZmZmZmZmZrkxX5vbKzMzMdGW4MnP1vZ9nnE9Rso4lO7tx92lmJ97EFvwlPX6ysR1WfvvtN7vNNtvYkUYayRpjOvpvzz33tJ9++mkwgu+9955dccUV7VBDDRU9vuGHH94ec8wx9uuvvw5u//HHH7cLLrig7dOnT3T7PTU30003nb3rrrvsv//+Gzzu0Af++ecf++yzz9oNNtjAjjbaaHVYjTzyyHbDDTdMfv/rr7+CqqbvZ511lp1sssnq6pxooonslVdeaf/444+g+tybqfucc86xU0wxRV3dY4wxhr3gggvs77//7t6eeX311VfbGWecsa6eUUYZxZ5yyin2xx9/zHy26I8//fST3XfffS39dtfaYostZlm/rcozzzxjl1pqKTvEEEPUPb/MMsvYJ554olvWj9vHb775xm633XZ2hBFGqOvP0ksvbZ988kn31uDrjz/+2G600UZ2mGGGqat7rrnmCq6rtz9gOg2ADz74IGEWQw89dN3kupuiE66HG244e/rpp0cRhscee8zON998hcY37rjj2ssvv9wiQIQWiO70009fqP2emoPlllvOPvfcc6FDjrr/9ddfT4SzscYaqw4rhJHVVlvNPvzww0EMJu0Ec7b//vvbMcccs67e2Wef3d53333pbVGf1H3QQQfZscceu65uBInbb789NyOAsR533HF2ggkmqKtn8sknt9dee639888/o/qX9yEETQQOn8hvsskm9q233sqshr5feOGFduqpp67rO0L2YYcdZgcPHpz5fDt+fOONN+yqq65qhxxyyFqfEEi33357C80rUl555RW7/PLLNwi466yzTpFqe+WzHccQH3zwQTvPPPM0TG4IAUYqRBJDmm3HHxtrhhlmsLfccksUYYCRTTvttLWNETK29F4kd4gnmz+k/P333/b444+3aCNpXTGfCCzgkBdf7i2iEad9xHrw/vvvhww56l6I1N57723HH3/8OpwYN5rHnXfeaX/99deouiH2G2+8sUWoSsfF5yqrrGJfeOGFqDrThyD2MA2/bjSjp59+Or2t5Sca2o477thgqUGQe+CBB4LXXcsGvRvAAZxdfMD+gAMOsF9++aV3d/2/aK+77babRYt3n59lllmSPRuq0dfXHvcfdG2hhRaq6w806oQTTrBgXaTcfffdDQI2WO23335Fqu2Vz/Zh1LJoOqZccskl5ogjjjDvvPNOdJ8mmWQSs+yyyxoh+kaksOh6unpQmJARQmmWWGIJM+mkkwa1AdxHHXWU6d+/v5GN3VUTLb8XTSnBabbZZmt5r3uDbD4jRMVcfPHF5ocffnB/yn0NpmJyNUIcjTDEXM99/vnn5o477jDCzHLd3+ymYYcdNum7MEUjWluzW0r57rPPPjMDBgww559/vvnwww8RGpN6RdAyIqwZIbZGTF1GCG5Uey+//LIRc7u55557anVT0c4772x23313M/HEE0fVy0OiiSR1CMOu1c18bbnllmavvfYyYkrNVTf7b5999jE333yzESGq9szqq69uRAM1M888c+27dlzQ7qGHHmqef/75WvXMuWh4RsyDZsQRR6x971+AAX2/9dZbDXuVAgZrr722Ec3ciDDpP9LW/1k/V1xxRbLvxepQa6tv375G3B4GTEVYrH0feiGmcHP00UcbccXUHhULQYIVe0VLAAIyWR1T0F6EGTZI5TKcOsmq1f+pXR7zUbv+8PPgYwotP//8s916662tbOigMfljxtQyaNCg0ObtRx99lJj7kCD9OvP+j/Zx+OGHJ/7TvPgK8U80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" width="452" height="138" alt="ETH Zürich">
+      </a>
+      <div class="masthead-right">
+        <div class="brand"><span class="brand-mark">AT</span><span>AgenTekki</span></div>
+        <div class="edition">BMAI · WEEK 2 · STUDENT FIELD GUIDE</div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="eyebrow"><span class="pulse-dot"></span> Companion to the student notebook</div>
+      <h1>Build a tax agent.<br><em>Understand every step.</em></h1>
+      <p class="hero-copy">
+        The notebook has ten sections and six 🎯 tasks. This page has one stop per notebook section (1–9) and a wrap-up for section 10.
+        Each stop explains, in plain words and pictures, what is happening in that part of the notebook and what the AI is doing.
+        The blue <strong>?</strong> boxes answer the questions students ask most; the orange <strong>!</strong> boxes are the mistakes that cost points.
+      </p>
+      <p class="hero-copy">Budget about 2–3 hours. Everything runs on Colab's free runtime; a full agent run costs a few cents of OpenRouter credit per taxpayer.</p>
+
+      <div class="simple-architecture" aria-labelledby="simple-architecture-title">
+        <div class="simple-architecture-head">
+          <span id="simple-architecture-title">First: what is an "agent"?</span>
+          <p>A chatbot answers one question and stops. An <b style="color:#c9f26b">agent</b> keeps going on its own: it looks at the situation, thinks about what to do, does it, looks again. The language model is the brain. The <em>tools</em> you give it are its eyes and hands. Your job in this notebook is to build the loop that connects them.</p>
+        </div>
+        <div class="fig hero-fig" aria-label="The agent loop: look, think, act">
+          <svg viewBox="0 0 880 300" role="img" aria-labelledby="agent-loop-title">
+            <title id="agent-loop-title">Look, think, act, repeat</title>
+            <defs>
+              <marker id="arr-lime" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c9f26b"/></marker>
+            </defs>
+            <!-- LOOK -->
+            <g transform="translate(60,55)">
+              <rect width="210" height="130" rx="22" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.35)"/>
+              <text x="105" y="42" text-anchor="middle" font-size="34">👁</text>
+              <text x="105" y="80" text-anchor="middle" font-size="19" font-weight="800" fill="#fffdf7">LOOK</text>
+              <text x="105" y="106" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.75)">What is on this page of the form?</text>
+            </g>
+            <!-- THINK -->
+            <g transform="translate(335,55)">
+              <rect width="210" height="130" rx="22" fill="rgba(201,242,107,.18)" stroke="#c9f26b" stroke-width="2"/>
+              <text x="105" y="42" text-anchor="middle" font-size="34">🧠</text>
+              <text x="105" y="80" text-anchor="middle" font-size="19" font-weight="800" fill="#fffdf7">THINK</text>
+              <text x="105" y="106" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.8)">The language model decides</text>
+            </g>
+            <!-- ACT -->
+            <g transform="translate(610,55)">
+              <rect width="210" height="130" rx="22" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.35)"/>
+              <text x="105" y="42" text-anchor="middle" font-size="34">✋</text>
+              <text x="105" y="80" text-anchor="middle" font-size="19" font-weight="800" fill="#fffdf7">ACT</text>
+              <text x="105" y="106" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.75)">Type values, click Next</text>
+            </g>
+            <line x1="272" y1="120" x2="330" y2="120" stroke="#c9f26b" stroke-width="3" marker-end="url(#arr-lime)"/>
+            <line x1="547" y1="120" x2="605" y2="120" stroke="#c9f26b" stroke-width="3" marker-end="url(#arr-lime)"/>
+            <!-- return arrow -->
+            <path d="M715 186 C715 262, 165 262, 165 187" fill="none" stroke="#c9f26b" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#arr-lime)"/>
+            <text x="440" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="#c9f26b">…and again on the next page, until the return is handed in</text>
+            <text x="165" y="30" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.6)">eyes = a tool</text>
+            <text x="440" y="30" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.6)">brain = the LLM</text>
+            <text x="715" y="30" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.6)">hands = tools</text>
+          </svg>
+        </div>
+        <p class="simple-summary" style="margin-top:6px">In this project the "think" part happens in <b>two moves</b> for every page. Sections 5 to 8 build exactly this:</p>
+        <div class="simple-grid" style="margin-top:14px" aria-label="The two prompts per page">
+          <div class="simple-step"><span class="simple-num">1</span><b>PLANNER · the first prompt</b><p>Sees the page's questions and the <em>labels</em> of the documents and guides. Answers with a plan: which ones to open, and how it intends to use them.</p><div class="source-note ai-one"><span class="call-id">LLM PROMPTED (FIRST TIME)</span><span>writes the plan</span></div></div>
+          <div class="simple-step"><span class="simple-num">→</span><b>YOUR CODE · builds the executor's packet</b><p>Opens exactly what the plan asked for and packs it, together with the plan and the page's boxes, into the message for the second prompt. No AI involved.</p><div class="source-note code-note"><span class="call-id">PYTHON</span><span>Sections 6 and 8</span></div></div>
+          <div class="simple-step"><span class="simple-num">2</span><b>EXECUTOR · the second prompt</b><p>Sees the plan, the opened documents and the rules. Answers with a value for every box it can fill. Your code types them into the form.</p><div class="source-note ai-two"><span class="call-id">LLM PROMPTED (SECOND TIME)</span><span>writes the values</span></div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="map-wrap">
+    <nav class="metro" aria-label="Notebook sections">
+      <div class="metro-head">
+        <span class="map-label">NOTEBOOK SECTIONS 1–9</span>
+        <span class="where-label" id="where-label" aria-live="polite">You are here · Setup</span>
+      </div>
+      <div class="map-viewport" id="map-viewport">
+        <div class="metro-track" id="metro-track">
+          <div class="metro-pin" aria-hidden="true"><span>YOU</span></div>
+          <ol>
+            <li class="active"><a href="#stop-1" data-label="Setup"><span class="station-dot">01</span><span>Setup</span></a></li>
+            <li><a href="#stop-2" data-label="Explore the form"><span class="station-dot">02</span><span>Explore form</span></a></li>
+            <li><a href="#stop-3" data-label="Documents &amp; guides"><span class="station-dot">03</span><span>Docs &amp; guides</span></a></li>
+            <li><a href="#stop-4" data-label="Tools"><span class="station-dot">04</span><span>Tools</span></a></li>
+            <li><a href="#stop-5" data-label="Plan by hand (Task 1)"><span class="station-dot">05</span><span>Plan by hand</span></a></li>
+            <li><a href="#stop-6" data-label="One page, step by step (Tasks 2–5)"><span class="station-dot">06</span><span>One page</span></a></li>
+            <li><a href="#stop-7" data-label="Visualize the plan"><span class="station-dot">07</span><span>Visualize plan</span></a></li>
+            <li><a href="#stop-8" data-label="The full run (Task 6)"><span class="station-dot">08</span><span>Full run</span></a></li>
+            <li><a href="#stop-9" data-label="Score"><span class="station-dot">09</span><span>Score</span></a></li>
+          </ol>
+        </div>
+      </div>
+      <div class="reading-progress" aria-hidden="true"><span id="reading-progress"></span></div>
+    </nav>
+  </div>
+
+  <main class="guide" id="guide">
+
+    <!-- ══════════════════════════════════════ STOP 1 ═══════════════════════════ -->
+    <section class="chapter" id="stop-1" data-station="0" style="--chapter-color:#174f3f">
+      <div class="chapter-head">
+        <div class="stop-sign">01</div>
+        <div>
+          <div class="kicker">Notebook section 1 · ⚙️ Setup</div>
+          <h2>Getting everything ready. No tax work yet.</h2>
+          <p class="chapter-lead">This section only prepares your workspace. Three things get set up: the course material is fetched into your Colab session, the practice tax form is started, and the notebook is connected to an AI model. Click through the cells top to bottom; the only thing you must do yourself is add your API key.</p>
+          <span class="cell-badge">RUN TOP TO BOTTOM · ONE THING TO DO: THE KEY</span>
+        </div>
+      </div>
+
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="setup-icon" style="background:#e9f1ff">📦</div>
+          <b>1 · Get the course files</b>
+          <p>The exercise needs a lot of prepared material: the practice tax form, five taxpayers' documents, the tax guides and the helper code. It all lives on <em>GitHub</em>, a website where code projects are stored. The first cell downloads a copy into your Colab session, like unzipping a folder someone sent you.</p>
+        </div>
+        <div class="setup-step">
+          <div class="setup-icon" style="background:#eaf7ee">🖥️</div>
+          <b>2 · Start the practice form</b>
+          <p>The tax form is a small website that imitates Zurich's real e-filing portal. Before a browser can show a website, its source has to be <em>built</em> (packaged into display-ready files), and then <em>served</em> (a tiny web server inside Colab hands those files to the browser). That is what the second cell does. It takes a minute or two.</p>
+        </div>
+        <div class="setup-step">
+          <div class="setup-icon" style="background:#fff1e8">🔌</div>
+          <b>3 · Connect an AI model</b>
+          <p>The AI itself does not run in Colab. The notebook sends requests over the internet to <em>OpenRouter</em>, a service that gives one account access to many different models. Your API key is the password for that account. The third cell reads it from Colab's secrets and sends one tiny test message.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="panel">
+          <span class="panel-label">Your one job here · the API key</span>
+          <h3>Store the key as a Colab secret, step by step.</h3>
+          <div class="step-stack">
+            <div class="stack-row"><span class="num">1</span><div><b>Get a key</b><small>Log in at <b>openrouter.ai</b>, open <em>Keys</em> and create one. It is a long string starting with <span class="mono-soft">sk-or-v1-</span>. Copy it now; some sites only show it once.</small></div><span class="status">KEY</span></div>
+            <div class="stack-row"><span class="num">2</span><div><b>Open Colab's secrets</b><small>In the notebook, look at the thin toolbar on the <em>left edge</em> of the screen. Click the <b>key icon 🔑</b>. A panel called <em>Secrets</em> slides out.</small></div><span class="status">PANEL</span></div>
+            <div class="stack-row"><span class="num">3</span><div><b>Add the secret</b><small>Click <em>+ Add new secret</em>. In <b>Name</b> type exactly <span class="mono-soft">OPENROUTER_API_KEY</span> (capitals and underscores matter). In <b>Value</b> paste your key.</small></div><span class="status">NAME</span></div>
+            <div class="stack-row"><span class="num">4</span><div><b>Switch on "Notebook access"</b><small>Each secret has a small toggle. It must be <b>on</b> for this notebook, otherwise the cell cannot read the key and will ask you to type it instead.</small></div><span class="status">TOGGLE</span></div>
+            <div class="stack-row"><span class="num">5</span><div><b>Run the model cell</b><small>The last setup cell sends "say hello in German" to the model. You should see <b>LLM says: Hallo</b> (or a close variant). That is your proof the connection works.</small></div><span class="status">READY</span></div>
+          </div>
+          <div class="warning"><span>⚠</span><div><b>Never type the key into a notebook cell.</b><br>The notebook file is shared and saved with the course. Anything typed into a cell is saved with it. A secret is stored only in your own Colab account and never leaves it.</div></div>
+        </div>
+
+        <div>
+          <div class="secrets-mock" aria-label="What the Colab Secrets panel looks like">
+            <div class="secrets-side"><span>📁</span><span class="active-key">🔑</span><span>{x}</span><span>🔍</span></div>
+            <div class="secrets-body">
+              <div class="secrets-title">Secrets</div>
+              <p class="secrets-hint">Store keys here so they are never written into your notebook. Switch on <b>Notebook access</b> for each notebook that may use a secret.</p>
+              <div class="secret-row head"><span>Notebook access</span><span>Name</span><span>Value</span></div>
+              <div class="secret-row"><span class="toggle on" aria-hidden="true"><i></i></span><span class="secret-name">OPENROUTER_API_KEY</span><span class="secret-value">sk-or-v1-••••••••••••••••</span></div>
+              <div class="secret-add">+ Add new secret</div>
+            </div>
+          </div>
+          <details class="qa">
+            <summary>What happens in "Clone Repository &amp; Install Dependencies"?</summary>
+            <div class="details-body"><p>"Clone" is the GitHub word for "download a copy". The cell fetches the whole course project into a folder in your Colab session and then installs the few extra Python packages the notebook needs. While the course repository is still private, the cell also needs a GitHub access token; your TA has one. Once the material is public, the cell simply downloads without asking.</p></div>
+          </details>
+          <details class="qa">
+            <summary>What happens in "Build &amp; Serve the React Frontend"?</summary>
+            <div class="details-body"><p>The practice tax form is written as a web app. <b>Build</b> turns its source files into the plain HTML, CSS and JavaScript a browser understands. <b>Serve</b> starts a tiny web server inside your Colab session that hands out those files. From then on the notebook can show the form to you (Section 2) and, later, to the agent (Section 8). The cell prints the address it is served at; every later cell reuses it.</p></div>
+          </details>
+          <details class="qa">
+            <summary>Can I use a different model?</summary>
+            <div class="details-body"><p>Yes. OpenRouter offers hundreds of models under one key. Pick one from the list at <b>openrouter.ai/models</b> and put its name (in the form <em>vendor/model</em>) in the model line at the top of the setup cell. Names ending in <em>:free</em> cost nothing but are slowed down, which shows up as long waits in the full run.</p><p>Keep in mind that the same model also acts as the "judge" for free-text answers when you score your run in Section 9, so the model you pick grades part of your own work.</p></div>
+          </details>
+          <details class="qa">
+            <summary>The test printed a paragraph about "refining core logic" instead of "Hallo".</summary>
+            <div class="details-body"><p>Some models think before they answer, and that thinking uses part of the reply budget. If the budget is very small, the model runs out of room before it gets to the actual answer, and what you see is a leftover of its thinking. The current notebook gives the test enough room; if you still see this, simply run the cell again or pick another model.</p></div>
+          </details>
+        </div>
+      </div>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 1</summary>
+        <div class="details-body">After this section you have three things: the course material in your session, the practice tax form running, and a working line to an AI model. Everything that follows assumes all three. If a later cell complains about a missing name or address, come back and re-run the setup cells in order.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="setup"><span>I saw the "Frontend served at …" line and "LLM says: Hallo".</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 2 ═══════════════════════════ -->
+    <section class="chapter" id="stop-2" data-station="1" style="--chapter-color:#2b6ef2">
+      <div class="chapter-head">
+        <div class="stop-sign">02</div>
+        <div>
+          <div class="kicker">Notebook section 2 · 🖥️ Explore the tax portal</div>
+          <h2>This is the form your AI will have to work its way through.</h2>
+          <p class="chapter-lead">The cell shows the practice tax form right inside the notebook. Nothing you type is saved, so click around freely. The point of this stop: get a feel for the job you are about to hand to an AI. Every box you see, the agent will later have to find, fill in and move past on its own.</p>
+          <span class="cell-badge">CLICK AROUND · NO TASKS</span>
+        </div>
+      </div>
+
+      <div class="fig" aria-label="The path through the tax form">
+        <svg viewBox="0 0 900 150" role="img" aria-labelledby="form-path-title">
+          <title id="form-path-title">Six sections, 28 pages, one Next button after another</title>
+          <defs><marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2b6ef2"/></marker></defs>
+          <line x1="20" y1="70" x2="880" y2="70" stroke="#cbd9f7" stroke-width="6" stroke-linecap="round"/>
+          <g font-family="Inter, ui-sans-serif, sans-serif" text-anchor="middle">
+            <g transform="translate(60,70)"><circle r="26" fill="#2b6ef2"/><text y="7" font-size="22">👤</text><text y="56" font-size="14" font-weight="800" fill="#172821">Personal</text><text y="74" font-size="12" fill="#65726b">8 pages</text></g>
+            <g transform="translate(220,70)"><circle r="26" fill="#2b6ef2"/><text y="7" font-size="22">💼</text><text y="56" font-size="14" font-weight="800" fill="#172821">Income</text><text y="74" font-size="12" fill="#65726b">5 pages</text></g>
+            <g transform="translate(380,70)"><circle r="26" fill="#2b6ef2"/><text y="7" font-size="22">🧾</text><text y="56" font-size="14" font-weight="800" fill="#172821">Deductions</text><text y="74" font-size="12" fill="#65726b">7 pages</text></g>
+            <g transform="translate(540,70)"><circle r="26" fill="#2b6ef2"/><text y="7" font-size="22">🏦</text><text y="56" font-size="14" font-weight="800" fill="#172821">Wealth</text><text y="74" font-size="12" fill="#65726b">6 pages</text></g>
+            <g transform="translate(700,70)"><circle r="26" fill="#9db6e8"/><text y="7" font-size="22">📎</text><text y="56" font-size="14" font-weight="800" fill="#172821">Attachments</text><text y="74" font-size="12" fill="#65726b">nothing to type</text></g>
+            <g transform="translate(850,70)"><circle r="26" fill="#174f3f"/><text y="7" font-size="22">✅</text><text y="56" font-size="14" font-weight="800" fill="#172821">Review</text><text y="74" font-size="12" fill="#65726b">hand it in</text></g>
+          </g>
+          <text x="450" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#2b6ef2">Every page ends with a "Next" button. The agent will press it 27 times.</text>
+        </svg>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="panel" style="padding:14px">
+          <span class="panel-label" style="margin:10px 10px 16px">What YOU see</span>
+          <div class="portal">
+            <div class="portal-nav">
+              <div class="portal-logo">ZH TAX</div>
+              <span class="active">Personal</span><small>8 pages</small>
+              <span>Income</span><small>5 pages</small>
+              <span>Deductions</span><small>7 pages</small>
+              <span>Wealth</span><small>6 pages</small>
+              <span>Attachments</span>
+              <span>Review</span>
+            </div>
+            <div class="portal-main">
+              <div class="portal-top"></div>
+              <div class="fake-field"><label>FIRST NAME</label><div class="fake-input plain">Anna</div></div>
+              <div class="fake-field"><label>DATE OF BIRTH</label><div class="fake-input plain">14.07.1996</div></div>
+              <div class="fake-field"><label>AHV NUMBER</label><div class="fake-input plain"></div></div>
+              <div class="portal-actions"><span class="fake-button ghost">Back</span><span class="fake-button">Next</span></div>
+            </div>
+          </div>
+          <p class="soft micro" style="margin:14px 10px 4px">A normal web form: labels, boxes, drop-downs, a Next button. You read it with your eyes and fill it with a keyboard.</p>
+        </div>
+        <div class="panel dark">
+          <span class="panel-label">What the AI "sees"</span>
+          <h3>Not a picture. A list.</h3>
+          <p class="soft micro">The AI has no eyes. When it "looks" at a page it receives a plain text list: for every box, its label, what kind of box it is, and whether it is already filled. It answers with text too: <em>write this value into that box</em>. Something else has to press the keys for it.</p>
+          <div class="ai-view">
+            <div class="ai-row"><span class="ai-label">First name</span><span class="ai-type">text box</span><span class="ai-val">empty</span></div>
+            <div class="ai-row"><span class="ai-label">Date of birth</span><span class="ai-type">date</span><span class="ai-val">empty</span></div>
+            <div class="ai-row"><span class="ai-label">AHV number</span><span class="ai-type">text box</span><span class="ai-val">empty</span></div>
+            <div class="ai-row"><span class="ai-label">Marital status</span><span class="ai-type">drop-down: single / married / …</span><span class="ai-val">empty</span></div>
+            <div class="ai-row"><span class="ai-label">Next</span><span class="ai-type">button</span><span class="ai-val"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel lime" style="margin-top:20px">
+        <span class="panel-label" style="color:#52662c">What to notice while clicking</span>
+        <div class="mission-list">
+          <div class="mission-item"><span class="mission-icon">1</span><div><b>The form is long</b><span>Six sections, 28 pages. Nobody wants to fill this by hand twice; that is the point of automating it.</span></div></div>
+          <div class="mission-item"><span class="mission-icon">2</span><div><b>Different kinds of boxes</b><span>Text, numbers, dates, drop-downs (marital status), tick boxes (self-employed). A drop-down only accepts the choices it offers, so the AI must pick one of them rather than invent wording.</span></div></div>
+          <div class="mission-item"><span class="mission-icon">3</span><div><b>Some pages are tables</b><span>Children, bank accounts, securities, debts. They start with no rows; you press "add row" first. The agent will have to notice this and do the same.</span></div></div>
+          <div class="mission-item"><span class="mission-icon">4</span><div><b>Later pages depend on earlier ones</b><span>The medical deduction depends on income declared earlier; the securities table must exist if dividends were declared. The agent needs a memory of what it already wrote.</span></div></div>
+        </div>
+      </div>
+
+      <details class="qa">
+        <summary>Will the AI see exactly the same form I am clicking through?</summary>
+        <div class="details-body"><p>Same form, different senses. You see the layout; the AI gets the list of boxes on the current page. For the first trial in Section 6 the notebook uses a simplified <em>practice version</em> of the form that has just the main pages and no tables, so you can test one page quickly. The full run in Section 8 uses the real form you are looking at now, with all 28 pages, tables and drop-downs.</p></div>
+      </details>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 2</summary>
+        <div class="details-body">The agent has to do what you just did, page by page: find out which boxes are on the page, work out what belongs in each, type it in, press Next. It never sees the screen; it works from a text description of each page and gives back text instructions. Keep this picture in mind, because everything you build later is in service of it.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="explore"><span>I clicked through all six sections, found a table page with an "add row" button, and saw at least one drop-down.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 3 ═══════════════════════════ -->
+    <section class="chapter" id="stop-3" data-station="2" style="--chapter-color:#ff6b35">
+      <div class="chapter-head">
+        <div class="stop-sign">03</div>
+        <div>
+          <div class="kicker">Notebook section 3 · 📂 Documents &amp; guides</div>
+          <h2>The AI gets a filing cabinet and a rule book.</h2>
+          <p class="chapter-lead">A tax return is filled from paperwork. Each taxpayer comes with a folder of <b>documents</b> (salary certificate, bank statement, receipts) that hold the <em>facts</em>. The course also provides <b>guides</b> that hold the <em>rules</em>: how much of a cost is deductible, which thresholds apply. The notebook shows you both, and lets you open any guide to read it in full.</p>
+          <span class="cell-badge">READ · OPEN A GUIDE · NO TASKS</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <span class="panel-label">Anna Meier's folder · two ways of looking at it</span>
+        <div class="evidence-stage">
+          <div class="cabinet">
+            <h3>From outside: labels only</h3>
+            <div class="file-card locked"><b>Profile</b><small>Personal information: name, address, date of birth, AHV number, marital status</small></div>
+            <div class="file-card locked ai-selected"><b>Salary certificate (Lohnausweis)</b><small>Gross salary, social-insurance contributions, employer, canteen, expenses</small></div>
+            <div class="source-note ai-one"><span class="call-id">THE AI DECIDES</span><span>"I need to open this one"</span></div>
+            <div class="file-card locked"><b>Bank statement</b><small>Transactions: salary, rent, purchases, interest, year-end balance</small></div>
+            <div class="file-card locked"><b>Pension (pillar 3a) confirmation</b><small>Annual contribution, provider</small></div>
+            <div class="file-card locked"><b>Public transport pass receipt</b><small>ZVV zones, cost, validity</small></div>
+          </div>
+          <div class="retrieval-arrow">→</div>
+          <div class="open-file">
+            <h3>Opened: the actual contents</h3>
+            <pre>=== Salary certificate ===
+Employer: Google Switzerland GmbH
+ 1. Gross salary              CHF <span class="spotlight">142,000.00</span>
+ 9. Social insurance (AHV…)   CHF   <span class="spotlight">7,526.60</span>
+    Accident insurance (NBU)  CHF     568.00
+10. Pension fund (BVG)        CHF   <span class="spotlight">8,400.00</span>
+12. Net salary                CHF <span class="spotlight">125,505.40</span>
+    14.1 Canteen meals:       <span class="spotlight">Yes</span></pre>
+            <div class="source-note code-note on-dark"><span class="call-id">FACTS</span><span>The numbers the AI will copy into the form come from here, and only from here.</span></div>
+          </div>
+        </div>
+        <div class="grid-3" style="margin-top:18px">
+          <div class="panel" style="box-shadow:none"><span class="panel-label">Documents</span><h3>Facts about this taxpayer</h3><p class="soft micro">Five files for Anna, up to eleven for the harder taxpayers: salary certificates, bank statements, receipts, pension and broker statements, even a divorce decree. All are plain text.</p></div>
+          <div class="panel" style="box-shadow:none"><span class="panel-label">Guides</span><h3>Rules for turning facts into amounts</h3><p class="soft micro">Eleven guides. One is the official-style rule list the exercise is built on; the other ten are short articles on single topics (bicycle commuting allowance, childcare cap, medical-cost threshold, freelance income…). Each comes with a one-line description of when it is useful.</p></div>
+          <div class="panel" style="box-shadow:none"><span class="panel-label">Hidden</span><h3>What the AI cannot see</h3><p class="soft micro">The answer key for each taxpayer sits in the same folder, but the AI's document list is filtered so it never appears. Same for the notes used by the simulated taxpayer. The AI has to earn its answers.</p></div>
+        </div>
+      </div>
+
+      <div class="fig" aria-label="Facts plus rules give the amount">
+        <div class="equation">
+          <div class="eq-card fact"><span class="eq-label">FACT · from the salary certificate</span><b>Net salary<br>CHF 125 505</b></div>
+          <div class="eq-op">+</div>
+          <div class="eq-card rule"><span class="eq-label">RULE · from the guide</span><b>3 % of net salary,<br>at least 2 000, at most 4 000</b></div>
+          <div class="eq-op">=</div>
+          <div class="eq-card result"><span class="eq-label">WRITE INTO THE FORM</span><b>Professional expenses, flat rate<br>CHF 3 765</b></div>
+        </div>
+        <p class="fig-cap">Most boxes are copied straight from a document. A few, like this flat-rate deduction for professional expenses, are <em>computed</em>: the AI needs both a document and a guide, and must actually do the arithmetic.</p>
+      </div>
+
+      <details class="qa">
+        <summary>Why doesn't the AI simply read all the documents every time?</summary>
+        <div class="details-body"><p>Because more text is not better. The hardest taxpayer has eleven documents; sending all of them for every one of the 28 pages would bury the two or three relevant numbers in pages of irrelevant lines, and language models get measurably worse at picking the right number out of a long, noisy text. Instead, the AI first looks at the labels on the folder (name and one-line description) and asks for only what it needs, the same way you would pull one file from a cabinet rather than dump the whole drawer on your desk.</p><p>It also makes the agent easier to understand: for every page you can later see exactly which documents it asked for, and spot a wrong answer that came from never opening the right file.</p></div>
+      </details>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 3</summary>
+        <div class="details-body">Two kinds of material: documents hold the facts about the taxpayer, guides hold the rules. The AI sees only labels until it asks to open something; then it gets the full text. Copying a value needs a document; computing a deduction needs a document <em>and</em> a guide. The Deductions pages need both, every time.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="evidence"><span>I opened at least one guide in the notebook and can say which of Anna's five files the Income page needs.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 4 ═══════════════════════════ -->
+    <section class="chapter" id="stop-4" data-station="3" style="--chapter-color:#7157d9">
+      <div class="chapter-head">
+        <div class="stop-sign">04</div>
+        <div>
+          <div class="kicker">Notebook section 4 · 🧰 Tools</div>
+          <h2>Nine tools: how the AI sees, reads, acts and asks.</h2>
+          <p class="chapter-lead">A language model on its own can only produce text. To fill a form it needs a way to look at the page, open documents, type values and press buttons. Those abilities are given to it as <b>tools</b>: named actions it can request, which the notebook then carries out for it. This section lists the nine tools and shows what one of them returns.</p>
+          <span class="cell-badge">READ · NO TASKS</span>
+        </div>
+      </div>
+
+      <div class="fig" aria-label="The nine tools grouped by what they let the AI do">
+        <svg viewBox="0 0 900 420" role="img" aria-labelledby="tools-title">
+          <title id="tools-title">The AI in the middle; its tools grouped as eyes, hands, cabinet and phone</title>
+          <defs><marker id="arr-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#7157d9"/></marker></defs>
+          <g font-family="Inter, ui-sans-serif, sans-serif">
+            <!-- center -->
+            <circle cx="450" cy="210" r="62" fill="#7157d9"/>
+            <text x="450" y="200" text-anchor="middle" font-size="30">🧠</text>
+            <text x="450" y="232" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">THE AI</text>
+            <!-- spokes -->
+            <line x1="388" y1="185" x2="262" y2="120" stroke="#7157d9" stroke-width="2.5" marker-end="url(#arr-violet)"/>
+            <line x1="512" y1="185" x2="638" y2="120" stroke="#7157d9" stroke-width="2.5" marker-end="url(#arr-violet)"/>
+            <line x1="388" y1="235" x2="262" y2="300" stroke="#7157d9" stroke-width="2.5" marker-end="url(#arr-violet)"/>
+            <line x1="512" y1="235" x2="638" y2="300" stroke="#7157d9" stroke-width="2.5" marker-end="url(#arr-violet)"/>
+            <!-- SEE -->
+            <g transform="translate(20,30)">
+              <rect width="240" height="150" rx="18" fill="#f3fbd9" stroke="#b9d75a"/>
+              <text x="18" y="34" font-size="22">👁</text><text x="52" y="34" font-size="15" font-weight="800" fill="#172821">SEE · 1 tool</text>
+              <text x="18" y="66" font-size="13" font-weight="700" fill="#172821">Look at the page</text>
+              <text x="18" y="86" font-size="12" fill="#3f4d46">Which boxes and buttons are on the page</text>
+              <text x="18" y="103" font-size="12" fill="#3f4d46">right now, what they are called, what type</text>
+              <text x="18" y="120" font-size="12" fill="#3f4d46">they are, and whether they already hold a</text>
+              <text x="18" y="137" font-size="12" fill="#3f4d46">value. The AI's only eyes.</text>
+            </g>
+            <!-- ACT -->
+            <g transform="translate(640,30)">
+              <rect width="240" height="150" rx="18" fill="#e9f1ff" stroke="#9db6e8"/>
+              <text x="18" y="34" font-size="22">✋</text><text x="52" y="34" font-size="15" font-weight="800" fill="#172821">ACT · 3 tools</text>
+              <text x="18" y="66" font-size="13" font-weight="700" fill="#172821">Type a value into a box</text>
+              <text x="18" y="92" font-size="13" font-weight="700" fill="#172821">Click a button (Next, add row…)</text>
+              <text x="18" y="118" font-size="13" font-weight="700" fill="#172821">Hand in the finished return</text>
+              <text x="18" y="140" font-size="12" fill="#3f4d46">Each one reports back whether it worked.</text>
+            </g>
+            <!-- READ -->
+            <g transform="translate(20,240)">
+              <rect width="240" height="150" rx="18" fill="#fff6dc" stroke="#e6cf7a"/>
+              <text x="18" y="34" font-size="22">🗄️</text><text x="52" y="34" font-size="15" font-weight="800" fill="#172821">READ · 4 tools</text>
+              <text x="18" y="66" font-size="13" font-weight="700" fill="#172821">List the taxpayer's documents</text>
+              <text x="18" y="90" font-size="13" font-weight="700" fill="#172821">Open one document</text>
+              <text x="18" y="114" font-size="13" font-weight="700" fill="#172821">List the guides</text>
+              <text x="18" y="138" font-size="13" font-weight="700" fill="#172821">Open one guide</text>
+            </g>
+            <!-- ASK -->
+            <g transform="translate(640,240)">
+              <rect width="240" height="150" rx="18" fill="#ffe9e7" stroke="#f0a7a2"/>
+              <text x="18" y="34" font-size="22">📞</text><text x="52" y="34" font-size="15" font-weight="800" fill="#172821">ASK · 1 tool</text>
+              <text x="18" y="66" font-size="13" font-weight="700" fill="#172821">Ask the taxpayer a question</text>
+              <text x="18" y="88" font-size="12" fill="#3f4d46">A simulated person answers from a script.</text>
+              <text x="18" y="105" font-size="12" fill="#3f4d46">Every question is logged, and unnecessary</text>
+              <text x="18" y="122" font-size="12" fill="#3f4d46">ones cost points: a good accountant looks</text>
+              <text x="18" y="139" font-size="12" fill="#3f4d46">in the documents first.</text>
+            </g>
+          </g>
+        </svg>
+        <p class="fig-cap">Everything the AI learns arrives through these nine tools, and everything it does goes out through them. It has no other way to perceive the form or the documents.</p>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="panel">
+          <span class="panel-label">From a label to a value</span>
+          <h3>The AI reads labels. It answers with box + value.</h3>
+          <div class="locator-demo">
+            <div class="locator-row"><div class="locator-box">Gross salary (CHF)</div><div class="arrow">→</div><div class="locator-box mono">the "gross salary" box on the Income page</div><div class="arrow">→</div><div class="locator-box">142 000</div></div>
+            <div class="locator-row"><div class="locator-box">Interest income (CHF)</div><div class="arrow">→</div><div class="locator-box mono">the "interest" box on the Income page</div><div class="arrow">→</div><div class="locator-box">12.50</div></div>
+            <div class="locator-row"><div class="locator-box">Professional expenses, flat rate</div><div class="arrow">→</div><div class="locator-box mono">the "flat rate" box on the Deductions page</div><div class="arrow">→</div><div class="locator-box">3 765</div></div>
+          </div>
+          <p class="soft micro" style="margin-top:14px">Behind the scenes each box has a unique technical name, like a house number, so "type 142 000 here" is unambiguous. The AI must use the names it was shown on the page; it is not allowed to invent one.</p>
+        </div>
+        <div class="panel dark">
+          <span class="panel-label">Who actually presses the keys?</span>
+          <h3>The AI proposes. The notebook acts.</h3>
+          <p class="soft micro">In this project the language model never touches the form directly. It answers in text: "put 142 000 into the gross-salary box". Your Python code reads that answer and calls the typing tool. The same goes for opening documents: the AI names the file, the code fetches it. This keeps every action visible in your own code, and it is why the notebook's ✅ checkpoints can test your work without prompting the model at all.</p>
+        </div>
+      </div>
+      <details class="qa">
+        <summary>The notebook calls this an "MCP server". What is that?</summary>
+        <div class="details-body"><p>Think of a waiter. The AI sits at the table and can only <em>say</em> things: "bring me the salary certificate", "write 142 000 into the gross-salary box", "press Next". The waiter goes and does it, then comes back and reports what happened. The <b>server</b> is that waiter: one program that owns the nine tools and carries them out on the form and the file folder. <b>MCP</b> (Model Context Protocol) is simply a widely used standard for how an AI and such a waiter talk to each other, so the same tools could be offered to any model or app. In this notebook you use the tools through plain Python calls; the standard matters more if you want to plug the same tax tools into another AI product later.</p></div>
+      </details>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 4</summary>
+        <div class="details-body">The AI has no screen, no keyboard and no file browser of its own. These nine tools are how it is fed information (what is on the page, what a document says, what the taxpayer answers) and how it acts (type, click, hand in). Whatever a tool does not tell it, the AI does not know; whatever it cannot request through a tool, it cannot do. Designing an agent is largely deciding which tools to give it and when.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="tools"><span>I can sort the nine tools into see, act, read and ask, and explain who actually types into the form.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 5 ═══════════════════════════ -->
+    <section class="chapter" id="stop-5" data-station="4" style="--chapter-color:#2b6ef2">
+      <div class="chapter-head">
+        <div class="stop-sign">05</div>
+        <div>
+          <div class="kicker">Notebook section 5 · 🗺️ Plan discovery · Task 1</div>
+          <h2>Before it fills a page, the AI plans. You do that once by hand.</h2>
+          <p class="chapter-lead">Here you play the role the AI will take over in the next section: the <b>planner</b>. Looking only at the questions on the Income page and the <em>labels</em> of the documents, you decide which files need opening and how each answer will be found. The notebook shows you finished plans for two other pages as examples and checks yours automatically.</p>
+          <span class="cell-badge">🎯 TASK 1 · ✅ CHECKPOINT · MODEL NEVER PROMPTED</span>
+        </div>
+      </div>
+
+      <div class="fig" aria-label="What the planner does">
+        <svg viewBox="0 0 900 300" role="img" aria-labelledby="planner-title">
+          <title id="planner-title">The planner reads the page's questions and the folder labels, and writes a plan</title>
+          <defs><marker id="arr-blue2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2b6ef2"/></marker></defs>
+          <g font-family="Inter, ui-sans-serif, sans-serif">
+            <!-- page -->
+            <g transform="translate(20,30)">
+              <rect width="220" height="240" rx="14" fill="#fffdf7" stroke="#cbc8bd"/>
+              <text x="110" y="30" text-anchor="middle" font-size="13" font-weight="800" fill="#2b6ef2">THE INCOME PAGE ASKS</text>
+              <g font-size="12.5" fill="#172821">
+                <rect x="16" y="48" width="188" height="30" rx="7" fill="#eef3ff"/><text x="26" y="68">Gross salary?</text>
+                <rect x="16" y="88" width="188" height="30" rx="7" fill="#eef3ff"/><text x="26" y="108">Social-insurance contributions?</text>
+                <rect x="16" y="128" width="188" height="30" rx="7" fill="#eef3ff"/><text x="26" y="148">Pension-fund contributions?</text>
+                <rect x="16" y="168" width="188" height="30" rx="7" fill="#eef3ff"/><text x="26" y="188">Interest income?</text>
+              </g>
+              <text x="110" y="225" text-anchor="middle" font-size="11" fill="#65726b">(only the questions, no answers yet)</text>
+            </g>
+            <!-- planner -->
+            <g transform="translate(330,95)">
+              <circle cx="60" cy="55" r="55" fill="#2b6ef2"/>
+              <text x="60" y="48" text-anchor="middle" font-size="30">🤔</text>
+              <text x="60" y="82" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">PLANNER</text>
+              <text x="60" y="140" text-anchor="middle" font-size="12" fill="#65726b">you, in Task 1</text>
+              <text x="60" y="156" text-anchor="middle" font-size="12" fill="#65726b">the AI, from Section 6 on</text>
+            </g>
+            <line x1="245" y1="150" x2="325" y2="150" stroke="#2b6ef2" stroke-width="2.5" marker-end="url(#arr-blue2)"/>
+            <!-- cabinet labels -->
+            <g transform="translate(330,15)">
+              <text x="60" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#65726b">FOLDER LABELS IT CAN SEE</text>
+              <g font-size="11" fill="#172821">
+                <rect x="-40" y="22" width="200" height="20" rx="5" fill="#fff1e8" stroke="#ffb28f"/><text x="60" y="36" text-anchor="middle">Salary certificate · Bank statement</text>
+                <rect x="-40" y="46" width="200" height="20" rx="5" fill="#fff1e8" stroke="#ffb28f"/><text x="60" y="60" text-anchor="middle">Profile · Pension · Transport pass</text>
+              </g>
+            </g>
+            <line x1="390" y1="90" x2="390" y2="93" stroke="#2b6ef2" stroke-width="2.5"/>
+            <line x1="455" y1="150" x2="535" y2="150" stroke="#2b6ef2" stroke-width="2.5" marker-end="url(#arr-blue2)"/>
+            <!-- plan -->
+            <g transform="translate(540,30)">
+              <rect width="340" height="240" rx="14" fill="#172821"/>
+              <text x="170" y="30" text-anchor="middle" font-size="13" font-weight="800" fill="#c9f26b">THE PLAN</text>
+              <g font-size="12.5" fill="#fffdf7">
+                <text x="18" y="62" font-weight="800">Why:</text><text x="62" y="62">salary figures are on the certificate,</text><text x="62" y="78">interest is in the bank statement.</text>
+                <text x="18" y="108" font-weight="800">Open:</text><text x="70" y="108">✓ Salary certificate  ✓ Bank statement</text>
+                <text x="18" y="138" font-weight="800">Rules needed:</text><text x="125" y="138">none, the values are copied</text>
+                <text x="18" y="168" font-weight="800">How:</text><text x="62" y="168">certificate lines 1, 9, 10 → the three</text><text x="62" y="184">salary boxes; add up the interest rows.</text>
+                <text x="18" y="214" font-weight="800">Boxes to fill:</text><text x="125" y="214">the four Income boxes above</text>
+              </g>
+            </g>
+          </g>
+        </svg>
+        <p class="fig-cap">The planner never sees the numbers. It decides <em>where to look</em> and <em>how to use what it finds</em>. That is all a plan is.</p>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="panel blue">
+          <span class="panel-label">What you are actually doing in Task 1</span>
+          <h3>Thinking the planner's thoughts, once, slowly.</h3>
+          <div class="mission-list">
+            <div class="mission-item"><span class="mission-icon" style="background:white">1</span><div><b>Read the questions</b><span style="color:rgba(255,255,255,.75)">The Income page wants four things: gross salary, social-insurance contributions, pension-fund contributions, interest income.</span></div></div>
+            <div class="mission-item"><span class="mission-icon" style="background:white">2</span><div><b>Match them to folder labels</b><span style="color:rgba(255,255,255,.75)">Three come from the salary certificate. The interest comes from the bank statement, as the sum of its interest rows.</span></div></div>
+            <div class="mission-item"><span class="mission-icon" style="background:white">3</span><div><b>Ask: is any of this computed?</b><span style="color:rgba(255,255,255,.75)">No. All four are copied numbers, so no guide is needed. (On the Deductions page the answer is yes, and the plan must ask for the rule book.)</span></div></div>
+            <div class="mission-item"><span class="mission-icon" style="background:white">4</span><div><b>Write it down</b><span style="color:rgba(255,255,255,.75)">Which files to open, which boxes you intend to fill, and one or two sentences on how. The checkpoint checks exactly these.</span></div></div>
+          </div>
+          <div class="lock-banner"><span class="lock-symbol">🔒</span><div><b>You are planning from the labels, like the AI will.</b><span>You know the salary certificate holds the salary because its description says so, not because you opened it.</span></div></div>
+        </div>
+
+        <div class="panel">
+          <span class="panel-label">Why this step matters so much</span>
+          <h3>Whatever the plan leaves out, the AI never sees.</h3>
+          <p class="soft">In the next section the AI writes plans like yours for every page, and then fills the page using <em>only</em> the documents and guides its own plan asked for. Nothing else is shown to it. So a plan that forgets the bank statement means an empty interest box, and a Deductions plan that forgets the rule book means a guessed or missing deduction. The quality of the plan caps the quality of the answer.</p>
+          <div class="formula-line">The rule the Deductions example needs: professional expenses (flat rate) = 3 % of net salary, at least 2 000, at most 4 000, per working person
+            <small>Anna: 125 505 × 3 % = 3 765. This box is the one thing on the form that is not copied from a document; the example plan asks for the rule guide precisely because of it.</small>
+          </div>
+        </div>
+      </div>
+
+      <details class="qa">
+        <summary>Is the plan already the answer?</summary>
+        <div class="details-body">No. The plan for the Deductions page says "read the net salary and apply the flat-rate rule from the guide". The number 3 765 only appears later, when the AI has the certificate <em>and</em> the guide open in front of it. A good plan can be checked before any document is opened: does every box have a named source, and does every computed box have a named rule?</div>
+      </details>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 5</summary>
+        <div class="details-body">Planning means deciding what to read and how to use it, without seeing the contents. By writing one plan yourself you now know what a good one looks like, which is exactly what you need to judge the AI's plans in Section 7 and to debug wrong answers in Section 9: most of them trace back to a plan that opened the wrong file or forgot the rule book.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="plan"><span>The Task 1 checkpoint prints ✅ and I can explain why the Income plan needs no guide but the Deductions plan does.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 6 ═══════════════════════════ -->
+    <section class="chapter" id="stop-6" data-station="5" style="--chapter-color:#ff6b35">
+      <div class="chapter-head">
+        <div class="stop-sign">06</div>
+        <div>
+          <div class="kicker">Notebook section 6 · 🧠 One page, step by step · Tasks 2–5</div>
+          <h2>Teach the AI to handle one page: plan, read, fill.</h2>
+          <p class="chapter-lead">This is the heart of the project. You complete the function that handles a single page of the form. It asks the AI for a plan (like the one you wrote by hand), opens the documents the plan named, and asks the AI a second time for the values to write. Two of the five tasks are whole messages you write from scratch; the other three are single lines dropped into code that is already there. Each of your building blocks has a ✅ checkpoint that inspects your work without prompting the model.</p>
+          <span class="cell-badge">🎯 TASKS 2 · 3 · 4a · 4b · 5</span>
+        </div>
+      </div>
+
+      <div class="phase-flow" aria-label="One page in three moves">
+        <div class="phase"><span class="phase-num">1</span><h3>PLAN</h3><p>The AI sees the page's questions and the folder labels, and answers with a plan: which documents and guides to open, and how it intends to use them.</p><div class="phase-io">IN: the page's boxes, folder labels, what earlier pages filled<br>OUT: a plan</div><div class="source-note ai-one on-dark"><span class="call-id">LLM PROMPTED (FIRST TIME)</span><span>Task 2 writes what the AI is told</span></div></div>
+        <div class="flow-arrow">→</div>
+        <div class="phase"><span class="phase-num">2</span><h3>READ</h3><p>No AI involved. Your code opens exactly the documents and guides the plan asked for, and nothing else.</p><div class="phase-io">IN: the plan's list of names<br>OUT: the documents' full text</div><div class="source-note code-note on-dark"><span class="call-id">YOUR CODE</span><span>Task 4a</span></div></div>
+        <div class="flow-arrow">→</div>
+        <div class="phase"><span class="phase-num">3</span><h3>FILL</h3><p>The AI sees its own plan, the opened documents and guides, and the page's boxes again. It answers with a value for each box it can fill.</p><div class="phase-io">IN: plan, documents, rules, boxes<br>OUT: box → value pairs</div><div class="source-note ai-two on-dark"><span class="call-id">LLM PROMPTED (SECOND TIME)</span><span>Task 3 writes what the AI is told · Task 4b sends it</span></div></div>
+      </div>
+
+      <div class="fig" aria-label="System prompt versus user message">
+        <div class="prompt-anatomy">
+          <div class="sticky">
+            <span class="eq-label">SYSTEM PROMPT · the job description</span>
+            <p class="sub">Written once by the course. The same for every page.</p>
+            <p class="quote">"You are a Swiss tax accountant. Decide which documents you need."</p>
+            <p class="who">for the first prompt</p>
+            <p class="quote">"Fill the boxes on this page. Only use boxes shown to you. If you don't know a value, leave it."</p>
+            <p class="who">for the second prompt, plus the rules of that form section</p>
+          </div>
+          <div class="eq-op">+</div>
+          <div class="packet">
+            <span class="eq-label blue">USER MESSAGE · today's packet</span>
+            <p class="sub">Built by <b>your</b> code, fresh for every page. Tasks 2 and 3.</p>
+            <div class="packet-row">📄 Which page we are on, and its boxes</div>
+            <div class="packet-row">🗂 Folder labels (first prompt) / the opened documents (second prompt)</div>
+            <div class="packet-row">📘 Guide labels (first prompt) / the guide texts (second prompt)</div>
+            <div class="packet-row">🧾 What was already filled on earlier pages</div>
+            <div class="packet-row">✍️ "Answer in the agreed format"</div>
+          </div>
+        </div>
+        <p class="fig-cap">Same model, prompted twice, two different jobs. The <b>system prompt</b> tells the AI who it is and what kind of answer is expected; the <b>user message</b> is everything specific to this page. What you leave out of the packet, the AI does not know, which is exactly what the two checkpoints test.</p>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="panel">
+          <span class="panel-label">The five tasks and what each produces</span>
+          <p class="soft" style="margin:-9px 0 15px;font-size:.82rem">Every blank is marked with a 🎯 in the notebook. Tasks 2 and 3 are whole messages you write; Tasks 4a, 4b and 5 are single lines, with the code around them already written for you.</p>
+          <div class="code-anatomy">
+            <div class="code-task"><div class="cell">TASK 2</div><div class="code-task-body"><b><code>build_plan_user_message</code></b><p>The packet for the first prompt. One f-string from the ready-made pieces <code>page_name</code>, <code>fields_desc</code>, <code>catalog_text</code>, <code>guides_text</code>, <code>history_text</code>, in the order the TODO lists.</p><div class="formula"><span>page</span><i>+</i><span>boxes</span><i>+</i><span>folder labels</span><i>+</i><span>guide labels</span><i>+</i><span>history</span></div></div></div>
+            <div class="code-task"><div class="cell">TASK 3</div><div class="code-task-body"><b><code>build_execute_user_message</code></b><p>The packet for the second prompt. Same idea with <code>plan_text</code>, <code>docs_text</code>, <code>guides_text</code>. This is the first time real numbers enter a prompt.</p><div class="formula"><span>plan</span><i>+</i><span>document text</span><i>+</i><span>guide text</span><i>+</i><span>history</span><i>+</i><span>boxes</span></div></div></div>
+            <div class="code-task"><div class="cell">TASK 4a</div><div class="code-task-body"><b>Say what gets read</b><p>Both loops are written for you — one opens documents, one picks up guides, and both cope with a name that cannot be found. You fill in the two lists they walk over: the documents the plan asked for, and the guides the plan asked for. Nothing else is opened, which is the whole point of planning first.</p><div class="formula"><span>documents_needed</span><i>+</i><span>guides_needed</span><i>=</i><span>everything this page opens</span></div></div></div>
+            <div class="code-task"><div class="cell">TASK 4b</div><div class="code-task-body"><b>Send the second prompt</b><p>Which section of the form this page belongs to is worked out for you. Three lines are left blank: look up that section's extra rules, glue them onto the general job description to get the system prompt, and send it with your Task 3 packet as the user message. What comes back is the box → value answer.</p><div class="formula"><span>job description</span><i>+</i><span>section rules</span><i>+</i><span>your packet</span><i>=</i><span>values</span></div></div></div>
+            <div class="code-task"><div class="cell">TASK 5</div><div class="code-task-body"><b>Try it on one page</b><p>Ask the practice form for its Income page with <code>test_server.scan_page()</code>, run your <code>think_step</code> on it, and compare the four values it produced with the expected ones.</p></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel green">
+            <span class="panel-label">The test at the end · Task 5</span>
+            <h3>Four numbers tell you whether the whole page works.</h3>
+            <p class="soft">For Anna the Income page has four boxes with known answers: gross salary 142 000, social-insurance 7 526.60, pension fund 8 400, interest 12.50. The notebook prints your AI's values next to them with a ✓ or ✗. All four ✓ means plan, reading and filling all worked on this page.</p>
+          </div>
+          <details class="qa">
+            <summary>Why prompt the model twice instead of once?</summary>
+            <div class="details-body"><ul><li><b>You can test each half.</b> The checkpoints inspect the packets you build. One giant prompt could only be tested by running it.</li><li><b>Less noise.</b> The second prompt carries two or three relevant documents instead of all eleven, on every one of 28 pages.</li><li><b>You can see what happened.</b> Every plan is saved and drawn in Section 7. When a value is wrong you can see whether the right file was ever opened.</li></ul></div>
+          </details>
+          <details class="qa">
+            <summary>The Task 5 table shows a ✗. Where do I look, in what order?</summary>
+            <div class="details-body"><ol><li><b>The plan.</b> Print <code>plan["documents_needed"]</code>. Is the salary certificate in it, spelled exactly like the catalog?</li><li><b>The reading.</b> Print <code>doc_contents.keys()</code>. Did the loop actually open it? If the list you handed it in Task 4a was the wrong one — or an empty one — the second prompt carries no documents at all.</li><li><b>The packet.</b> Print the message Task 3 built. Does it contain 142,000.00? If not, the document text is not making it into the packet.</li><li><b>The AI's reasoning.</b> Look at <code>mapping["_thought"]</code>. A model that added the accident-insurance line to the social-insurance total ignored the section rules: check that Task 4b appends them.</li><li><b>The box names.</b> Every key in <code>mapping</code> must be a box that was on the page. Invented names fail later when the value is typed in.</li></ol></div>
+          </details>
+        </div>
+      </div>
+
+      <details class="qa takeaway">
+        <summary>What to take away from Section 6</summary>
+        <div class="details-body">One page, three moves: the AI decides what to read, your code reads it, the AI turns it into values. The system prompt sets the job; the packet you build is the only thing the AI knows about this particular page. When something goes wrong later, it is almost always one of these three moves, and you now know how to check each one.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="think"><span>Both packet checkpoints print 🎉 and the Task 5 table shows Anna's four values with ✓.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 7 ═══════════════════════════ -->
+    <section class="chapter" id="stop-7" data-station="6" style="--chapter-color:#2b6ef2">
+      <div class="chapter-head">
+        <div class="stop-sign">07</div>
+        <div>
+          <div class="kicker">Notebook section 7 · 🎨 Plan visualization</div>
+          <h2>Look at the AI's plan before you trust it.</h2>
+          <p class="chapter-lead">Section 6 gave you a working page handler. This section draws the plan the AI produced as a card: its reasoning, the documents it ticked, the boxes it intends to fill. During the full run in Section 8 one card appears for every page, so you can watch the planner's choices as they happen.</p>
+          <span class="cell-badge">RUN · NO TASKS</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="visual-plan">
+          <h3>Plan: income</h3>
+          <div class="reasoning-box"><b>Reasoning</b><br>Gross salary, AHV and BVG contributions are on the Lohnausweis. Interest income is the sum of the Zinsabschluss rows in the bank statement. No guide needed: the values are copied, not computed.</div>
+          <div class="source-note ai-one"><span class="call-id">LLM PROMPTED (FIRST TIME)</span><span>wrote the text above and chose the files below</span></div>
+          <div class="doc-choice yes"><span class="checkbox-icon">✓</span> lohnausweis.txt</div>
+          <div class="doc-choice yes"><span class="checkbox-icon">✓</span> bank_statement.csv</div>
+          <div class="doc-choice no"><span class="checkbox-icon"></span> profile.json</div>
+          <div class="doc-choice no"><span class="checkbox-icon"></span> pillar_3a.txt</div>
+          <div class="doc-choice no"><span class="checkbox-icon"></span> zvv_receipt.txt</div>
+          <div style="margin-top:15px"><span class="code-chip">gross salary</span><span class="code-chip">social insurance</span><span class="code-chip">pension fund</span><span class="code-chip">interest</span></div>
+        </div>
+        <div class="panel">
+          <span class="panel-label">Three questions to ask of every card</span>
+          <h3>Relevant, complete, honest.</h3>
+          <div class="debug-lights">
+            <div class="debug-light"><i class="light" style="--light:#2f9d66"></i><div><b>Relevant?</b><br><span class="soft">Each ticked file should help with at least one box on this page. Opening the profile for the Deductions page is wasted effort and extra noise.</span></div></div>
+            <div class="debug-light"><i class="light" style="--light:#e4aa26"></i><div><b>Complete?</b><br><span class="soft">Every computed box needs a rule guide. A Deductions plan with no guide ticked will guess or skip the flat-rate deduction.</span></div></div>
+            <div class="debug-light"><i class="light" style="--light:#d94b45"></i><div><b>Honest?</b><br><span class="soft">The reasoning should say where to look, not what the numbers are. A plan that already claims "gross salary is 142 000" made it up: the planner never saw the file.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 7</summary>
+        <div class="details-body">The card is a window into the AI's decision, not proof it is right. Fluent reasoning can still tick the wrong file or forget a guide. Comparing the ticked files against the page's questions takes five seconds and explains most wrong values before you look at anything else.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="visualize"><span>For the Income card I checked that the ticked files match the boxes and that no guide was needed.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 8 ═══════════════════════════ -->
+    <section class="chapter" id="stop-8" data-station="7" style="--chapter-color:#174f3f">
+      <div class="chapter-head">
+        <div class="stop-sign">08</div>
+        <div>
+          <div class="kicker">Notebook section 8 · 🔁 The full run · Task 6</div>
+          <h2>Repeat the one-page routine on all 28 pages, then hand in.</h2>
+          <p class="chapter-lead">The loop is given to you almost complete. It walks the form page by page, calls your one-page routine on each, types the answers in, presses Next, and hands the return in on the Review page. Your Task 6 is to plug your routine into two marked places. Then the big final cell shows the real form and you watch the agent fill it.</p>
+          <span class="cell-badge">🎯 TASK 6 · TWO LINES · THEN WATCH IT RUN</span>
+        </div>
+      </div>
+
+      <div class="loop-board" aria-label="One trip around the loop">
+        <div class="loop-step"><i style="--step-color:#c9f26b">1</i><b>LOOK</b><small>what is on this page?</small></div>
+        <div class="loop-step"><i style="--step-color:#7eb5ff">2</i><b>PLAN</b><small>first prompt</small></div>
+        <div class="loop-step"><i style="--step-color:#ffd95a">3</i><b>READ</b><small>open the named files</small></div>
+        <div class="loop-step"><i style="--step-color:#d8cafa">4</i><b>DECIDE</b><small>second prompt</small></div>
+        <div class="loop-step"><i style="--step-color:#ff9c77">5</i><b>TYPE</b><small>value into each box</small></div>
+        <div class="loop-step"><i style="--step-color:#b5e6d3">6</i><b>NEXT</b><small>press the button</small></div>
+        <div class="loop-step"><i style="--step-color:#ffffff">7</i><b>HAND IN</b><small>on the Review page</small></div>
+        <div class="loop-return">STEPS 1–6 REPEAT FOR EVERY PAGE, UNTIL THE REVIEW PAGE ↶</div>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="panel">
+          <span class="panel-label">Your two lines · Task 6</span>
+          <h3>Steps 2–4 and step 5 are yours.</h3>
+          <div class="code-anatomy">
+            <div class="code-task"><div class="cell">STEP 2–4</div><div class="code-task-body"><b>Call your one-page routine</b><p>Where the loop says <code>plan, mapping = {}, {}</code>, call <code>think_step(...)</code> with the arguments the comment lists. The loop has already looked at the page and prepared the folder labels and guides for you.</p></div></div>
+            <div class="code-task"><div class="cell">STEP 5</div><div class="code-task-body"><b>Type the values in</b><p>Where the loop says <code>filled = {}</code>, call <code>fill_page(...)</code>. It types each value into its box, prints what worked and what failed, and remembers the successful ones so later pages can see them.</p></div></div>
+          </div>
+        </div>
+        <div class="panel lime">
+          <span class="panel-label" style="color:#52662c">What the loop handles for you</span>
+          <div class="mission-list">
+            <div class="mission-item"><span class="mission-icon">↦</span><div><b>Getting onto the form</b><span>From the start screen it finds its way to the first form page.</span></div></div>
+            <div class="mission-item"><span class="mission-icon">＋</span><div><b>Tables</b><span>If a page is a table with no rows yet, it adds a row first so the AI can see the boxes. If the AI says "there are two children but only one row", it adds rows and asks again.</span></div></div>
+            <div class="mission-item"><span class="mission-icon">🧾</span><div><b>Memory</b><span>Everything successfully typed is remembered and shown to the AI on later pages, so cross-page rules (medical threshold, securities after dividends) can be applied.</span></div></div>
+            <div class="mission-item"><span class="mission-icon">🛑</span><div><b>Stopping</b><span>It hands in on the Review page. If it cannot move forward, or has done 100 steps, it stops and tells you; then there is nothing to score.</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:20px">
+        <span class="panel-label">The five taxpayers · run them in this order</span>
+        <h3>Each one adds paperwork and rules the previous one did not need.</h3>
+        <div class="table-scroll">
+        <table class="facts">
+          <tr><th>Taxpayer</th><th>Level</th><th>New paperwork</th><th>New rules the agent must apply</th></tr>
+          <tr><td><b>Anna Meier</b></td><td>Easy</td><td>One salary certificate, bank statement, pension confirmation, transport pass</td><td>Flat-rate professional expenses (3 % of net salary); the bicycle allowance on top of the transport pass; meal allowance depending on canteen access; donations from the bank statement; year-end bank balance.</td></tr>
+          <tr><td><b>Marco &amp; Laura Bernasconi</b></td><td>Medium</td><td>Two salary certificates, joint bank statement, two pension confirmations, day-care receipt, professional-association membership, property assessment</td><td>Flat rate per person, then summed; the two-earner deduction; the childcare cap per child; the home's rental value as income and tax value as wealth, the mortgage as debt; flat rate versus itemised receipts is a per-person choice, never both.</td></tr>
+          <tr><td><b>Priya Chakraborty</b></td><td>Hard</td><td>Four freelance invoices and expenses, a US broker statement, a language-course receipt</td><td>Self-employment must be switched on before its boxes count; dividends in dollars converted to francs; declared dividends require a securities row; further education only if job-related.</td></tr>
+          <tr><td><b>Thomas &amp; Elisabeth Widmer</b></td><td>Very hard</td><td>Part-year salary certificate, state-pension and pension-fund statements, a vested-benefits account, medical receipts, a securities portfolio, property</td><td>Pensions are ordinary income; medical costs count only above 5 % of net income (write 0, not the receipt total, when below); the vested-benefits balance is wealth and its interest income; all wealth at 31 December values.</td></tr>
+          <tr><td><b>Yuki Tanaka</b></td><td>Expert</td><td>Divorce decree, an email from the ex-husband, a blurry day-care receipt</td><td>Spousal support received is income, child support is not; alimony as ordered by the court, not as actually paid; single-parent status. The blurry receipt is the case where asking the taxpayer is the right move.</td></tr>
+        </table>
+        </div>
+      </div>
+
+      <details class="qa">
+        <summary>Why does the AI need to remember earlier pages?</summary>
+        <div class="details-body"><p>Because a tax return is not 28 independent quizzes. The medical deduction on a Deductions page depends on the income declared several pages earlier. The securities table on the Wealth pages must have a row if dividends were declared on Income. Without a memory, every page would be answered in isolation and those rules could not be applied. That is why the list of everything already filled travels along in both prompts.</p></div>
+      </details>
+      <details class="qa pitfall">
+        <summary>The run ended without "Submitted!"</summary>
+        <div class="details-body">Scroll up to the last page header. If the last line says it cannot move forward, pressing Next failed on that page; run the cell again. If it says 100 steps were reached, the agent went round in a circle between pages. If the cell stopped with a Python error inside your routine, the AI replied with something that was not in the agreed format; run the cell again, and if it repeats, tighten the "answer in the agreed format" line of your packet.</div>
+      </details>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 8</summary>
+        <div class="details-body">The full agent is your one-page routine repeated, with bookkeeping around it: knowing where it is, adding rows, remembering what it filled, and stopping at the right time. Your Task 6 is two lines because everything page-specific already lives in the routine you wrote in Section 6.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="loop"><span>For Anna Meier the final cell showed a plan card for every page, then "Submitted! Success: True".</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ STOP 9 ═══════════════════════════ -->
+    <section class="chapter" id="stop-9" data-station="8" style="--chapter-color:#ff6b35">
+      <div class="chapter-head">
+        <div class="stop-sign">09</div>
+        <div>
+          <div class="kicker">Notebook section 9 · 📊 Score</div>
+          <h2>Every box is compared with the answer key, and every verdict says why.</h2>
+          <p class="chapter-lead">The scorer takes the return your agent handed in and compares it, box by box, with a hidden answer key for that taxpayer. Each box is compared in the way that suits its kind (a number, a date, a name…). The score card shows the total, lists what was wrong or missing, and tells you for each which rule decided it.</p>
+          <span class="cell-badge">RUN AFTER A FULL RUN</span>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <span class="panel-label">How each kind of box is compared</span>
+          <div class="table-scroll">
+          <table class="facts">
+            <tr><th>Kind of box</th><th>Counts as correct when</th><th>Example that passes</th></tr>
+            <tr><td>Amount</td><td>Within 1 franc of the key. A few estimated values (dividends in a foreign currency) also pass within half a percent.</td><td>7526.6 vs 7526.60</td></tr>
+            <tr><td>Choice (drop-down, tick box)</td><td>Means the same thing, in either language.</td><td>"ledig" = "single"; "Tochter" = "child"</td></tr>
+            <tr><td>Date</td><td>Same day, whatever the format.</td><td>14.07.1996 = 1996-07-14</td></tr>
+            <tr><td>Identifier (AHV number, postcode…)</td><td>Same characters once dots, spaces and accents are ignored.</td><td>756.1234.5678.90 = 7561234567890</td></tr>
+            <tr><td>Free text (names)</td><td>Same text, or close enough. In doubt, an AI judge is asked "is this the same thing?"</td><td>"UBS" vs "UBS Switzerland AG"</td></tr>
+          </table>
+          </div>
+          <div class="formula-line">score = (correct − ½ × extra) ÷ total × 100
+            <small><b>total</b>: boxes the answer key fills in. <b>missing</b>: the key has a value, you left it empty. <b>extra</b>: you filled a box the key leaves empty; each costs half a point. Leaving a box empty where the key says 0 is fine.</small>
+          </div>
+        </div>
+
+        <div class="panel dark">
+          <span class="panel-label">Trace a wrong or missing box backwards</span>
+          <h3>Start from the "Decided by" column.</h3>
+          <div class="decision-tree">
+            <div class="decision"><b>1</b><span><strong>Missing</strong> · Open that page's plan card. Was the right document ticked? Then look at the "Filled / FAILED" lines: was the box on the page, and did typing into it succeed?</span></div>
+            <div class="decision"><b>2</b><span><strong>Wrong amount</strong> · A fact was misread or a rule misapplied: the accident-insurance line added to social insurance, a flat rate not capped, spouses not summed. Read the AI's own reasoning for that page.</span></div>
+            <div class="decision"><b>3</b><span><strong>Wrong text</strong> · Usually the wrong thing entirely, such as the employer's address instead of its name.</span></div>
+            <div class="decision"><b>4</b><span><strong>Extra</strong> · You filled a box the key leaves empty. Typical: a 0 written into a deduction the taxpayer does not have, or an extra row in a table.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:20px">
+        <span class="panel-label">Rules that are easy to miss</span>
+        <div class="grid-3">
+          <div><b>Table rows are matched by name, not by position.</b><p class="soft micro">Bank accounts by bank name, children by name, debts by creditor. A row the key has and you do not costs one point per box in it; a row you add that the key does not have counts as extra, per box.</p></div>
+          <div><b>Writing 0 is not the same as leaving a box empty.</b><p class="soft micro">A 0 in a deduction the taxpayer does not have is an <em>extra</em>. The AI is told not to do this; if it does, tighten the rules for that section.</p></div>
+          <div><b>The AI judge only ever looks at free text.</b><p class="soft micro">Amounts, dates, choices and identifiers are compared by fixed rules. Only names and descriptions can go to the judge, and its verdicts are remembered so re-scoring is free.</p></div>
+        </div>
+      </div>
+
+      <details class="qa">
+        <summary>Glossary</summary>
+        <div class="details-body"><ul><li><b>Taxpayer (persona)</b>: one simulated person or couple, with a folder of documents, a script for answering questions, and a hidden answer key.</li><li><b>Plan</b>: the AI's decision, for one page, about which documents and guides to open and how to use them.</li><li><b>Packet (user message)</b>: everything about the current page that your code sends to the AI in one call.</li><li><b>System prompt</b>: the fixed job description the AI gets with every prompt.</li><li><b>Section rules</b>: extra instructions added to the job description for one section of the form (Income, Deductions, Wealth…).</li><li><b>Memory (filled history)</b>: everything successfully typed on earlier pages, shown to the AI again on later pages.</li><li><b>Decided by</b>: the comparison rule that settled a box's verdict on the score card.</li></ul></div>
+      </details>
+      <details class="qa takeaway">
+        <summary>What to take away from Section 9</summary>
+        <div class="details-body">The score is a diagnosis of the whole pipeline. Because every verdict names the rule behind it, you can tell a reading failure (missing) from a reasoning failure (wrong amount) from over-eagerness (extra), and fix the earliest step that broke: plan, reading, filling, or navigation.</div>
+      </details>
+      <label class="done-check"><input type="checkbox" data-check="score"><span>I scored a run, read the "Decided by" entry for each problem box, and traced each one back to plan, reading, filling or navigation.</span></label>
+    </section>
+
+    <!-- ══════════════════════════════════════ WRAP-UP ═══════════════════════════ -->
+    <section class="final-card">
+      <div class="kicker" style="color:var(--lime)">Notebook section 10 · 🏁 Wrap-up</div>
+      <h2>What to try once Anna scores well.</h2>
+      <p>Each of these is a contained change to something you already built, and each can be measured with the Section 9 score card.</p>
+      <ul>
+        <li><b>Send less.</b> The bank statement currently reaches the AI twice, once as plain text and once as a table. Send only one form and check the score holds.</li>
+        <li><b>Check the typing.</b> After filling a page, look at the page again and compare what is in the boxes with what you sent. Redo the boxes that did not stick.</li>
+        <li><b>Let it ask.</b> When the plan says a question to the taxpayer is needed, actually ask, and add the answer to the packet. Yuki's blurry day-care receipt is the test case.</li>
+        <li><b>Compare models.</b> Switch the model, re-run the same taxpayer, compare score, time and cost. Keep the scorer's judge model fixed so the grading does not move.</li>
+        <li><b>Ask for confidence.</b> Have the planner rate its confidence per box and skip or flag the doubtful ones; see whether extras drop faster than correct answers.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>Companion to the AgenTekki student notebook · follows the notebook's section numbers, not its cell numbers</footer>
+
+  <script>
+    (() => {
+      const sections = [...document.querySelectorAll('[data-station]')];
+      const items = [...document.querySelectorAll('.metro li')];
+      const links = [...document.querySelectorAll('.metro a[data-label]')];
+      const track = document.getElementById('metro-track');
+      const viewport = document.getElementById('map-viewport');
+      const where = document.getElementById('where-label');
+      const reading = document.getElementById('reading-progress');
+      let activeIndex = -1;
+
+      function setActive(index) {
+        if (index === activeIndex || index < 0) return;
+        activeIndex = index;
+        const pct = index === 0 ? '0%' : `calc((100% - 48px - (100% - 48px) / 9) * ${index / (items.length - 1)})`;
+        track.style.setProperty('--pin-index', index);
+        track.style.setProperty('--progress', pct);
+        items.forEach((item, i) => {
+          item.classList.toggle('active', i === index);
+          item.classList.toggle('visited', i <= index);
+        });
+        where.textContent = `You are here · ${links[index].dataset.label}`;
+        const activeLink = links[index];
+        const target = activeLink.offsetLeft + activeLink.offsetWidth / 2 - viewport.clientWidth / 2;
+        viewport.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+      }
+
+      function updateFromScroll() {
+        const marker = window.innerHeight * .46;
+        let next = 0;
+        sections.forEach((section, i) => {
+          if (section.getBoundingClientRect().top <= marker) next = i;
+        });
+        setActive(next);
+        const root = document.documentElement;
+        const scrollable = root.scrollHeight - window.innerHeight;
+        const readPct = scrollable > 0 ? Math.min(100, Math.max(0, window.scrollY / scrollable * 100)) : 0;
+        reading.style.width = `${readPct}%`;
+      }
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => { updateFromScroll(); ticking = false; });
+          ticking = true;
+        }
+      }, { passive: true });
+      window.addEventListener('resize', updateFromScroll);
+      updateFromScroll();
+
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem('agentekki-guide-checks') || '{}'); } catch (e) {}
+      document.querySelectorAll('[data-check]').forEach(box => {
+        box.checked = Boolean(saved[box.dataset.check]);
+        box.addEventListener('change', () => {
+          saved[box.dataset.check] = box.checked;
+          try { localStorage.setItem('agentekki-guide-checks', JSON.stringify(saved)); } catch (e) {}
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
