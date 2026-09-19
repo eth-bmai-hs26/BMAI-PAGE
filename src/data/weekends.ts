@@ -580,9 +580,15 @@ export const weekends: Weekend[] = [
         // Wittgenstein's language games and the weekend's agenda, projected in
         // front of the autoencoders deck. It is w2-lecture-material/cold-intro/
         // slides.pdf, copied here on 2026-09-17 on Carlos's instruction.
+        //
+        // "Annotated" is the deck as Carlos wrote on it in the lecture, an iPad
+        // export handed over on 2026-09-19, right after the deck it annotates,
+        // as on weekend 1. The cold open has no such chip: its export carries
+        // no ink. See the note on the Materials list below.
         links: [
           { label: 'Cold open', url: deck(2, 'cold-open.pdf') },
           { label: 'Slides', url: deck(2, 'autoencoders.pdf') },
+          { label: 'Annotated', url: deck(2, 'autoencoders-annotated.pdf') },
           { label: 'Yogurt cup game', url: viz(2, 'yogurt-cups') },
           {
             label: 'Notebook',
@@ -634,6 +640,7 @@ export const weekends: Weekend[] = [
         // the query on both links.
         links: [
           { label: 'Slides', url: deck(2, 'attention.pdf') },
+          { label: 'Annotated', url: deck(2, 'attention-annotated.pdf') },
           { label: 'Wuggish attention game', url: `${viz(2, 'wuggish')}?dev=0` },
           { label: 'Walkthrough, simple normalization', url: viz(2, 'attention-walkthrough', 'normalized.html') },
           { label: 'Walkthrough, softmax', url: viz(2, 'attention-walkthrough', 'softmax.html') },
@@ -665,7 +672,10 @@ export const weekends: Weekend[] = [
         // w2-lecture-material/attention-deck/transformer-slides.pdf, copied:
         // the second half of the FS26 attention deck, split off as its own deck
         // that day so each lecture row carries one.
-        links: [{ label: 'Slides', url: deck(2, 'transformers.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(2, 'transformers.pdf') },
+          { label: 'Annotated', url: deck(2, 'transformers-annotated.pdf') },
+        ],
       },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       {
@@ -674,7 +684,10 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         // agentic-ai-part1-llms-to-reasoning/agentic-ai-part1-slides.pdf in the
         // private w2-lecture-material, copied here on 2026-09-17.
-        links: [{ label: 'Slides', url: deck(2, 'agentic-ai-part1.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(2, 'agentic-ai-part1.pdf') },
+          { label: 'Annotated', url: deck(2, 'agentic-ai-part1-annotated.pdf') },
+        ],
       },
     ],
     saturday: [
@@ -726,14 +739,43 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
     ],
     resources: [
+      // Each annotated copy sits directly under the deck it annotates, as on
+      // weekend 1. They are Carlos's iPad exports of 2026-09-19, copied from
+      // w2-lecture-material/annotated/, and their embedded fonts are damaged
+      // the same way, so the clean deck stays the primary link above each one.
+      // Their extra pages are sheets he inserted to write on.
+      //
+      // The cold open and part 2 have no annotated copy here: both exports
+      // carry no ink, and the cold open's still misspells the guest's name.
+      // See ../w2-lecture-material/annotated/CLAUDE.md.
       { group: 'Lecture slides', label: 'The cold open', url: deck(2, 'cold-open.pdf') },
       { group: 'Lecture slides', label: 'Autoencoders', url: deck(2, 'autoencoders.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Autoencoders, annotated in the lecture',
+        url: deck(2, 'autoencoders-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Attention', url: deck(2, 'attention.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Attention, annotated in the lecture',
+        url: deck(2, 'attention-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Transformers', url: deck(2, 'transformers.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Transformers, annotated in the lecture',
+        url: deck(2, 'transformers-annotated.pdf'),
+      },
       {
         group: 'Lecture slides',
         label: 'Agentic AI, part 1: From LLMs to reasoning models',
         url: deck(2, 'agentic-ai-part1.pdf'),
+      },
+      {
+        group: 'Lecture slides',
+        label: 'Agentic AI, part 1: From LLMs to reasoning models, annotated in the lecture',
+        url: deck(2, 'agentic-ai-part1-annotated.pdf'),
       },
       {
         group: 'Lecture slides',
