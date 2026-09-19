@@ -707,7 +707,21 @@ export const weekends: Weekend[] = [
         title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
         type: 'break',
       },
-      { time: '10:30', title: 'Guest lecture: Christopher Makni', type: 'lecture' },
+      {
+        time: '10:30',
+        title: 'Guest lecture: Christophe Makni',
+        type: 'lecture',
+        // The speaker's own deck, "Agentic AI in practice: Lessons learned for
+        // Leaders", 37 pages, copied byte for byte on 2026-09-19 on Carlos's
+        // instruction from "Agentic AI and Data for Leaders 19-sep-2026
+        // final.pdf". It is not ours, so no repository holds a source to
+        // recopy from. Page 6 is a black box in the PDF: the talk plays a
+        // video there, and the export kept only a placeholder.
+        //
+        // The name was "Christopher" here and in the master spreadsheet until
+        // that day. The deck spells it Christophe on every page.
+        links: [{ label: 'Slides', url: deck(2, 'agentic-ai-in-practice.pdf') }],
+      },
       { time: '11:00', title: 'Guest lecture continues', type: 'lecture' },
       { time: '12:00', title: 'Project intro: Tax agent', type: 'project' },
     ],
@@ -725,6 +739,11 @@ export const weekends: Weekend[] = [
         group: 'Lecture slides',
         label: 'Agentic AI, part 2: Agents',
         url: deck(2, 'agentic-ai-part2.pdf'),
+      },
+      {
+        group: 'Lecture slides',
+        label: 'Guest lecture: Agentic AI in practice, by Christophe Makni',
+        url: deck(2, 'agentic-ai-in-practice.pdf'),
       },
       {
         group: 'Visualizations',
