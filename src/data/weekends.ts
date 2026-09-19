@@ -864,11 +864,7 @@ export const weekends: Weekend[] = [
         label: 'Agentic AI: The Hidden Layer spy game, full mission (Colab notebook)',
         url: colab('w2-cx-public', 'spy-game/the_hidden_layer_full_mission.ipynb'),
       },
-      {
-        group: 'Project',
-        label: 'Tax agent: project description',
-        url: deck(2, 'tax-agent-project-brief.pdf'),
-      },
+      { group: 'Project', label: 'Tax agent: project description', url: SOON },
       {
         group: 'Project',
         label: 'Tax agent: project intro slides',
