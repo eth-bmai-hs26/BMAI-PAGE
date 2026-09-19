@@ -355,19 +355,15 @@ export const weekends: Weekend[] = [
         time: '12:00',
         title: 'Project intro: LLM routing',
         type: 'project',
-        // No Slides chip: llm-routing-project.pdf was the wrong file and was
-        // taken down on 2026-09-19. Re-add it here, and swap the project
-        // description in the Materials list back off SOON, once the right
-        // deck is in public/slides/we1/.
-        //
-        // The chips below deliberately behave differently. The app DOWNLOADS,
+        // The two chips deliberately behave differently. The brief DOWNLOADS,
         // so it is served from this site: the download attribute is same-origin
         // only, and a github.com link would open in GitHub's viewer instead.
-        // That zip is a copy, so check upstream when the TA edits it. The
+        // That PDF is a copy, so check upstream when the TA edits it. The
         // notebook OPENS IN COLAB, which is where participants work on it and
         // which reads w1-project-public directly, so there is nothing to copy
         // and nothing to go stale.
         links: [
+          { label: 'Slides', url: deck(1, 'llm-routing-project.pdf') },
           {
             label: 'Project Notebook',
             url: colab('w1-project-public', 'project1_RelayAI_student.ipynb'),
@@ -525,7 +521,11 @@ export const weekends: Weekend[] = [
         label: 'Setting up Claude Code: VS Code, a terminal, and your licence',
         url: guide('claude-code-setup.html'),
       },
-      { group: 'Project', label: 'LLM routing: project description', url: SOON },
+      {
+        group: 'Project',
+        label: 'LLM routing: project description',
+        url: deck(1, 'llm-routing-project.pdf'),
+      },
       {
         group: 'Project',
         label: 'LLM routing: RelayAI student notebook (Colab notebook)',
