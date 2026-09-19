@@ -698,7 +698,7 @@ export const weekends: Weekend[] = [
           { label: 'Spy game', url: viz(2, 'spy-game') },
           {
             label: 'Colab notebook',
-            url: colab('w2-cx-public', 'spy-game/the_hidden_layer_micro_mission.ipynb'),
+            url: colab('w2-cx-public', 'fridge-chef/fridge_chef.ipynb'),
           },
         ],
       },
