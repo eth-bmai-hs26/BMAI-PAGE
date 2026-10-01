@@ -947,15 +947,9 @@ export const weekends: Weekend[] = [
         // connected. Copied from w3-cx-public/tetris-games/ (the six pages
         // only, not its CLAUDE.md), so recopy when the TA edits them there.
         // The pages link each other and the index by relative path, so keep
-        // them together in one folder. As on weekend 1, the chips name WHICH
-        // game, in the order they are played.
-        links: [
-          { label: 'Stencil hunt', url: exercise(3, 'tetris-games/game1-stencil-hunt.html') },
-          { label: 'Build the inspector', url: exercise(3, 'tetris-games/game2-layers.html') },
-          { label: 'Shrink the sheets', url: exercise(3, 'tetris-games/game3-pooling.html') },
-          { label: 'Let it learn', url: exercise(3, 'tetris-games/game4-let-it-learn.html') },
-          { label: 'Why a stencil?', url: exercise(3, 'tetris-games/game5-why-a-stencil.html') },
-        ],
+        // them together in one folder. One chip to the games' own index page,
+        // which lists the five in order, rather than a chip per game.
+        links: [{ label: 'Play games', url: exercise(3, 'tetris-games/index.html') }],
       },
       {
         time: '10:00',
@@ -1060,28 +1054,8 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Coding exercises',
-        label: 'Tetris game 1: Stencil hunt (filters and convolution, runs in the browser)',
-        url: exercise(3, 'tetris-games/game1-stencil-hunt.html'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Tetris game 2: Build the inspector (layers and activation, runs in the browser)',
-        url: exercise(3, 'tetris-games/game2-layers.html'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Tetris game 3: Shrink the sheets (pooling, runs in the browser)',
-        url: exercise(3, 'tetris-games/game3-pooling.html'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Tetris game 4: Let it learn (training, runs in the browser)',
-        url: exercise(3, 'tetris-games/game4-let-it-learn.html'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Tetris game 5: Why a stencil? (CNN vs fully connected, runs in the browser)',
-        url: exercise(3, 'tetris-games/game5-why-a-stencil.html'),
+        label: 'Tetris games: five games on how a CNN sees, played in order (runs in the browser)',
+        url: exercise(3, 'tetris-games/index.html'),
       },
       {
         group: 'Coding exercises',
