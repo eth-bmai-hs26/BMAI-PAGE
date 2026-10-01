@@ -964,7 +964,12 @@ export const weekends: Weekend[] = [
         // One deck for both UNet blocks, this one and 16:00.
         links: [{ label: 'Slides', url: deck(3, 'w3_3_unet.pdf') }],
       },
-      { time: '14:30', title: 'UNets', type: 'exercise' },
+      {
+        time: '14:30',
+        title: 'UNets',
+        type: 'exercise',
+        links: [{ label: 'Colab notebook', url: colab('w3-cx-public', 'unet/w3_cx_unet.ipynb') }],
+      },
       {
         time: '15:30',
         title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 16:00',
@@ -1041,7 +1046,11 @@ export const weekends: Weekend[] = [
         label: 'CNNs in PyTorch (Colab notebook)',
         url: colab('w3-cx-public', 'w3_cx_cnn.ipynb', 'cnn'),
       },
-      { group: 'Coding exercises', label: 'UNets', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'UNets (Colab notebook)',
+        url: colab('w3-cx-public', 'unet/w3_cx_unet.ipynb'),
+      },
       {
         group: 'Coding exercises',
         label: 'Diffusion (Colab notebook)',
