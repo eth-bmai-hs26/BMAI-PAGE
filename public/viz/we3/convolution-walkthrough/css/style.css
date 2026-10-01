@@ -1,0 +1,194 @@
+/* style.css : the Paper and Grid look of the convolution walkthrough.
+ *
+ * These pages are projected in the same lecture as convolutional-filters-deck, so they
+ * take that deck's theme rather than the course-viz editorial one: warm
+ * paper, a faint squared grid, a sepia margin rule, near-black ink,
+ * Libertinus everywhere, and the deck's own Tetris-tile colours (its
+ * beamer-preamble.tex, "The Tetris-tile kit"), whose pairs stay CIEDE2000 18
+ * apart under protanopia and deuteranopia. Light only, as the deck is.
+ *
+ * Every colour lives here as a token. The drawing code sets classes; it
+ * never writes a colour.
+ */
+
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Italic.otf") format("opentype");
+  font-weight: 400; font-style: italic;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Math";
+  src: url("../vendor/fonts/LibertinusMath-Regular.otf") format("opentype");
+}
+
+:root {
+  --paper: #FBF8F2;      /* the warm ground */
+  --ink: #212121;        /* black 87 percent */
+  --muted: #737373;      /* black 55 percent, the legible floor */
+  --hair: #C9C6C0;       /* inner cell lines */
+  --sepia: #8A6D3B;      /* chrome only: rules */
+  --brand: #26456E;      /* ink blue: links, the probe */
+  --orange: #E69F00;     /* the O tile; the orange filter */
+  --magenta: #BB1B78;    /* the J tile; the fuchsia filter */
+  --violet: #996BC7;     /* the L tile; the purple window */
+  --cyan: #66CCEE;       /* the I tile; the cyan window; pooling */
+  --cyan-text: #2E8BA8;  /* cyan dark enough to read as text */
+  --land: #32B08C;       /* bluish green, 80 percent on paper */
+  --sea: #EEF3F1;        /* sky blue, 8 percent on paper */
+  --orange-tint: #EBB53D;   /* orange 75 percent on paper */
+  --magenta-tint: #CB5297;  /* magenta 75 percent on paper */
+  --grey-land: #DAD8D3;     /* black 13 percent on paper: a 1 in a 0/1 grid */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
+}
+body {
+  /* the squared page and the sepia margin rule */
+  background-image:
+    linear-gradient(to right, rgba(138, 109, 59, 0.55) 0, rgba(138, 109, 59, 0.55) 1.5px, transparent 1.5px),
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 22px 22px, 22px 22px;
+  background-position: 26px 0, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======== the top bar */
+header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 14px 36px 6px 56px;
+  border-bottom: 1.5px solid var(--sepia);
+  margin: 0 28px 0 0;
+}
+header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1 1 auto;
+  white-space: nowrap;
+}
+header .crossicon { height: 0.8em; vertical-align: -0.06em; }
+header nav { display: flex; gap: 14px; font-size: 16px; }
+header nav a { color: var(--brand); text-decoration: none; }
+header nav a.here { color: var(--ink); font-weight: 700; }
+.controls { display: flex; align-items: baseline; gap: 10px; font-size: 16px; }
+.controls button {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--brand);
+  background: transparent;
+  border: 1px solid var(--brand);
+  border-radius: 3px;
+  padding: 1px 10px;
+  cursor: pointer;
+}
+.controls button:disabled { color: var(--muted); border-color: var(--hair); cursor: default; }
+.controls .count { color: var(--muted); min-width: 92px; text-align: right; }
+
+/* ======== the drawing */
+main {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 8px 28px 10px 44px;
+  display: flex;
+}
+main > svg {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Step visibility: an element with data-from and data-to is shown only when
+   the current step lies between them; js/stepper.js sets the class. */
+.off { display: none; }
+
+/* SVG: cells */
+.sea { fill: var(--sea); }
+.white { fill: var(--paper); }
+.land { fill: var(--land); }
+.land-grey { fill: var(--grey-land); }
+.land-orange { fill: var(--orange-tint); }
+.land-magenta { fill: var(--magenta-tint); }
+.hatch { fill: url(#hatch); }
+.hatchline { stroke: var(--ink); stroke-width: 2.4; }
+.crossline { stroke: var(--ink); stroke-width: 0.12; }
+.hair { stroke: var(--hair); stroke-width: 1; fill: none; }
+.frame { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+.paperfill { fill: var(--paper); }
+
+/* SVG: the colours as strokes */
+.s-orange { stroke: var(--orange); fill: none; }
+.s-magenta { stroke: var(--magenta); fill: none; }
+.s-violet { stroke: var(--violet); fill: none; }
+.s-cyan { stroke: var(--cyan); fill: none; }
+.s-ink { stroke: var(--ink); fill: none; }
+.s-cyantext { stroke: var(--cyan-text); fill: none; }
+.w1 { stroke-width: 1.5; }
+.w2 { stroke-width: 2.4; }
+.w3 { stroke-width: 3.2; }
+.dash { stroke-dasharray: 9 6; }
+.round { stroke-linejoin: round; stroke-linecap: round; }
+
+/* SVG: text */
+text { font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif; fill: var(--ink); }
+.num { font-size: 22px; dominant-baseline: central; text-anchor: middle; }
+.num-sm { font-size: 18px; dominant-baseline: central; text-anchor: middle; }
+.num-big { font-size: 40px; dominant-baseline: central; text-anchor: middle; }
+.b { font-weight: 700; }
+.dim { font-size: 20px; fill: var(--muted); dominant-baseline: central; text-anchor: middle; }
+.label { font-size: 24px; dominant-baseline: central; text-anchor: middle; }
+.label-l { font-size: 24px; dominant-baseline: central; text-anchor: start; }
+.note { font-size: 21px; font-style: italic; fill: var(--muted); dominant-baseline: central; text-anchor: start; }
+.op { font-size: 34px; dominant-baseline: central; text-anchor: middle; font-family: "Libertinus Math", "Libertinus Serif", serif; }
+.t-cyan { fill: var(--cyan-text); }
+.t-muted { fill: var(--muted); }
+
+/* SVG: arrowheads */
+.head-ink { fill: var(--ink); }
+.head-orange { fill: var(--orange); }
+.head-magenta { fill: var(--magenta); }
+.head-cyan { fill: var(--cyan-text); }
+
+/* interaction: what the pointer is over */
+.probe { fill: none; stroke: var(--brand); stroke-width: 3.2; stroke-dasharray: 10 6; pointer-events: none; }
+.hit { fill: transparent; cursor: pointer; }
+.hit:hover { fill: rgba(38, 69, 110, 0.10); }
+.dimmed { opacity: 0.22; }
+
+/* the landing page */
+.landing { padding: 40px 56px; max-width: 980px; }
+.landing h1 { font-size: 34px; margin: 0 0 6px 0; }
+.landing .rule { width: 180px; height: 2px; background: var(--sepia); margin: 10px 0 18px 0; }
+.landing p { font-size: 19px; line-height: 1.5; margin: 0 0 14px 0; }
+.landing ol { font-size: 20px; line-height: 1.6; padding-left: 26px; }
+.landing a { color: var(--brand); }
+.landing .keys { color: var(--muted); font-style: italic; font-size: 17px; }
+
+/* a script error, written by js/errors.js, shown rather than swallowed */
+html[data-error]::before {
+  content: "Script error: " attr(data-error);
+  position: fixed; left: 0; right: 0; top: 0; z-index: 10;
+  background: #fff; color: #000; padding: 6px 12px; font: 14px monospace;
+}

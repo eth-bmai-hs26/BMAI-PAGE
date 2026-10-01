@@ -913,7 +913,20 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         // Since 2026-10-01: the four frames Carlos asked for from his sheets 7
         // to 11; he abandoned the rest of the first CNN deck that day.
-        links: [{ label: 'Slides', url: deck(3, 'convolutional-filters.pdf') }],
+        //
+        // The three walkthroughs are the same four frames with room to work
+        // them out in the room, one page per sheet: tiles (sheet 7), crosses
+        // with pooling (sheets 8 and 11), activations (sheets 9 and 10).
+        // Copied on 2026-10-01, on Carlos's instruction, from
+        // w3-lecture-material/convolution-walkthrough/ (the four pages, css,
+        // js, data and vendored fonts only; not its dev or precompute
+        // folders). A change there must be recopied here.
+        links: [
+          { label: 'Slides', url: deck(3, 'convolutional-filters.pdf') },
+          { label: 'Walkthrough, tiles', url: viz(3, 'convolution-walkthrough', 'tiles.html') },
+          { label: 'Walkthrough, crosses and pooling', url: viz(3, 'convolution-walkthrough', 'crosses.html') },
+          { label: 'Walkthrough, activations', url: viz(3, 'convolution-walkthrough', 'activations.html') },
+        ],
       },
       { time: '09:00', title: 'CNNs', type: 'exercise' },
       {
@@ -974,6 +987,21 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'UNets, part 2', url: deck(3, 'unet-part-2.pdf') },
       { group: 'Lecture slides', label: 'Diffusion', url: deck(3, 'diffusion.pdf') },
       { group: 'Lecture slides', label: 'CLIP', url: deck(3, 'clip.pdf') },
+      {
+        group: 'Visualizations',
+        label: 'Decomposing an image into tiles (Friday, convolutional filters)',
+        url: viz(3, 'convolution-walkthrough', 'tiles.html'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'Recognizing islands that look like a cross, with pooling (Friday, convolutional filters)',
+        url: viz(3, 'convolution-walkthrough', 'crosses.html'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'How to compute activations (Friday, convolutional filters)',
+        url: viz(3, 'convolution-walkthrough', 'activations.html'),
+      },
       { group: 'Coding exercises', label: 'CNNs', url: SOON },
       { group: 'Coding exercises', label: 'CNNs in PyTorch', url: SOON },
       { group: 'Coding exercises', label: 'UNets', url: SOON },
