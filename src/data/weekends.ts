@@ -996,7 +996,12 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [{ label: 'Slides', url: deck(3, 'w3_5_clip.pdf') }],
       },
-      { time: '11:00', title: 'CLIP', type: 'exercise' },
+      {
+        time: '11:00',
+        title: 'CLIP',
+        type: 'exercise',
+        links: [{ label: 'Colab notebook', url: colab('w3-cx-public', 'clip/cx_clip_w3.ipynb') }],
+      },
       { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
     ],
     resources: [
@@ -1033,7 +1038,11 @@ export const weekends: Weekend[] = [
       },
       { group: 'Coding exercises', label: 'UNets', url: SOON },
       { group: 'Coding exercises', label: 'Diffusion', url: SOON },
-      { group: 'Coding exercises', label: 'CLIP', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'CLIP (Colab notebook)',
+        url: colab('w3-cx-public', 'clip/cx_clip_w3.ipynb'),
+      },
       { group: 'Project', label: 'Fashion magazine editor: project description', url: SOON },
       { group: 'Project', label: 'Fashion magazine editor: grading scheme', url: SOON },
     ],
