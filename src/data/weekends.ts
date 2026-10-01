@@ -57,9 +57,12 @@ export type PublicRepo = string;
 export const raw = (repo: PublicRepo, path: string): string =>
   `https://raw.githubusercontent.com/${ORG}/${repo}/main/${path}`;
 
-/** Notebook in a public repo, opened in Google Colab. */
-export const colab = (repo: PublicRepo, path: string): string =>
-  `https://colab.research.google.com/github/${ORG}/${repo}/blob/main/${path}`;
+/**
+ * Notebook in a public repo, opened in Google Colab. Pass `branch` only for a
+ * notebook that has not been merged to main yet.
+ */
+export const colab = (repo: PublicRepo, path: string, branch = 'main'): string =>
+  `https://colab.research.google.com/github/${ORG}/${repo}/blob/${branch}/${path}`;
 
 /** File shown in GitHub's own viewer, for a notebook or PDF to preview in-page. */
 export const github = (repo: PublicRepo, path: string): string =>
@@ -945,7 +948,13 @@ export const weekends: Weekend[] = [
         links: [{ label: 'Slides', url: deck(3, 'w3_2_cnn.pdf') }],
       },
       { time: '10:30', title: 'Coffee break at Dozentenfoyer, until 11:00', type: 'break' },
-      { time: '11:00', title: 'CNNs in PyTorch', type: 'exercise' },
+      {
+        time: '11:00',
+        title: 'CNNs in PyTorch',
+        type: 'exercise',
+        // Only on the cnn branch of w3-cx-public so far, not on main.
+        links: [{ label: 'Colab notebook', url: colab('w3-cx-public', 'w3_cx_cnn.ipynb', 'cnn') }],
+      },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Dozentenfoyer, until 14:00', type: 'break' },
       {
@@ -1017,7 +1026,11 @@ export const weekends: Weekend[] = [
         url: viz(3, 'convolution-walkthrough', 'activations.html'),
       },
       { group: 'Coding exercises', label: 'Tetris games', url: SOON },
-      { group: 'Coding exercises', label: 'CNNs in PyTorch', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'CNNs in PyTorch (Colab notebook)',
+        url: colab('w3-cx-public', 'w3_cx_cnn.ipynb', 'cnn'),
+      },
       { group: 'Coding exercises', label: 'UNets', url: SOON },
       { group: 'Coding exercises', label: 'Diffusion', url: SOON },
       { group: 'Coding exercises', label: 'CLIP', url: SOON },
