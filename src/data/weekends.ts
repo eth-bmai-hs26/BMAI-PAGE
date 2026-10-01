@@ -905,14 +905,20 @@ export const weekends: Weekend[] = [
     saturdayRoom: 'HG D 7.2',
     project: 'Fashion magazine editor',
     summary:
-      'Two days on models that work on images. Friday covers convolutional networks and UNets and gets them running in PyTorch; Saturday moves on to diffusion models and evaluation.',
+      'Two days on models that work on images. Friday covers convolutional networks and UNets and gets them running in PyTorch; Saturday moves on to diffusion models and CLIP.',
     friday: [
       {
         time: '08:15',
         title: 'Convolutional neural networks',
         type: 'lecture',
-        // Since 2026-10-01: the four frames Carlos asked for from his sheets 7
-        // to 11; he abandoned the rest of the first CNN deck that day.
+        // Every "Slides" chip this weekend is one of Carlos's FS26 PowerPoint
+        // decks, re-dated for this weekend and exported by PowerPoint, from
+        // w3-lecture-material/pptx-decks/, numbered in teaching order. They
+        // replaced the Beamer translations on 2026-10-01, on his instruction.
+        //
+        // "Convolutional filters" is the part of this lecture he works out by
+        // hand, his sheets 7 to 11, rebuilt as a deck on 2026-10-01 because
+        // the handwritten arithmetic was wrong.
         //
         // The three walkthroughs are the same four frames with room to work
         // them out in the room, one page per sheet: tiles (sheet 7), crosses
@@ -922,18 +928,21 @@ export const weekends: Weekend[] = [
         // js, data and vendored fonts only; not its dev or precompute
         // folders). A change there must be recopied here.
         links: [
-          { label: 'Slides', url: deck(3, 'convolutional-filters.pdf') },
+          { label: 'Slides', url: deck(3, 'w3_1_intro_cnn.pdf') },
+          { label: 'Convolutional filters', url: deck(3, 'convolutional-filters.pdf') },
           { label: 'Walkthrough, tiles', url: viz(3, 'convolution-walkthrough', 'tiles.html') },
           { label: 'Walkthrough, crosses and pooling', url: viz(3, 'convolution-walkthrough', 'crosses.html') },
           { label: 'Walkthrough, activations', url: viz(3, 'convolution-walkthrough', 'activations.html') },
         ],
       },
-      { time: '09:00', title: 'CNNs', type: 'exercise' },
+      { time: '09:00', title: 'Tetris games', type: 'exercise' },
       {
         time: '10:00',
         title: 'Convolutional neural networks',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'convolutional-networks-part-2.pdf') }],
+        // The whole FS26 CNN deck: its first 36 slides are the 08:15 deck, and
+        // this hour starts at slide 37 (softmax, loss, training, validation).
+        links: [{ label: 'Slides', url: deck(3, 'w3_2_cnn.pdf') }],
       },
       { time: '10:30', title: 'Coffee break at Dozentenfoyer, until 11:00', type: 'break' },
       { time: '11:00', title: 'CNNs in PyTorch', type: 'exercise' },
@@ -943,7 +952,8 @@ export const weekends: Weekend[] = [
         time: '14:00',
         title: 'UNets',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'unet.pdf') }],
+        // One deck for both UNet blocks, this one and 16:00.
+        links: [{ label: 'Slides', url: deck(3, 'w3_3_unet.pdf') }],
       },
       { time: '14:30', title: 'UNets', type: 'exercise' },
       {
@@ -955,7 +965,7 @@ export const weekends: Weekend[] = [
         time: '16:00',
         title: 'UNets',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'unet-part-2.pdf') }],
+        links: [{ label: 'Slides', url: deck(3, 'w3_3_unet.pdf') }],
       },
     ],
     saturday: [
@@ -963,7 +973,7 @@ export const weekends: Weekend[] = [
         time: '08:15',
         title: 'Diffusion',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'diffusion.pdf') }],
+        links: [{ label: 'Slides', url: deck(3, 'w3_4_diffusion.pdf') }],
       },
       { time: '09:00', title: 'Diffusion', type: 'exercise' },
       {
@@ -975,18 +985,22 @@ export const weekends: Weekend[] = [
         time: '10:30',
         title: 'CLIP',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'clip.pdf') }],
+        links: [{ label: 'Slides', url: deck(3, 'w3_5_clip.pdf') }],
       },
       { time: '11:00', title: 'CLIP', type: 'exercise' },
       { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
     ],
     resources: [
+      { group: 'Lecture slides', label: 'Convolutional neural networks, part 1', url: deck(3, 'w3_1_intro_cnn.pdf') },
       { group: 'Lecture slides', label: 'Convolutional filters', url: deck(3, 'convolutional-filters.pdf') },
-      { group: 'Lecture slides', label: 'Convolutional neural networks, part 2', url: deck(3, 'convolutional-networks-part-2.pdf') },
-      { group: 'Lecture slides', label: 'UNets', url: deck(3, 'unet.pdf') },
-      { group: 'Lecture slides', label: 'UNets, part 2', url: deck(3, 'unet-part-2.pdf') },
-      { group: 'Lecture slides', label: 'Diffusion', url: deck(3, 'diffusion.pdf') },
-      { group: 'Lecture slides', label: 'CLIP', url: deck(3, 'clip.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Convolutional neural networks, part 2 (repeats part 1, then training from slide 37)',
+        url: deck(3, 'w3_2_cnn.pdf'),
+      },
+      { group: 'Lecture slides', label: 'UNets', url: deck(3, 'w3_3_unet.pdf') },
+      { group: 'Lecture slides', label: 'Diffusion models', url: deck(3, 'w3_4_diffusion.pdf') },
+      { group: 'Lecture slides', label: 'CLIP', url: deck(3, 'w3_5_clip.pdf') },
       {
         group: 'Visualizations',
         label: 'Decomposing an image into tiles (Friday, convolutional filters)',
@@ -1002,7 +1016,7 @@ export const weekends: Weekend[] = [
         label: 'How to compute activations (Friday, convolutional filters)',
         url: viz(3, 'convolution-walkthrough', 'activations.html'),
       },
-      { group: 'Coding exercises', label: 'CNNs', url: SOON },
+      { group: 'Coding exercises', label: 'Tetris games', url: SOON },
       { group: 'Coding exercises', label: 'CNNs in PyTorch', url: SOON },
       { group: 'Coding exercises', label: 'UNets', url: SOON },
       { group: 'Coding exercises', label: 'Diffusion', url: SOON },
