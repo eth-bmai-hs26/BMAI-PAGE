@@ -911,7 +911,9 @@ export const weekends: Weekend[] = [
         time: '08:15',
         title: 'Convolutional neural networks',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'convolutional-networks.pdf') }],
+        // Since 2026-10-01: the four frames Carlos asked for from his sheets 7
+        // to 11; he abandoned the rest of the first CNN deck that day.
+        links: [{ label: 'Slides', url: deck(3, 'convolutional-filters.pdf') }],
       },
       { time: '09:00', title: 'CNNs', type: 'exercise' },
       {
@@ -966,7 +968,7 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
     ],
     resources: [
-      { group: 'Lecture slides', label: 'Convolutional neural networks', url: deck(3, 'convolutional-networks.pdf') },
+      { group: 'Lecture slides', label: 'Convolutional filters', url: deck(3, 'convolutional-filters.pdf') },
       { group: 'Lecture slides', label: 'Convolutional neural networks, part 2', url: deck(3, 'convolutional-networks-part-2.pdf') },
       { group: 'Lecture slides', label: 'UNets', url: deck(3, 'unet.pdf') },
       { group: 'Lecture slides', label: 'UNets, part 2', url: deck(3, 'unet-part-2.pdf') },
