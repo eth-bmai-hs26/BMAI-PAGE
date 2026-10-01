@@ -984,7 +984,12 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [{ label: 'Slides', url: deck(3, 'w3_4_diffusion.pdf') }],
       },
-      { time: '09:00', title: 'Diffusion', type: 'exercise' },
+      {
+        time: '09:00',
+        title: 'Diffusion',
+        type: 'exercise',
+        links: [{ label: 'Colab notebook', url: colab('w3-cx-public', 'diffusion/w3_cx_diffusion.ipynb') }],
+      },
       {
         time: '10:00',
         title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
@@ -1037,7 +1042,11 @@ export const weekends: Weekend[] = [
         url: colab('w3-cx-public', 'w3_cx_cnn.ipynb', 'cnn'),
       },
       { group: 'Coding exercises', label: 'UNets', url: SOON },
-      { group: 'Coding exercises', label: 'Diffusion', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Diffusion (Colab notebook)',
+        url: colab('w3-cx-public', 'diffusion/w3_cx_diffusion.ipynb'),
+      },
       {
         group: 'Coding exercises',
         label: 'CLIP (Colab notebook)',
