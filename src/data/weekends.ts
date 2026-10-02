@@ -956,6 +956,7 @@ export const weekends: Weekend[] = [
         links: [
           { label: 'Cold open', url: deck(3, 'cold-open.pdf') },
           { label: 'Slides', url: deck(3, 'w3_1_intro_cnn.pdf') },
+          { label: 'Annotated', url: deck(3, 'w3_1_intro_cnn-annotated.pdf') },
           { label: 'Convolutional filters', url: deck(3, 'convolutional-filters.pdf') },
           { label: 'Walkthrough, tiles', url: viz(3, 'convolution-walkthrough', 'tiles.html') },
           { label: 'Walkthrough, crosses and pooling', url: viz(3, 'convolution-walkthrough', 'crosses.html') },
@@ -1003,6 +1004,7 @@ export const weekends: Weekend[] = [
         // linked, not copied, see SML_UNET_DEEPDIVE.
         links: [
           { label: 'Slides', url: deck(3, 'w3_3_unet.pdf') },
+          { label: 'Annotated', url: deck(3, 'w3_3_unet-annotated.pdf') },
           { label: 'U-Net deep dive', url: SML_UNET_DEEPDIVE },
         ],
       },
@@ -1023,6 +1025,7 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         links: [
           { label: 'Slides', url: deck(3, 'w3_3_unet.pdf') },
+          { label: 'Annotated', url: deck(3, 'w3_3_unet-annotated.pdf') },
           { label: 'U-Net deep dive', url: SML_UNET_DEEPDIVE },
         ],
       },
@@ -1032,7 +1035,10 @@ export const weekends: Weekend[] = [
         time: '08:15',
         title: 'Diffusion',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'w3_4_diffusion.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(3, 'w3_4_diffusion.pdf') },
+          { label: 'Annotated', url: deck(3, 'w3_4_diffusion-annotated.pdf') },
+        ],
       },
       {
         time: '09:00',
