@@ -914,6 +914,14 @@ export const weekends: Weekend[] = [
         time: '08:15',
         title: 'Convolutional neural networks',
         type: 'lecture',
+        // The weekend's cold open comes first, as on weekends 1 and 2: Leonardo
+        // da Vinci, four excerpts of his Trattato della pittura, one for each
+        // topic of the weekend, then the agenda, projected in front of the
+        // first CNN lecture. It is w3-lecture-material/cold-intro-leonardo/
+        // slides.pdf, copied here on 2026-10-02 on Carlos's instruction, and a
+        // change there must be recopied here. The Haeckel version in
+        // ../w3-lecture-material/cold-intro/ is not published.
+        //
         // Every "Slides" chip this weekend is one of Carlos's FS26 PowerPoint
         // decks, re-dated for this weekend and exported by PowerPoint, from
         // w3-lecture-material/pptx-decks/, numbered in teaching order. They
@@ -931,6 +939,7 @@ export const weekends: Weekend[] = [
         // js, data and vendored fonts only; not its dev or precompute
         // folders). A change there must be recopied here.
         links: [
+          { label: 'Cold open', url: deck(3, 'cold-open.pdf') },
           { label: 'Slides', url: deck(3, 'w3_1_intro_cnn.pdf') },
           { label: 'Convolutional filters', url: deck(3, 'convolutional-filters.pdf') },
           { label: 'Walkthrough, tiles', url: viz(3, 'convolution-walkthrough', 'tiles.html') },
@@ -1027,6 +1036,7 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
     ],
     resources: [
+      { group: 'Lecture slides', label: 'The cold open', url: deck(3, 'cold-open.pdf') },
       { group: 'Lecture slides', label: 'Convolutional neural networks, part 1', url: deck(3, 'w3_1_intro_cnn.pdf') },
       { group: 'Lecture slides', label: 'Convolutional filters', url: deck(3, 'convolutional-filters.pdf') },
       {
