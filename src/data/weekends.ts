@@ -151,6 +151,17 @@ export const exercise = (n: number, file: string): string =>
 export const app = (n: number, file: string): string =>
   `${import.meta.env.BASE_URL}apps/we${n}/${file}`;
 
+/**
+ * Two interactive deep dives from the SML course's own site, a convolutional
+ * network and a U-Net, linked rather than copied, unlike every other
+ * visualization here: they are public, live and maintained upstream in
+ * github.com/sml-fs26/neuralnetworks, so a fix there reaches this site with no
+ * recopy. The catch is that moving or renaming them there breaks these two
+ * links. Both pages and every asset they load were checked live on 2026-10-02.
+ */
+const SML_CNN_DEEPDIVE = 'https://sml-fs26.github.io/neuralnetworks/cnn-deepdive/';
+const SML_UNET_DEEPDIVE = 'https://sml-fs26.github.io/neuralnetworks/unet-deepdive/';
+
 export const weekends: Weekend[] = [
   {
     id: 'we1',
@@ -938,6 +949,10 @@ export const weekends: Weekend[] = [
         // w3-lecture-material/convolution-walkthrough/ (the four pages, css,
         // js, data and vendored fonts only; not its dev or precompute
         // folders). A change there must be recopied here.
+        //
+        // "CNN deep dive" is the SML course's own visualization of the same
+        // material, from a single filter up to receptive fields. It is linked,
+        // not copied, see SML_CNN_DEEPDIVE.
         links: [
           { label: 'Cold open', url: deck(3, 'cold-open.pdf') },
           { label: 'Slides', url: deck(3, 'w3_1_intro_cnn.pdf') },
@@ -945,6 +960,7 @@ export const weekends: Weekend[] = [
           { label: 'Walkthrough, tiles', url: viz(3, 'convolution-walkthrough', 'tiles.html') },
           { label: 'Walkthrough, crosses and pooling', url: viz(3, 'convolution-walkthrough', 'crosses.html') },
           { label: 'Walkthrough, activations', url: viz(3, 'convolution-walkthrough', 'activations.html') },
+          { label: 'CNN deep dive', url: SML_CNN_DEEPDIVE },
         ],
       },
       {
@@ -982,8 +998,13 @@ export const weekends: Weekend[] = [
         time: '14:00',
         title: 'UNets',
         type: 'lecture',
-        // One deck for both UNet blocks, this one and 16:00.
-        links: [{ label: 'Slides', url: deck(3, 'w3_3_unet.pdf') }],
+        // One deck for both UNet blocks, this one and 16:00, and the SML
+        // course's U-Net deep dive hangs on both rows the same way. It is
+        // linked, not copied, see SML_UNET_DEEPDIVE.
+        links: [
+          { label: 'Slides', url: deck(3, 'w3_3_unet.pdf') },
+          { label: 'U-Net deep dive', url: SML_UNET_DEEPDIVE },
+        ],
       },
       {
         time: '14:30',
@@ -1000,7 +1021,10 @@ export const weekends: Weekend[] = [
         time: '16:00',
         title: 'UNets',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'w3_3_unet.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(3, 'w3_3_unet.pdf') },
+          { label: 'U-Net deep dive', url: SML_UNET_DEEPDIVE },
+        ],
       },
     ],
     saturday: [
@@ -1061,6 +1085,16 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'How to compute activations (Friday, convolutional filters)',
         url: viz(3, 'convolution-walkthrough', 'activations.html'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'Convolutional networks: a deep dive (Friday, from the SML course)',
+        url: SML_CNN_DEEPDIVE,
+      },
+      {
+        group: 'Visualizations',
+        label: 'U-Net: a deep dive (Friday, from the SML course)',
+        url: SML_UNET_DEEPDIVE,
       },
       {
         group: 'Coding exercises',
