@@ -1072,11 +1072,22 @@ export const weekends: Weekend[] = [
         // nothing to go stale. The deck downloads, so it is a copy served from
         // this site: w3-project-public/Project3_Fashion_Magazine_Editor.pdf,
         // copied on 2026-10-03. Re-copy it when it changes upstream.
+        //
+        // The app zip is built from w3-project-public/fashion_app with only
+        // what the Flask app reads (backend, templates, requirements.txt and
+        // five Data files) under Fashion-Magazine-Editor/app/, beside
+        // "Installation Guide.pdf", the same file as the guide chip. Both are
+        // copies, so rebuild them together when the app changes upstream.
         links: [
           { label: 'Slides', url: deck(3, 'fashion-magazine-editor-project.pdf') },
           {
             label: 'Project Notebook',
             url: colab('w3-project-public', 'notebook/project_fashion_magazine_handout.ipynb'),
+          },
+          { label: 'App', url: app(3, 'fashion-magazine-editor.zip') },
+          {
+            label: 'App installation guide',
+            url: guide('fashion-magazine-installation-guide.pdf'),
           },
         ],
       },
