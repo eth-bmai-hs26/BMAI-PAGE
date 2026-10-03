@@ -1065,7 +1065,7 @@ export const weekends: Weekend[] = [
       },
       {
         time: '12:00',
-        title: 'Project intro: Fashion magazine editor',
+        title: 'Project intro: Fashion magazine editor and warehouse manager',
         type: 'project',
         // Same split as weekends 1 and 2. The notebook OPENS IN COLAB, which
         // reads w3-project-public directly, so there is nothing to copy and
