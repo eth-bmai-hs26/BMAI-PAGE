@@ -1081,8 +1081,15 @@ export const weekends: Weekend[] = [
         links: [
           { label: 'Slides', url: deck(3, 'fashion-magazine-editor-project.pdf') },
           {
-            label: 'Project Notebook',
+            label: 'Project Notebook: Fashion magazine',
             url: colab('w3-project-public', 'notebook/project_fashion_magazine_handout.ipynb'),
+          },
+          // The second project of the weekend, "Recycling Warehouse: Automated
+          // Tile Inspection", opened in Colab from its own public repo like the
+          // first. Labelled "Warehouse manager" as the teaching team names it.
+          {
+            label: 'Project Notebook: Warehouse manager',
+            url: colab('w3-cv-new-projects-public', 'week3/project1/notebook.ipynb'),
           },
           { label: 'App', url: app(3, 'fashion-magazine-editor.zip') },
           {
