@@ -1055,7 +1055,10 @@ export const weekends: Weekend[] = [
         time: '10:30',
         title: 'CLIP',
         type: 'lecture',
-        links: [{ label: 'Slides', url: deck(3, 'w3_5_clip.pdf') }],
+        links: [
+          { label: 'Slides', url: deck(3, 'w3_5_clip.pdf') },
+          { label: 'Annotated', url: deck(3, 'w3_5_clip-annotated.pdf') },
+        ],
       },
       {
         time: '11:00',
