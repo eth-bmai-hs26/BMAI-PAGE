@@ -1066,7 +1066,41 @@ export const weekends: Weekend[] = [
         type: 'exercise',
         links: [{ label: 'Colab notebook', url: colab('w3-cx-public', 'clip/cx_clip_w3.ipynb') }],
       },
-      { time: '12:00', title: 'Project intro: Fashion magazine editor', type: 'project' },
+      {
+        time: '12:00',
+        title: 'Project intro: Fashion magazine editor and warehouse manager',
+        type: 'project',
+        // Same split as weekends 1 and 2. The notebook OPENS IN COLAB, which
+        // reads w3-project-public directly, so there is nothing to copy and
+        // nothing to go stale. The deck downloads, so it is a copy served from
+        // this site: w3-project-public/Project3_Fashion_Magazine_Editor.pdf,
+        // copied on 2026-10-03. Re-copy it when it changes upstream.
+        //
+        // The app zip is built from w3-project-public/fashion_app with only
+        // what the Flask app reads (backend, templates, requirements.txt and
+        // five Data files) under Fashion-Magazine-Editor/app/, beside
+        // "Installation Guide.pdf", the same file as the guide chip. Both are
+        // copies, so rebuild them together when the app changes upstream.
+        links: [
+          { label: 'Slides', url: deck(3, 'fashion-magazine-editor-project.pdf') },
+          {
+            label: 'Project Notebook: Fashion magazine',
+            url: colab('w3-project-public', 'notebook/project_fashion_magazine_handout.ipynb'),
+          },
+          // The second project of the weekend, "Recycling Warehouse: Automated
+          // Tile Inspection", opened in Colab from its own public repo like the
+          // first. Labelled "Warehouse manager" as the teaching team names it.
+          {
+            label: 'Project Notebook: Warehouse manager',
+            url: colab('w3-cv-new-projects-public', 'week3/project1/notebook.ipynb'),
+          },
+          { label: 'App', url: app(3, 'fashion-magazine-editor.zip') },
+          {
+            label: 'App installation guide',
+            url: guide('fashion-magazine-installation-guide.pdf'),
+          },
+        ],
+      },
     ],
     resources: [
       { group: 'Lecture slides', label: 'The cold open', url: deck(3, 'cold-open.pdf') },
