@@ -1074,7 +1074,10 @@ export const weekends: Weekend[] = [
         // reads w3-project-public directly, so there is nothing to copy and
         // nothing to go stale. The deck downloads, so it is a copy served from
         // this site: w3-project-public/Project3_Fashion_Magazine_Editor.pdf,
-        // copied on 2026-10-03. Re-copy it when it changes upstream.
+        // copied on 2026-10-03. Re-copy it when it changes upstream. The
+        // warehouse deck is the same kind of copy, from
+        // w3-cv-new-projects-public/week3/project1/slides/warehouse_inspector_slides.pdf
+        // (commit 44a3380d, 23 slides), copied on 2026-10-13.
         //
         // The app zip is built from w3-project-public/fashion_app with only
         // what the Flask app reads (backend, templates, requirements.txt and
@@ -1082,7 +1085,8 @@ export const weekends: Weekend[] = [
         // "Installation Guide.pdf", the same file as the guide chip. Both are
         // copies, so rebuild them together when the app changes upstream.
         links: [
-          { label: 'Slides', url: deck(3, 'fashion-magazine-editor-project.pdf') },
+          { label: 'Slides: Fashion magazine', url: deck(3, 'fashion-magazine-editor-project.pdf') },
+          { label: 'Slides: Warehouse manager', url: deck(3, 'warehouse-inspector-project.pdf') },
           {
             label: 'Project Notebook: Fashion magazine',
             url: colab('w3-project-public', 'notebook/project_fashion_magazine_handout.ipynb'),
