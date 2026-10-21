@@ -1,0 +1,19 @@
+{
+ "shapes": [
+  "plane",
+  "cylinder",
+  "mobius",
+  "sphere",
+  "torus",
+  "rp2"
+ ],
+ "runs": {
+  "plane": "seed 42",
+  "cylinder": "seed 42",
+  "mobius": "seed 1",
+  "sphere": "seed 1",
+  "torus": "seed 42",
+  "rp2": "seed 42"
+ },
+ "note": "exemplary training runs chosen for didactic clarity; all numbers measured, see latent_shapes/REPORT.md"
+}

@@ -1187,7 +1187,20 @@ export const weekends: Weekend[] = [
       'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and adversarial robustness, then stable diffusion, CLIP and cross-attention.',
     friday: [
       { time: '08:15', title: 'Manifolds and VAEs', type: 'lecture' },
-      { time: '09:00', title: 'Manifold games', type: 'exercise' },
+      {
+        time: '09:00',
+        title: 'Manifold games',
+        type: 'exercise',
+        // Two browser apps, copied from w4-cx-public/manifold-games/ (static
+        // builds, no Python), so recopy when the TA edits them there. Each folder
+        // is self-contained and loads its assets by relative path; the Sunrise
+        // Machine pulls TF.js, GSAP, D3 and KaTeX from jsDelivr, so it needs a
+        // network connection.
+        links: [
+          { label: 'Sunrise Machine', url: exercise(4, 'manifold-games/sunrise-machine/index.html') },
+          { label: 'Manifold Explorer', url: exercise(4, 'manifold-games/manifold-explorer/index.html') },
+        ],
+      },
       { time: '10:00', title: 'Conditional VAEs and age progression', type: 'lecture' },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
       { time: '11:00', title: 'Conditional VAE with demo', type: 'exercise' },
@@ -1218,7 +1231,16 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Cross-attention mechanisms', url: SOON },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
       { group: 'Lecture slides', label: 'Deepfake detection and generation', url: SOON },
-      { group: 'Coding exercises', label: 'Manifold games', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Manifold games: the Sunrise Machine, a VAE on synthetic sunrises (runs in the browser)',
+        url: exercise(4, 'manifold-games/sunrise-machine/index.html'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Manifold games: the Manifold Chart Explorer, 2-D manifolds and shaped latent spaces (runs in the browser)',
+        url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
+      },
       { group: 'Coding exercises', label: 'Conditional VAE with demo', url: SOON },
       { group: 'Coding exercises', label: 'Adversarial attacks', url: SOON },
       { group: 'Project', label: 'Project description', url: SOON },

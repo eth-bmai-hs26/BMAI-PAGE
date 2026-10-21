@@ -1,0 +1,195 @@
+{
+  "pca": {
+    "explained_variance_ratio": [
+      0.4911,
+      0.1718,
+      0.0963
+    ],
+    "explained_top3": 0.7593,
+    "ambient_dim": 3072,
+    "intrinsic_dim": 2
+  },
+  "manifold": {
+    "grid": 61,
+    "noise_floor_rms": 0.0114,
+    "grid_resolution_rms": 0.0179
+  },
+  "encoder": {
+    "mean_sigma": [
+      0.0718,
+      0.0852
+    ],
+    "mean_sigma_overall": 0.0785,
+    "axes": {
+      "page_axes": {
+        "x": "sun_x",
+        "y": "-sun_y"
+      },
+      "corr": {
+        "z1_sun_x": 0.976,
+        "z1_sun_y": 0.037,
+        "z2_sun_x": 0.051,
+        "z2_sun_y": -0.972
+      },
+      "z1_best_matches": "+time of year (sun_x)",
+      "z2_best_matches": "\u2212time of day (sun_y)",
+      "page_labels_supported": true,
+      "best_fit_rotation_deg": -2.6,
+      "reflected": false,
+      "corr_after_rotation": [
+        0.977,
+        0.974
+      ],
+      "rotation_matrix": [
+        [
+          0.999,
+          -0.0449
+        ],
+        [
+          0.0449,
+          0.999
+        ]
+      ]
+    },
+    "distortion": {
+      "cells": 100,
+      "area_ratio_max_min": 8.36,
+      "area_median": 0.1309,
+      "area_min": 0.071,
+      "area_max": 0.5937,
+      "param_cell_area": 0.01,
+      "mean_scale": 4.025,
+      "latent_bbox": {
+        "z1": [
+          -2.841,
+          2.773
+        ],
+        "z2": [
+          -2.291,
+          2.339
+        ]
+      }
+    }
+  },
+  "decoder": {
+    "mean_dist_inside_2": 0.0186,
+    "mean_dist_outside_2_5": 0.0338,
+    "dist_at_origin": 0.0209,
+    "max_dist": 0.0782
+  },
+  "presets": [
+    {
+      "name": "Winter dawn \u2194 summer noon",
+      "pixel_max_dist": 0.1344,
+      "pixel_mid_dist": 0.1325,
+      "latent_max_dist": 0.0209,
+      "latent_mid_dist": 0.0174
+    },
+    {
+      "name": "Summer dawn \u2194 winter noon",
+      "pixel_max_dist": 0.1439,
+      "pixel_mid_dist": 0.1408,
+      "latent_max_dist": 0.0209,
+      "latent_mid_dist": 0.0178
+    },
+    {
+      "name": "Dawn \u2194 noon (same season)",
+      "pixel_max_dist": 0.1511,
+      "pixel_mid_dist": 0.1444,
+      "latent_max_dist": 0.0247,
+      "latent_mid_dist": 0.0208
+    },
+    {
+      "name": "Winter \u2194 summer (same hour)",
+      "pixel_max_dist": 0.0935,
+      "pixel_mid_dist": 0.0935,
+      "latent_max_dist": 0.0194,
+      "latent_mid_dist": 0.0194
+    },
+    {
+      "name": "Early \u2194 late morning",
+      "pixel_max_dist": 0.1102,
+      "pixel_mid_dist": 0.1081,
+      "latent_max_dist": 0.0226,
+      "latent_mid_dist": 0.0186
+    }
+  ],
+  "beta": [
+    {
+      "beta": 0.1,
+      "mean_sigma": [
+        0.0212,
+        0.0257
+      ],
+      "recon_mse_per_pixel": 0.00031,
+      "recon_mse_per_image": 0.97,
+      "kl_per_image": 8.009,
+      "latent_coverage": 0.957,
+      "posterior_coverage": 0.518,
+      "z_std": [
+        1.306,
+        1.049
+      ],
+      "atlas": "beta_atlas_0.1.webp",
+      "atlas_grid": 16,
+      "atlas_mean_dist_inside_2": 0.0157,
+      "recon_sprite_row": 1,
+      "epochs_trained": 160
+    },
+    {
+      "beta": 1.0,
+      "mean_sigma": [
+        0.0718,
+        0.0852
+      ],
+      "recon_mse_per_pixel": 0.00047,
+      "recon_mse_per_image": 1.46,
+      "kl_per_image": 5.326,
+      "latent_coverage": 0.981,
+      "posterior_coverage": 0.996,
+      "z_std": [
+        1.064,
+        0.989
+      ],
+      "atlas": "beta_atlas_1.webp",
+      "atlas_grid": 16,
+      "atlas_mean_dist_inside_2": 0.0184,
+      "recon_sprite_row": 2,
+      "epochs_trained": 116
+    },
+    {
+      "beta": 4.0,
+      "mean_sigma": [
+        0.1607,
+        0.1569
+      ],
+      "recon_mse_per_pixel": 0.00084,
+      "recon_mse_per_image": 2.59,
+      "kl_per_image": 3.895,
+      "latent_coverage": 0.962,
+      "posterior_coverage": 1.0,
+      "z_std": [
+        1.005,
+        0.963
+      ],
+      "atlas": "beta_atlas_4.webp",
+      "atlas_grid": 16,
+      "atlas_mean_dist_inside_2": 0.0233,
+      "recon_sprite_row": 3,
+      "epochs_trained": 112
+    }
+  ],
+  "live_model": {
+    "checkpoint": "checkpoints/beta_1/vae_final.pt",
+    "recon_mse_per_pixel": 0.00047,
+    "kl_per_image": 5.326,
+    "mean_sigma": [
+      0.0718,
+      0.0852
+    ],
+    "epochs_trained": 116,
+    "best_epoch": 96,
+    "beta_at_best_epoch": 1.0,
+    "warmup_complete": true
+  }
+}
