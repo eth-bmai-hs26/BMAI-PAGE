@@ -162,6 +162,15 @@ export const app = (n: number, file: string): string =>
 const SML_CNN_DEEPDIVE = 'https://sml-fs26.github.io/neuralnetworks/cnn-deepdive/';
 const SML_UNET_DEEPDIVE = 'https://sml-fs26.github.io/neuralnetworks/unet-deepdive/';
 
+/**
+ * The weekend-4 Manifold Chart Explorer (the copy under exercises/we4/, see the
+ * Friday 09:00 row) opened straight in its "Fold the chart" view on one tab.
+ * The hash is the explorer's own, read by its App.jsx; the link opens the
+ * explorer as a page of its own, so it never reaches this site's router.
+ */
+const foldTheChart = (shape: 'cylinder' | 'torus' | 'klein' | 'rp2'): string =>
+  `${exercise(4, 'manifold-games/manifold-explorer/index.html')}#fold=${shape}`;
+
 export const weekends: Weekend[] = [
   {
     id: 'we1',
@@ -1204,12 +1213,24 @@ export const weekends: Weekend[] = [
         // w4-cx-public of the master in the private w4-cx-private (both at
         // pufferfish-autoencoder/), the address the VAE deck's QR opens. Put on
         // the site on Carlos's word of 2026-10-22.
+        //
+        // The four "Folding" chips show the chart folding step by step into a
+        // cylinder, a torus, a Klein bottle and a projective plane (a
+        // cross-cap), the animated version of the deck's folding frames. They
+        // are not pages of their own: each opens the Manifold Chart Explorer of
+        // the 09:00 row in its "Fold the chart" view, see foldTheChart(). Put on
+        // the site on Carlos's word of 2026-10-22, with the explorer build that
+        // has the view (w4-cx-private 05d9874, w4-cx-public fcc774a).
         links: [
           { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
           {
             label: 'Pufferfish notebook',
             url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
           },
+          { label: 'Folding, cylinder', url: foldTheChart('cylinder') },
+          { label: 'Folding, torus', url: foldTheChart('torus') },
+          { label: 'Folding, Klein bottle', url: foldTheChart('klein') },
+          { label: 'Folding, projective plane', url: foldTheChart('rp2') },
         ],
       },
       {
@@ -1260,6 +1281,26 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, manifolds)',
         url: viz(4, 'grasshopper-regression'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'Folding the chart into a cylinder: roll it until its glued edges meet (Friday, manifolds)',
+        url: foldTheChart('cylinder'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'Folding the chart into a torus: a tube, bent until its two end circles meet (Friday, manifolds)',
+        url: foldTheChart('torus'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'Folding the chart into a Klein bottle, which has to pass through itself (Friday, manifolds)',
+        url: foldTheChart('klein'),
+      },
+      {
+        group: 'Visualizations',
+        label: 'Folding the chart into a projective plane: a bag, closed into a cross-cap (Friday, manifolds)',
+        url: foldTheChart('rp2'),
       },
       {
         group: 'Coding exercises',
