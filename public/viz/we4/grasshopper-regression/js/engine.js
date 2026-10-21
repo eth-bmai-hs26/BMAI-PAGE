@@ -28,15 +28,20 @@
   }
 
   // One iteration: the average loss where the grasshoppers stand, after w
-  // hops by eps, after b hops by eps; the two slopes; the jump.
+  // hops by eps, after b hops by eps; how much it changed during each hop
+  // (dW, dB, the Delta L_bar on the panel's triangle); the two slopes; the
+  // jump.
   function iteration(photos, w, b, alpha, eps) {
     var base = evaluate(photos, w, b);
     var hopW = evaluate(photos, w + eps, b);
     var hopB = evaluate(photos, w, b + eps);
-    var slopeW = (hopW.lbar - base.lbar) / eps;
-    var slopeB = (hopB.lbar - base.lbar) / eps;
+    var dW = hopW.lbar - base.lbar;
+    var dB = hopB.lbar - base.lbar;
+    var slopeW = dW / eps;
+    var slopeB = dB / eps;
     return {
       base: base, hopW: hopW, hopB: hopB,
+      dW: dW, dB: dB,
       slopeW: slopeW, slopeB: slopeB,
       wNext: w - alpha * slopeW, bNext: b - alpha * slopeB
     };
@@ -125,12 +130,20 @@
   }
   function fmtL(x, eps) { return fmt(x, lossDecimals(x, eps)); }
 
+  // Slopes: four decimals, and four significant digits once they fall below
+  // 1, so the slope of a nearly flat hop still shows its digits.
+  function fmtS(x) {
+    var ax = Math.abs(x), dp = 4;
+    if (ax > 0 && ax < 1) dp = Math.min(8, Math.max(4, 3 - Math.floor(Math.log10(ax))));
+    return fmt(x, dp);
+  }
+
   // A knob value as written in its menu.
   function fmtKnob(x) { return String(x); }
 
   var E = {
     evaluate: evaluate, iteration: iteration, Run: Run,
-    fmt: fmt, fmtP: fmtP, fmtL: fmtL, fmtKnob: fmtKnob, MINUS: MINUS
+    fmt: fmt, fmtP: fmtP, fmtL: fmtL, fmtS: fmtS, fmtKnob: fmtKnob, MINUS: MINUS
   };
   root.GHEngine = E;
   if (typeof module !== 'undefined' && module.exports) module.exports = E;

@@ -1,10 +1,11 @@
-/* style.css : the Paper and Grid look of the grasshopper regression.
+/* style.css : the look of the grasshopper regression.
  *
  * The page is projected in the same Friday 08:15 lecture as the manifolds
- * deck, so it takes the deck's theme rather than the course-viz editorial
- * one, the way the weekend-2 and weekend-3 walkthroughs did: warm paper, a
- * faint squared grid, a sepia margin rule, near-black ink, Libertinus
- * everywhere. Light only, as the deck is.
+ * deck, so it takes the deck's type and colours (Libertinus everywhere,
+ * near-black ink, the deck's blue and the Okabe-Ito pair), on a plain white
+ * ground: the deck's squared paper and sepia margin rule came off on
+ * Carlos's word of 2026-10-22, as too distracting behind the numbers. Light
+ * only, as the deck is.
  *
  * Colour roles. Okabe-Ito blue for the predictions, Okabe-Ito vermillion for
  * the losses (darkened for text), the weekend-3 bluish green for the
@@ -47,17 +48,16 @@
 }
 
 :root {
-  --paper: #FBF8F2;       /* the warm ground */
+  --paper: #FFFFFF;       /* the ground, plain white */
   --ink: #212121;         /* black 87 percent */
   --muted: #707070;       /* black 56 percent: contrast 4.6 on the paper */
-  --hair: #C9C6C0;        /* frames and grid lines */
-  --sepia: #8A6D3B;       /* chrome only: rules */
-  --brand: #26456E;       /* ink blue: controls, the measured slope */
+  --hair: #C9C6C0;        /* frames and rules */
+  --brand: #26456E;       /* ink blue: controls, the hop's triangle, the slope */
   --pred: #0072B2;        /* Okabe-Ito blue: the predictions */
   --loss: #D55E00;        /* Okabe-Ito vermillion: the losses, as strokes */
   --loss-text: #B34A00;   /* vermillion dark enough to read as text */
   --hopper: #32B08C;      /* bluish green, the weekend-3 land colour */
-  --hopper-dark: #14594F; /* its legs, eye and antenna; the history line */
+  --hopper-dark: #14594F; /* its legs, eye and antenna */
   --sun: #F0C24A;         /* the sun in the photos */
   --sun-edge: #B07800;
   --fresh: rgba(38, 69, 110, 0.09);   /* behind what the last click showed */
@@ -72,14 +72,6 @@ html, body {
   font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
 }
 body {
-  /* the squared page and the sepia margin rule */
-  background-image:
-    linear-gradient(to right, rgba(138, 109, 59, 0.55) 0, rgba(138, 109, 59, 0.55) 1.5px, transparent 1.5px),
-    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
-  background-size: 100% 100%, 22px 22px, 22px 22px;
-  background-position: 26px 0, 0 0, 0 0;
-  background-repeat: no-repeat, repeat, repeat;
   display: flex;
   flex-direction: column;
 }
@@ -93,7 +85,7 @@ header {
   column-gap: 22px;
   row-gap: 4px;
   padding: 12px 30px 6px 52px;
-  border-bottom: 1.5px solid var(--sepia);
+  border-bottom: 1px solid var(--hair);
   margin: 0 24px 0 0;
 }
 header h1 {
@@ -143,12 +135,8 @@ text {
 .it { font-style: italic; }
 .cal { font-family: "Latin Modern Math", "Libertinus Math", serif; font-style: normal; }
 .cal.bar { text-decoration: overline; }
-.caption { font-size: 25px; }
-.caption.note { fill: var(--muted); font-style: italic; }
-.caption.warn { fill: var(--loss-text); }
-.title { font-size: 25px; font-weight: 700; }
+.title { font-size: 26px; font-weight: 700; }
 .lanetitle { font-size: 24px; font-weight: 700; text-anchor: middle; }
-.lanevalues { font-size: 21px; text-anchor: middle; }
 .colhead { font-size: 23px; text-anchor: middle; }
 .colhead.pred { fill: var(--pred); }
 .colhead.loss { fill: var(--loss-text); }
@@ -163,19 +151,15 @@ text {
 .avglabel { font-weight: 400; fill: var(--ink); }
 .valuelabel { font-size: 32px; }
 .value { font-size: 34px; font-weight: 700; }
-.line { font-size: 22px; }
-.line .it { font-style: italic; }
-.axlabel { font-size: 20px; }
-.ticklabel { font-size: 17px; fill: var(--muted); }
-.qmark { font-size: 22px; fill: var(--brand); font-weight: 700; }
-.histtitle { font-size: 16px; fill: var(--muted); text-anchor: middle; }
-.histtick { font-size: 14px; fill: var(--muted); }
-.foot { font-size: 15px; font-style: italic; fill: var(--muted); }
-.hopnote { font-size: 20px; fill: var(--brand); font-style: italic; }
-.line.fresh, .lanevalues.fresh, .hopnote.fresh { fill: var(--brand); }
+.axlabel { font-size: 22px; }
+.ticklabel { font-size: 19px; fill: var(--muted); }
+.qmark { font-size: 24px; fill: var(--brand); font-weight: 700; }
+.leglabel { font-size: 22px; }
+.slope-row .result { font-weight: 700; fill: var(--brand); }
+.formula-line { font-size: 32px; }
+.formula-line.result { font-weight: 700; }
 
 /* SVG shapes */
-.station-frame { fill: none; stroke: var(--hair); stroke-width: 1.5; }
 .valuebox { fill: var(--paper); stroke: var(--ink); stroke-width: 2.2; }
 .colbox-pred { fill: none; stroke: var(--pred); stroke-width: 2.2; }
 .colbox-loss { fill: none; stroke: var(--loss); stroke-width: 2.2; }
@@ -191,18 +175,14 @@ text {
 .axis-arrow .shaft { stroke: none; }
 .axis-arrow .head { fill: var(--ink); }
 .tick { stroke: var(--ink); stroke-width: 1.4; }
-.windowbar { stroke: var(--brand); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.windowbar { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; }
 .stub { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
-.ground-unknown { stroke: var(--brand); stroke-width: 1.4; stroke-dasharray: 3 4; }
 .pt-base { fill: var(--ink); }
 .pt-land { fill: var(--loss); }
-.chord { stroke: var(--brand); stroke-width: 3; fill: none; }
-.leg { stroke: var(--brand); stroke-width: 1.4; stroke-dasharray: 4 4; fill: none; }
-.histaxis { fill: none; stroke: var(--muted); stroke-width: 1.2; }
-.histgrid { stroke: var(--hair); stroke-width: 1; }
-.histline { fill: none; stroke: var(--hopper-dark); stroke-width: 2.4; stroke-linejoin: round; }
-.histdot { fill: var(--hopper-dark); }
-.histstart { fill: var(--paper); stroke: var(--hopper-dark); stroke-width: 2; }
+.leg { stroke: var(--brand); stroke-width: 2.2; stroke-linecap: round; fill: none; }
+.rightangle { stroke: var(--brand); stroke-width: 1.3; fill: none; }
+.chord { stroke: var(--brand); stroke-width: 2.8; fill: none; }
+.fracbar { stroke: var(--ink); stroke-width: 1.6; }
 
 /* the grasshopper of the weekend-1 game */
 .hopper-body { fill: var(--hopper); }
@@ -212,9 +192,11 @@ text {
 .hopper-antenna { fill: none; stroke: var(--hopper-dark); stroke-width: 1.1; stroke-linecap: round; }
 .hopper-wing { fill: none; stroke: var(--hopper-dark); stroke-width: 1.1; }
 
-/* what the last click showed fades in, on a single forward click only */
+/* what the last click showed fades in, on a single forward click only;
+   "late" waits for the grasshopper to arrive, or for the division */
 @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
-svg.animate .fresh { animation: appear 380ms ease-out; }
+svg.animate .fresh { animation: appear 450ms ease-out both; }
+svg.animate .fresh.late { animation-delay: 700ms; }
 
 /* the start, typed into the value boxes */
 .startinput {
