@@ -1238,7 +1238,7 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Coding exercises',
-        label: 'Manifold games: the Manifold Chart Explorer, 2-D manifolds and shaped latent spaces (runs in the browser)',
+        label: 'Manifold games: the Manifold Chart Explorer, 2-D manifolds through their charts (runs in the browser)',
         url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
       },
       { group: 'Coding exercises', label: 'Conditional VAE with demo', url: SOON },
