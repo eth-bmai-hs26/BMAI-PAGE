@@ -1186,7 +1186,19 @@ export const weekends: Weekend[] = [
     summary:
       'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and adversarial robustness, then stable diffusion, CLIP and cross-attention.',
     friday: [
-      { time: '08:15', title: 'Manifolds and VAEs', type: 'lecture' },
+      {
+        time: '08:15',
+        title: 'Manifolds and VAEs',
+        type: 'lecture',
+        // "Two grasshoppers fit a line" is the click-through of the lecture's
+        // grasshopper frames, page 8 of Carlos's manifold notes: the room types
+        // a start for w and b, and every step of an iteration is a click. A copy
+        // of w4-lecture-material/grasshopper-regression/ (the page, css, js,
+        // data and vendored fonts only; not its dev or precompute folders),
+        // published on Carlos's word of 2026-10-21. A change there must be
+        // recopied here.
+        links: [{ label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') }],
+      },
       {
         time: '09:00',
         title: 'Manifold games',
@@ -1231,6 +1243,11 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Cross-attention mechanisms', url: SOON },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
       { group: 'Lecture slides', label: 'Deepfake detection and generation', url: SOON },
+      {
+        group: 'Visualizations',
+        label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, manifolds)',
+        url: viz(4, 'grasshopper-regression'),
+      },
       {
         group: 'Coding exercises',
         label: 'Manifold games: the Sunrise Machine, a VAE on synthetic sunrises (runs in the browser)',

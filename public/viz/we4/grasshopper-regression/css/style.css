@@ -1,0 +1,243 @@
+/* style.css : the Paper and Grid look of the grasshopper regression.
+ *
+ * The page is projected in the same Friday 08:15 lecture as the manifolds
+ * deck, so it takes the deck's theme rather than the course-viz editorial
+ * one, the way the weekend-2 and weekend-3 walkthroughs did: warm paper, a
+ * faint squared grid, a sepia margin rule, near-black ink, Libertinus
+ * everywhere. Light only, as the deck is.
+ *
+ * Colour roles. Okabe-Ito blue for the predictions, Okabe-Ito vermillion for
+ * the losses (darkened for text), the weekend-3 bluish green for the
+ * grasshoppers, a sun yellow inside the photos. precompute/check_palette.py
+ * holds the pairs that share the page at CIEDE2000 18 or more under normal
+ * vision, protanopia and deuteranopia, and every text colour at contrast 4.5
+ * or more on the paper. Every colour lives here as a token; the drawing code
+ * sets classes and never writes a colour.
+ */
+
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Italic.otf") format("opentype");
+  font-weight: 400; font-style: italic;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../vendor/fonts/LibertinusSerif-BoldItalic.otf") format("opentype");
+  font-weight: 700; font-style: italic;
+}
+@font-face {
+  font-family: "Libertinus Math";
+  src: url("../vendor/fonts/LibertinusMath-Regular.otf") format("opentype");
+}
+/* The calligraphic L of the loss: Latin Modern Math's is the Computer Modern
+   \mathcal{L} the decks print (TeX Live 2024, GUST-FONT-LICENSE.txt). */
+@font-face {
+  font-family: "Latin Modern Math";
+  src: url("../vendor/fonts/latinmodern-math.otf") format("opentype");
+}
+
+:root {
+  --paper: #FBF8F2;       /* the warm ground */
+  --ink: #212121;         /* black 87 percent */
+  --muted: #707070;       /* black 56 percent: contrast 4.6 on the paper */
+  --hair: #C9C6C0;        /* frames and grid lines */
+  --sepia: #8A6D3B;       /* chrome only: rules */
+  --brand: #26456E;       /* ink blue: controls, the measured slope */
+  --pred: #0072B2;        /* Okabe-Ito blue: the predictions */
+  --loss: #D55E00;        /* Okabe-Ito vermillion: the losses, as strokes */
+  --loss-text: #B34A00;   /* vermillion dark enough to read as text */
+  --hopper: #32B08C;      /* bluish green, the weekend-3 land colour */
+  --hopper-dark: #14594F; /* its legs, eye and antenna; the history line */
+  --sun: #F0C24A;         /* the sun in the photos */
+  --sun-edge: #B07800;
+  --fresh: rgba(38, 69, 110, 0.09);   /* behind what the last click showed */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
+}
+body {
+  /* the squared page and the sepia margin rule */
+  background-image:
+    linear-gradient(to right, rgba(138, 109, 59, 0.55) 0, rgba(138, 109, 59, 0.55) 1.5px, transparent 1.5px),
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 22px 22px, 22px 22px;
+  background-position: 26px 0, 0 0, 0 0;
+  background-repeat: no-repeat, repeat, repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======== the top bar */
+header {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 22px;
+  row-gap: 4px;
+  padding: 12px 30px 6px 52px;
+  border-bottom: 1.5px solid var(--sepia);
+  margin: 0 24px 0 0;
+}
+header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1 1 auto;
+  white-space: nowrap;
+}
+.controls { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: 16px; }
+.controls button, .controls select {
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--brand);
+  background: transparent;
+  border: 1px solid var(--brand);
+  border-radius: 3px;
+  padding: 1px 9px;
+  cursor: pointer;
+}
+.controls select { padding: 0 2px; }
+.controls label { color: var(--ink); font-style: italic; white-space: nowrap; }
+.controls button:disabled { color: var(--muted); border-color: var(--hair); cursor: default; }
+.controls .count { color: var(--muted); min-width: 178px; text-align: center; }
+.controls .gap { width: 6px; }
+.controls button.on { color: var(--paper); background: var(--brand); }
+
+/* ======== the drawing */
+main {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 6px 24px 8px 40px;
+  display: flex;
+}
+main > svg {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* SVG text */
+text {
+  font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
+  fill: var(--ink);
+}
+.it { font-style: italic; }
+.cal { font-family: "Latin Modern Math", "Libertinus Math", serif; font-style: normal; }
+.cal.bar { text-decoration: overline; }
+.caption { font-size: 25px; }
+.caption.note { fill: var(--muted); font-style: italic; }
+.caption.warn { fill: var(--loss-text); }
+.title { font-size: 25px; font-weight: 700; }
+.lanetitle { font-size: 24px; font-weight: 700; text-anchor: middle; }
+.lanevalues { font-size: 21px; text-anchor: middle; }
+.colhead { font-size: 23px; text-anchor: middle; }
+.colhead.pred { fill: var(--pred); }
+.colhead.loss { fill: var(--loss-text); }
+.arith { font-size: 17px; fill: var(--muted); }
+.num { font-size: 27px; }
+.num.pred { fill: var(--pred); }
+.num.loss { fill: var(--loss-text); }
+.num.ink { fill: var(--ink); }
+.num.dim { fill: var(--muted); }
+.avgarith { font-size: 17px; fill: var(--muted); }
+.avgvalue { font-size: 27px; font-weight: 700; fill: var(--loss-text); }
+.avglabel { font-weight: 400; fill: var(--ink); }
+.valuelabel { font-size: 32px; }
+.value { font-size: 34px; font-weight: 700; }
+.line { font-size: 22px; }
+.line .it { font-style: italic; }
+.axlabel { font-size: 20px; }
+.ticklabel { font-size: 17px; fill: var(--muted); }
+.qmark { font-size: 22px; fill: var(--brand); font-weight: 700; }
+.histtitle { font-size: 16px; fill: var(--muted); text-anchor: middle; }
+.histtick { font-size: 14px; fill: var(--muted); }
+.foot { font-size: 15px; font-style: italic; fill: var(--muted); }
+.hopnote { font-size: 20px; fill: var(--brand); font-style: italic; }
+.line.fresh, .lanevalues.fresh, .hopnote.fresh { fill: var(--brand); }
+
+/* SVG shapes */
+.station-frame { fill: none; stroke: var(--hair); stroke-width: 1.5; }
+.valuebox { fill: var(--paper); stroke: var(--ink); stroke-width: 2.2; }
+.colbox-pred { fill: none; stroke: var(--pred); stroke-width: 2.2; }
+.colbox-loss { fill: none; stroke: var(--loss); stroke-width: 2.2; }
+.rowrule-pred { stroke: var(--pred); stroke-width: 1; opacity: 0.45; }
+.rowrule-loss { stroke: var(--loss); stroke-width: 1; opacity: 0.45; }
+.avgbox { fill: none; stroke: var(--loss); stroke-width: 2.2; }
+.cellbg { fill: transparent; }
+.fresh > .cellbg { fill: var(--fresh); }
+.photo-frame { fill: none; stroke: var(--ink); stroke-width: 2; }
+.photo-grid { stroke: var(--hair); stroke-width: 1; }
+.sun { fill: var(--sun); stroke: var(--sun-edge); stroke-width: 1.2; }
+.axis { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.axis-arrow .shaft { stroke: none; }
+.axis-arrow .head { fill: var(--ink); }
+.tick { stroke: var(--ink); stroke-width: 1.4; }
+.windowbar { stroke: var(--brand); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.stub { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.ground-unknown { stroke: var(--brand); stroke-width: 1.4; stroke-dasharray: 3 4; }
+.pt-base { fill: var(--ink); }
+.pt-land { fill: var(--loss); }
+.chord { stroke: var(--brand); stroke-width: 3; fill: none; }
+.leg { stroke: var(--brand); stroke-width: 1.4; stroke-dasharray: 4 4; fill: none; }
+.histaxis { fill: none; stroke: var(--muted); stroke-width: 1.2; }
+.histgrid { stroke: var(--hair); stroke-width: 1; }
+.histline { fill: none; stroke: var(--hopper-dark); stroke-width: 2.4; stroke-linejoin: round; }
+.histdot { fill: var(--hopper-dark); }
+.histstart { fill: var(--paper); stroke: var(--hopper-dark); stroke-width: 2; }
+
+/* the grasshopper of the weekend-1 game */
+.hopper-body { fill: var(--hopper); }
+.hopper-dark { fill: var(--hopper-dark); }
+.hopper-ring { fill: none; stroke: var(--paper); stroke-width: 1.6; }
+.hopper-leg { fill: none; stroke: var(--hopper-dark); stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
+.hopper-antenna { fill: none; stroke: var(--hopper-dark); stroke-width: 1.1; stroke-linecap: round; }
+.hopper-wing { fill: none; stroke: var(--hopper-dark); stroke-width: 1.1; }
+
+/* what the last click showed fades in, on a single forward click only */
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+svg.animate .fresh { animation: appear 380ms ease-out; }
+
+/* the start, typed into the value boxes */
+.startinput {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-family: "Libertinus Serif", Palatino, Georgia, serif;
+  font-size: 34px;
+  font-weight: 700;
+  text-align: right;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed var(--brand);
+  outline: none;
+  padding: 0 4px;
+}
+.startinput::placeholder { color: var(--hair); font-weight: 400; }
+.startinput.bad { border-bottom-color: var(--loss); }
+
+/* a script error, written by js/errors.js, shown rather than swallowed */
+html[data-error]::before {
+  content: "Script error: " attr(data-error);
+  position: fixed; left: 0; right: 0; top: 0; z-index: 10;
+  background: #fff; color: #000; padding: 6px 12px; font: 14px monospace;
+}
