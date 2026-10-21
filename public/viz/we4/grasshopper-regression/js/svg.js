@@ -89,9 +89,12 @@
     return g;
   };
 
-  K.place = function (node, x, y, angleDeg, scale) {
+  // Put a glyph at (x, y), turned by angleDeg and scaled; face -1 mirrors it
+  // so the grasshopper faces left (a value between turns it part way).
+  K.place = function (node, x, y, angleDeg, scale, face) {
+    var sc = scale || 1, f = face === undefined ? 1 : face;
     node.setAttribute('transform', 'translate(' + x + ',' + y + ') rotate(' + (angleDeg || 0) +
-      ') scale(' + (scale || 1) + ')');
+      ') scale(' + (sc * f) + ',' + sc + ')');
   };
 
   // Nice axis numbers: about n ticks covering [lo, hi].

@@ -156,7 +156,7 @@ text {
 .qmark { font-size: 24px; fill: var(--brand); font-weight: 700; }
 .leglabel { font-size: 22px; }
 .slope-row .result { font-weight: 700; fill: var(--brand); }
-.formula-line { font-size: 32px; }
+.formula-line { font-size: 26px; }
 .formula-line.result { font-weight: 700; }
 
 /* SVG shapes */
@@ -167,7 +167,7 @@ text {
 .rowrule-loss { stroke: var(--loss); stroke-width: 1; opacity: 0.45; }
 .avgbox { fill: none; stroke: var(--loss); stroke-width: 2.2; }
 .cellbg { fill: transparent; }
-.fresh > .cellbg { fill: var(--fresh); }
+.fresh > .cellbg, .lit > .cellbg { fill: var(--fresh); }
 .photo-frame { fill: none; stroke: var(--ink); stroke-width: 2; }
 .photo-grid { stroke: var(--hair); stroke-width: 1; }
 .sun { fill: var(--sun); stroke: var(--sun-edge); stroke-width: 1.2; }
@@ -183,6 +183,8 @@ text {
 .rightangle { stroke: var(--brand); stroke-width: 1.3; fill: none; }
 .chord { stroke: var(--brand); stroke-width: 2.8; fill: none; }
 .fracbar { stroke: var(--ink); stroke-width: 1.6; }
+.decision path { fill: var(--hopper); stroke: var(--hopper-dark); stroke-width: 1.5; stroke-linejoin: round; }
+.thought { fill: var(--paper); stroke: var(--muted); stroke-width: 1.5; opacity: 0; }
 
 /* the grasshopper of the weekend-1 game */
 .hopper-body { fill: var(--hopper); }

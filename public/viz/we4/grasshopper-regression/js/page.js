@@ -6,22 +6,27 @@
  * L_i = (y - y_hat)^2, their average L_bar, a slope for each grasshopper
  * found by a hop of epsilon, and the jump w <- w - alpha * slope.
  *
- * An iteration is 25 clicks, as Carlos asked on 2026-10-22 (the slopes
- * slower, the hop sideways first, no words on the page):
+ * An iteration is 29 clicks, as Carlos asked on 2026-10-22 (the slopes
+ * slower, the hop sideways first, no words on the page, a decision before
+ * the jump):
  *    1 to 3    the predictions, the losses and their average where the
  *              grasshoppers stand
- *    4 to 13   grasshopper w finds its slope. Its panel appears, with it
+ *    4 to 15   grasshopper w finds its slope. Its panel appears, with it
  *              standing at height L_bar (4); it hops sideways, parallel to
  *              the w axis, to w + eps (5); the predictions, losses and
  *              average there (6 to 8); it drops or rises to that average (9);
  *              the hop eps on the right triangle (10); the change of L_bar
- *              on it (11) and its value (12); the division, animated (13)
- *    14 to 23  the same for grasshopper b
- *    24        the update formula, where the panels were
- *    25        the numbers in it, and both jump
- * The two panels and the two hop lanes show only from 4 to 23, while the
- * slopes are found. Step 0 of the first iteration is the start, typed by the
- * room into the two value boxes.
+ *              on it (11) and its value (12); the division, animated (13).
+ *              The hop was a test: it goes back to where it stands (14),
+ *              thinks it over and picks the way down, an arrow (15)
+ *    16 to 27  the same for grasshopper b
+ *    28        the update formula, under each value box
+ *    29        the numbers in it; both jump the way they picked, and their
+ *              values change as they land
+ * The two hop lanes show from each hop to step 27, while the slopes are
+ * found. Each panel shows from its first step until the jump, so the
+ * triangle stays in view through the update. Step 0 of the first iteration
+ * is the start, typed by the room into the two value boxes.
  *
  * The state is (k, s): iteration k, step s, plus the start and the two
  * knobs. render() draws everything from that state, so Back, a deep link and
@@ -49,10 +54,11 @@
   var SUB = ['\u2080', '\u2081', '\u2082', '\u2083'];
 
   // ===================================================== the click plan
-  var GRAD = { w: 4, b: 14 };   // the first step of each grasshopper's slope
-  // the steps of one slope, counted from GRAD
-  var G = { STAND: 0, HOP: 1, PRED: 2, LOSS: 3, AVG: 4, DROP: 5, EPS: 6, DELTA: 7, DVAL: 8, SLOPE: 9 };
-  var LAST_GRAD = GRAD.b + G.SLOPE, FORMULA = LAST_GRAD + 1, STEPS = FORMULA + 1;
+  // the steps of one slope, counted from its first
+  var G = { STAND: 0, HOP: 1, PRED: 2, LOSS: 3, AVG: 4, DROP: 5, EPS: 6, DELTA: 7, DVAL: 8, SLOPE: 9,
+            BACK: 10, DECIDE: 11 };
+  var GRAD = { w: 4, b: 5 + G.DECIDE };   // the first step of each grasshopper's slope: 4, 16
+  var LAST_GRAD = GRAD.b + G.DECIDE, FORMULA = LAST_GRAD + 1, STEPS = FORMULA + 1;   // 27, 28, 29
   var LANE_AT = [               // [shown from, predictions, losses, average] per lane
     [0, 1, 2, 3],
     [GRAD.w + G.HOP, GRAD.w + G.PRED, GRAD.w + G.LOSS, GRAD.w + G.AVG],
@@ -69,6 +75,7 @@
   };
   var N = {};               // the nodes render() updates
   var GEN = 0;              // renders so far: an animation of an older one stops
+  var JUMP_MS = 900;        // the update's jump; the new value shows as it lands
   var AFTER = [];           // animations that start from the final layout
 
   function newRun() { S.run = new E.Run(D, S.w0, S.b0, S.alpha, S.eps); }
@@ -145,18 +152,22 @@
 
   // ===================================================== the drawing
   // Two stations on top, one per grasshopper: its name, its value box with
-  // the grasshopper on it, and to the right the panel (while it finds its
-  // slope) or the update formula. Below, the three photos and three lanes:
-  // where they stand, and the two hops (while the slopes are found).
+  // the grasshopper on it and, at the update, the formula under it; to the
+  // right the panel, from its first slope step until the jump. Below, the
+  // three photos and three lanes: where they stand, and the two hops (while
+  // the slopes are found).
   var ST = { w: 30, b: 815 }, ST_Y = 8;
   var BOX = { x: 18, y: 112, w: 220, h: 72 }, PERCH = { x: 128, y: 112, scale: 1.8 };
-  var PANEL_X = 262;
+  var PANEL_X = 262, PANEL_R = 488;
   // The panel, in its own units: the axes; where the grasshopper stands,
   // (xp, ym); the hop to xp + run; the most a rise is drawn, rmax, squeezed
-  // by s0; the labels of the vertical leg; the row of the division.
-  var PL = { ax0: 40, ax1: 470, ay0: 28, ay1: 262, xp: 100, run: 136, ym: 140, rmax: 100, s0: 25,
-             scale: 1.4, labelX: 272, labelMax: 214, rowX: 255, rowY: 346, rowMax: 440 };
-  var FX = 300, FY = 128;       // the update formula, in the station
+  // by s0; the arrow of its decision, arrowY above it and arrowLen long; the
+  // shortest jump to the left, jumpMin, and how the jump grows with alpha *
+  // slope, jumpS0; the row of the division.
+  var PL = { ax0: 40, ax1: 470, ay0: 28, ay1: 262, xp: 160, run: 124, ym: 140, rmax: 100, s0: 25,
+             scale: 1.4, arrowY: 60, arrowLen: 84, jumpMin: 36, jumpS0: 0.5,
+             rowX: 255, rowY: 346, rowMax: 440 };
+  var FX = BOX.x, FY = 248, FMAX = 248;   // the update formula, under the value box
   var LANE_X = [350, 763, 1176], LANE_W = 397;
   var TITLE_Y = 436, HEAD_Y = 470, ROWS = [530, 630, 730];
   var COL_TOP = 480, COL_BOT = 780, AVG_TOP = 790, AVG_H = 64;
@@ -253,10 +264,12 @@
   function render(animate) {
     GEN++;
     AFTER = [];
+    ROWQ = [];
     var rec = record(), show = [];
     svg.classList.toggle('animate', !!animate);
     ['w', 'b'].forEach(function (which) { renderStation(which, rec, animate, show); });
     for (var i = 0; i < 3; i++) renderLane(i, rec, show);
+    flushRows();
     flushFits();
     AFTER.forEach(function (f) { f(); });
     // what is showing, and where the run is: for dev/check.sh
@@ -302,49 +315,63 @@
   // A row of math, left to right: items are {t: text} or {num:, den:}, a
   // stacked fraction, each with an optional class (cls, and barCls for a
   // fraction's bar) and key. anchor 'start' puts the row's left end at x,
-  // 'middle' its centre; past maxW it shrinks as a whole. It measures its
-  // texts, so it is right once the fonts are in (render() runs again then).
-  // Returns the parts by key and the x where each keyed item starts.
-  function mathRow(parent, x, y, items, cls, fs, maxW, anchor) {
+  // 'middle' its centre; past maxW it shrinks as a whole. Its texts are
+  // measured, so it is right once the fonts are in (render() runs again
+  // then), and all rows are measured together in flushRows(): measuring each
+  // as it was drawn cost a layout apiece, 35 ms a frame during Play. Returns
+  // the parts by key at once, and fills in the x where each keyed item starts
+  // when it is laid out; then(out) runs after that.
+  var ROWQ = [];
+  function mathRow(parent, x, y, items, cls, fs, maxW, anchor, then) {
     var g = K.g(parent, cls);
     g.style.fontSize = fs + 'px';
+    var out = { x: {}, part: {} };
     var parts = items.map(function (it) {
-      if (it.num === undefined) return { it: it, t: K.text(g, 0, y, it.t, it.cls || null) };
-      return {
+      var p = it.num === undefined ? { it: it, t: K.text(g, 0, y, it.t, it.cls || null) } : {
         it: it,
         n: K.text(g, 0, 0, it.num, it.cls || null, { 'text-anchor': 'middle' }),
         d: K.text(g, 0, 0, it.den, it.cls || null, { 'text-anchor': 'middle' }),
         bar: K.el(g, 'path', null, 'fracbar' + (it.barCls || it.cls ? ' ' + (it.barCls || it.cls) : ''))
       };
+      if (it.key) out.part[it.key] = p;
+      return p;
     });
-    var gap = 0.3 * fs;
-    var widths = parts.map(function (p) {
-      return p.t ? p.t.getComputedTextLength()
-                 : Math.max(p.n.getComputedTextLength(), p.d.getComputedTextLength()) + 0.3 * fs;
-    });
-    var total = gap * (parts.length - 1);
-    widths.forEach(function (w) { total += w; });
-    if (total > maxW) {
-      var f = maxW / total;
-      fs *= f; gap *= f; total = maxW;
-      widths = widths.map(function (w) { return w * f; });
-      g.style.fontSize = fs + 'px';
-    }
-    var cx = anchor === 'middle' ? x - total / 2 : x, barY = y - 0.3 * fs;
-    var out = { x: {}, part: {} };
-    parts.forEach(function (p, i) {
-      var w = widths[i];
-      if (p.it.key) { out.x[p.it.key] = cx; out.part[p.it.key] = p; }
-      if (p.t) {
-        p.t.setAttribute('x', cx);
-      } else {
-        p.n.setAttribute('x', cx + w / 2); p.n.setAttribute('y', barY - 0.3 * fs);
-        p.d.setAttribute('x', cx + w / 2); p.d.setAttribute('y', barY + 0.95 * fs);
-        p.bar.setAttribute('d', 'M ' + cx + ' ' + barY + ' H ' + (cx + w));
-      }
-      cx += w + gap;
-    });
+    ROWQ.push({ g: g, x: x, y: y, parts: parts, fs: fs, maxW: maxW, anchor: anchor, out: out, then: then });
     return out;
+  }
+  function flushRows() {
+    var q = ROWQ;
+    ROWQ = [];
+    var widths = q.map(function (r) {
+      return r.parts.map(function (p) {
+        return p.t ? p.t.getComputedTextLength()
+                   : Math.max(p.n.getComputedTextLength(), p.d.getComputedTextLength()) + 0.3 * r.fs;
+      });
+    });
+    q.forEach(function (r, i) {
+      var fs = r.fs, gap = 0.3 * fs, ws = widths[i], total = gap * (r.parts.length - 1);
+      ws.forEach(function (w) { total += w; });
+      if (total > r.maxW) {
+        var f = r.maxW / total;
+        fs *= f; gap *= f; total = r.maxW;
+        ws = ws.map(function (w) { return w * f; });
+        r.g.style.fontSize = fs + 'px';
+      }
+      var cx = r.anchor === 'middle' ? r.x - total / 2 : r.x, barY = r.y - 0.3 * fs;
+      r.parts.forEach(function (p, j) {
+        var w = ws[j];
+        if (p.it.key) r.out.x[p.it.key] = cx;
+        if (p.t) {
+          p.t.setAttribute('x', cx);
+        } else {
+          p.n.setAttribute('x', cx + w / 2); p.n.setAttribute('y', barY - 0.3 * fs);
+          p.d.setAttribute('x', cx + w / 2); p.d.setAttribute('y', barY + 0.95 * fs);
+          p.bar.setAttribute('d', 'M ' + cx + ' ' + barY + ' H ' + (cx + w));
+        }
+        cx += w + gap;
+      });
+      if (r.then) r.then(r.out);
+    });
   }
 
   // One animation: fn(u) for u from 0 to 1 over ms, called at once with 0 so
@@ -405,55 +432,89 @@
     var jumped = !!rec && S.s === STEPS;
     var cur = jumped ? (idx === 0 ? rec.wNext : rec.bNext) : start;
     fit(K.setText(n.value, cur === null ? '' : fP(cur)), 132);
-    n.vb.classList.toggle('fresh', jumped);
-    K.place(n.perch, PERCH.x, PERCH.y, 0, PERCH.scale);
+    n.vb.classList.toggle('lit', jumped);
     if (jumped && animate) {
-      tween(650, function (u) {
-        K.place(n.perch, PERCH.x, PERCH.y - 160 * u * (1 - u), 0, PERCH.scale);
+      // the old value until the grasshopper in the panel lands
+      var was = fP(start), will = fP(cur), shown = will;
+      tween(JUMP_MS, function (u) {
+        var v = u < 0.97 ? was : will;
+        if (v !== shown) { K.setText(n.value, v); shown = v; }
+        n.vb.classList.toggle('lit', u >= 0.97);
       });
     }
     renderPanel(which, rec, animate, show);
     renderFormula(which, rec, start, cur, show);
   }
 
-  // The update, in the deck's notation, where the panel was: the formula
-  // (step 24), then the numbers in it and the new value (25). The "=" of the
-  // two lines below stands under the arrow.
+  // The update, in the deck's notation, under the value box it changes: the
+  // formula (step 28), then the numbers in it and the new value (29), which
+  // shows as the grasshopper lands. The "=" of the two lines below stands
+  // under the arrow.
   function renderFormula(which, rec, start, cur, show) {
     var F = K.clear(N[which].formula), s = S.s;
     if (!rec || s < FORMULA) return;
     show.push('formula-' + which);
-    var row = mathRow(F, FX, FY, [
+    mathRow(F, FX, FY, [
       { t: '*' + which + '*' },
       { t: LA + ' *' + which + '* ' + MI + ' *' + AL + '*', key: 'arrow' },
       { num: PD + '*' + LB + '*', den: PD + '*' + which + '*' }
-    ], 'formula-row' + (s === FORMULA ? ' fresh' : ''), 32, 440, 'start');
-    if (s < STEPS) return;
-    var slope = which === 'w' ? rec.slopeW : rec.slopeB;
-    var x = row.x.arrow, max = 755 - 12 - x;
-    var g = K.g(F, 'fresh');
-    fit(K.text(g, x, FY + 66, '= ' + fP(start) + ' ' + MI + ' ' + E.fmtKnob(S.alpha) + ' ' + TI + ' ' +
-      paren(fS(slope)), 'formula-line'), max);
-    fit(K.text(g, x, FY + 126, '= ' + fP(cur), 'formula-line result'), max);
+    ], 'formula-row' + (s === FORMULA ? ' fresh' : ''), 28, FMAX, 'start', function (row) {
+      if (s < STEPS) return;
+      var slope = which === 'w' ? rec.slopeW : rec.slopeB;
+      var x = row.x.arrow, max = FX + FMAX - x;
+      fit(K.text(F, x, FY + 50, '= ' + fP(start) + ' ' + MI + ' ' + E.fmtKnob(S.alpha) + ' ' + TI + ' ' +
+        paren(fS(slope)), 'formula-line fresh'), max);
+      fit(K.text(F, x, FY + 96, '= ' + fP(cur), 'formula-line result fresh late'), max);
+    });
   }
 
-  // The ground under one grasshopper's feet, magnified, while it finds its
-  // slope. It stands at height L_bar (STAND); hops sideways to w + eps, the
-  // ground there unknown (HOP to AVG); drops or rises to the L_bar computed
-  // there (DROP), which closes a right triangle: the hop eps along the
-  // bottom (EPS), the change Delta L_bar up the side (DELTA, DVAL); their
-  // quotient is the slope, the tilt of the third side (SLOPE). The vertical
-  // scale is squeezed (an arctangent of the slope) so a steep start stays in
-  // the panel; up stays up and steeper stays steeper. The numbers on the
-  // legs are the real ones.
+  // The way the grasshopper picked: an arrow along the axis, above its head.
+  // The returned function redraws it len units long, for its growing.
+  function decisionArrow(P, x0, y, dir) {
+    var body = K.el(K.g(P, 'decision'), 'path', null, null);
+    function set(len) {
+      if (len < 1) { body.setAttribute('d', ''); return; }
+      var hl = Math.min(18, len), x2 = x0 + dir * len, xb = x2 - dir * hl, w = 4, hw = 11;
+      body.setAttribute('d', 'M ' + x0 + ' ' + (y - w) + ' H ' + xb + ' V ' + (y - hw) + ' L ' + x2 + ' ' + y +
+        ' L ' + xb + ' ' + (y + hw) + ' V ' + (y + w) + ' H ' + x0 + ' Z');
+    }
+    set(PL.arrowLen);
+    return set;
+  }
+
+  // Where the jump lands: down the third side, the way it picked. Its length
+  // grows with the real step, alpha * slope, squeezed like the rises: no
+  // panel could hold the first jump (three hundred hops), and later ones are
+  // shorter. To the right it always clears the triangle and its eps; to the
+  // left it stays clear of the axis.
+  function jumpTarget(xp, ym, kk, dir, step) {
+    var lo = dir > 0 ? PL.run + 18 : PL.jumpMin, hi = dir > 0 ? PL.ax1 - 30 - xp : xp - PL.ax0 - 36;
+    var J = lo + (hi - lo) * (2 / Math.PI) * Math.atan(Math.abs(step) / PL.jumpS0);
+    var fall = kk * dir;                  // how far down per unit across
+    if (fall > 0) J = Math.min(J, (PL.ay1 - 16 - ym) / fall);
+    return { x: xp + dir * J, y: ym + kk * dir * J, len: J };
+  }
+
+  // The ground under one grasshopper's feet, magnified, from its first slope
+  // step until its value changes. It stands at height L_bar (STAND); hops
+  // sideways to w + eps, the ground there unknown (HOP to AVG); drops or
+  // rises to the L_bar computed there (DROP), which closes a right triangle:
+  // the hop eps along the bottom (EPS), the change Delta L_bar up the side
+  // (DELTA, DVAL); their quotient is the slope, the tilt of the third side
+  // (SLOPE). The hop was a test: it goes back the way it came (BACK), looks
+  // the picture over and picks the way down, an arrow (DECIDE), and at the
+  // update it jumps that way. The vertical scale is squeezed (an arctangent
+  // of the slope) so a steep start stays in the panel; up stays up and
+  // steeper stays steeper. The numbers on the legs are the real ones; the
+  // lengths are not.
   function renderPanel(which, rec, animate, show) {
     var n = N[which], g0 = GRAD[which], s = S.s;
-    var on = !!rec && s >= g0 && s <= LAST_GRAD;
+    var on = !!rec && s >= g0;
     n.panel.style.display = on ? '' : 'none';
     var P = K.clear(n.panel);
     if (!on) return;
     show.push('panel-' + which);
-    var t = Math.min(s - g0, G.SLOPE);
+    var t = Math.min(s - g0, G.DECIDE), jumped = s === STEPS;
     function now(step) { return s - g0 === step; }
     function fresh(step, cls) { return (cls || '') + (now(step) ? ' fresh' : ''); }
     P.setAttribute('class', 'panel' + (now(G.STAND) ? ' fresh' : ''));
@@ -463,7 +524,11 @@
     var d = idx === 0 ? rec.dW : rec.dB;
     var slope = idx === 0 ? rec.slopeW : rec.slopeB;
     var xp = PL.xp, xh = PL.xp + PL.run, ym = PL.ym, yl = ym - risePx(slope);
-    var down = yl > ym;   // the ground falls under the hop (y grows downward)
+    var down = yl > ym;                   // the ground falls under the hop (y grows downward)
+    var kk = (yl - ym) / PL.run;          // the third side: down per unit across
+    var tilt = Math.atan2(yl - ym, PL.run) * 180 / Math.PI;
+    var dir = slope < 0 ? 1 : slope > 0 ? -1 : 0;   // the way down, along the axis
+    var face = dir < 0 ? -1 : 1;
     var epsStr = E.fmtKnob(S.eps);
 
     K.el(P, 'path', { d: 'M ' + PL.ax0 + ' ' + PL.ay0 + ' V ' + PL.ay1 + ' H ' + PL.ax1 }, 'axis');
@@ -504,24 +569,26 @@
     K.el(P, 'circle', { cx: xp, cy: ym, r: 4.5 }, 'pt-base');
     if (t >= G.DROP) K.el(P, 'circle', { cx: xh, cy: yl, r: 4.5 }, 'pt-land' + (now(G.DROP) ? ' fresh late' : ''));
 
-    // the hop along the bottom, on the side away from the triangle
+    // the hop along the bottom, on the side away from the triangle, clear of
+    // the grasshopper once it is back where it stood
     if (t >= G.EPS) {
-      epsText = K.text(P, (xp + xh) / 2, down ? ym - 12 : ym + 30, '*' + EP + '* = ' + epsStr,
+      epsText = K.text(P, (xp + xh) / 2 + 20, down ? ym - 12 : ym + 30, '*' + EP + '* = ' + epsStr,
         fresh(G.EPS, 'leglabel'), { 'text-anchor': 'middle' });
     }
-    // the change up the side, beside its corner, on the side away from the
-    // third side's extension
+    // the change up the side, written as a subtraction beside the corner, on
+    // the side away from the third side's extension, and above where a jump
+    // down that side can land
     if (t >= G.DELTA) {
-      var la = down ? ym - 34 : ym + 28;
+      var xs = xh + 82, y1 = down ? ym - 96 : ym + 26, room = PANEL_R - xs;
       var two = samePlaces(fL(hopEv.lbar), fL(rec.base.lbar));
-      fit(K.text(P, PL.labelX, la, DE + '*' + LB + '* = ' + two[0] + ' ' + MI + ' ' + two[1],
-        fresh(G.DELTA, 'leglabel')), PL.labelMax);
-      if (t >= G.DVAL) {
-        dvalText = fit(K.text(P, PL.labelX, la + 28, '= ' + fL(d), fresh(G.DVAL, 'leglabel')), PL.labelMax);
-      }
+      var gd = K.g(P, fresh(G.DELTA));
+      K.text(gd, xs - 8, y1, DE + '*' + LB + '*', 'leglabel', { 'text-anchor': 'end' });
+      fit(K.text(gd, xs, y1, '= ' + two[0], 'leglabel'), room);
+      fit(K.text(gd, xs, y1 + 26, MI + ' ' + two[1], 'leglabel'), room);
+      if (t >= G.DVAL) dvalText = fit(K.text(P, xs, y1 + 52, '= ' + fL(d), fresh(G.DVAL, 'leglabel')), room);
     }
 
-    var chord = null, kk = (yl - ym) / PL.run, far = 600;
+    var chord = null, far = 600;
     if (t >= G.SLOPE) {
       var cl = K.g(P, null);
       cl.setAttribute('clip-path', 'url(#plot-' + which + ')');
@@ -529,13 +596,18 @@
         d: 'M ' + (xp - far) + ' ' + (ym - kk * far) + ' L ' + (xp + far) + ' ' + (ym + kk * far)
       }, 'chord');
     }
+    var setArrow = t >= G.DECIDE && dir ? decisionArrow(P, xp, ym - PL.arrowY, dir) : null;
 
-    var pose = t === G.STAND ? { x: xp, y: ym, a: 0 }
-      : t < G.DROP ? { x: xh, y: ym, a: 0 }
-      : t < G.SLOPE ? { x: xh, y: yl, a: 0 }
-      : { x: xh, y: yl, a: Math.atan2(yl - ym, PL.run) * 180 / Math.PI };
+    var tgt = dir ? jumpTarget(xp, ym, kk, dir, S.alpha * slope) : { x: xp, y: ym, len: 0 };
+    var pose = t === G.STAND ? [xp, ym, 0, 1]
+      : t < G.DROP ? [xh, ym, 0, 1]
+      : t < G.SLOPE ? [xh, yl, 0, 1]
+      : t === G.SLOPE ? [xh, yl, tilt, 1]
+      : t === G.BACK ? [xp, ym, tilt, 1]
+      : jumped ? [tgt.x, tgt.y, tilt, face]
+      : [xp, ym, tilt, face];
     var hopper = K.hopper(P, 'walker');
-    K.place(hopper, pose.x, pose.y, pose.a, PL.scale);
+    K.place(hopper, pose[0], pose[1], pose[2], PL.scale, pose[3]);
 
     if (t >= G.SLOPE) {
       var a = now(G.SLOPE);
@@ -547,37 +619,71 @@
         { num: fL(d), den: epsStr, key: 'nums', barCls: a ? 'fresh late' : null },
         { t: '= ' + fS(slope), cls: 'result' + (a ? ' fresh late' : '') }
       ], 'slope-row', 24, PL.rowMax, 'middle');
-      if (animate && a) {
-        // the division: the two numbers leave the legs for the fraction, its
-        // bar and the slope appear, then the third side is drawn from where
-        // the grasshopper stood through where it landed, and on across the
-        // panel, and the grasshopper takes its tilt
-        var nums = row.part.nums;
-        AFTER.push(function () {
-          fly(nums.n, dvalText, fL(d), 750);
-          fly(nums.d, epsText, epsStr, 750);
-        });
-        tween(1500, function (u) {
-          var e1 = phase(u, 0.45, 0.7), e2 = phase(u, 0.7, 1);
-          var x1 = xp - far * e2, x2 = e2 > 0 ? xh + (xp + far - xh) * e2 : xp + PL.run * e1;
-          chord.setAttribute('d', 'M ' + x1 + ' ' + (ym + kk * (x1 - xp)) + ' L ' + x2 + ' ' + (ym + kk * (x2 - xp)));
-          K.place(hopper, xh, yl, pose.a * e2, PL.scale);
-        });
-      }
     }
+    if (!animate) return;
 
-    if (animate && now(G.HOP)) {
+    if (now(G.HOP)) {
       tween(700, function (u) {
         var x = xp + PL.run * ease(u);
         K.place(hopper, x, ym, 0, PL.scale);
         hleg.setAttribute('d', 'M ' + xp + ' ' + ym + ' H ' + x);
       });
     }
-    if (animate && now(G.DROP)) {
+    if (now(G.DROP)) {
       tween(700, function (u) {
         var y = ym + (yl - ym) * ease(u);
         K.place(hopper, xh, y, 0, PL.scale);
         vleg.setAttribute('d', 'M ' + xh + ' ' + ym + ' V ' + y);
+      });
+    }
+    if (now(G.SLOPE)) {
+      // the division: the two numbers leave the legs for the fraction, its
+      // bar and the slope appear, then the third side is drawn from where
+      // the grasshopper stood through where it landed, and on across the
+      // panel, and the grasshopper takes its tilt
+      var nums = row.part.nums;
+      AFTER.push(function () {
+        fly(nums.n, dvalText, fL(d), 750);
+        fly(nums.d, epsText, epsStr, 750);
+      });
+      tween(1500, function (u) {
+        var e1 = phase(u, 0.45, 0.7), e2 = phase(u, 0.7, 1);
+        var x1 = xp - far * e2, x2 = e2 > 0 ? xh + (xp + far - xh) * e2 : xp + PL.run * e1;
+        chord.setAttribute('d', 'M ' + x1 + ' ' + (ym + kk * (x1 - xp)) + ' L ' + x2 + ' ' + (ym + kk * (x2 - xp)));
+        K.place(hopper, xh, yl, tilt * e2, PL.scale);
+      });
+    }
+    if (now(G.BACK)) {
+      // back the way it came: along the side, then along the bottom, then
+      // onto the third side where it stands
+      tween(1200, function (u) {
+        var e1 = phase(u, 0, 0.4), e2 = phase(u, 0.45, 0.85), e3 = phase(u, 0.85, 1);
+        K.place(hopper, xh - PL.run * e2, yl + (ym - yl) * e1, e2 > 0 ? tilt * e3 : tilt * (1 - e1), PL.scale);
+      });
+    }
+    if (now(G.DECIDE)) {
+      // it thinks it over: a thought rises, it looks back and ahead, the
+      // third side pulses; then it turns down the slope and the arrow grows
+      var dots = [[14, -38, 4], [24, -54, 6], [38, -74, 8.5]].map(function (q) {
+        return K.el(P, 'circle', { cx: xp + q[0], cy: ym + q[1], r: q[2] }, 'thought');
+      });
+      tween(2400, function (u) {
+        dots.forEach(function (c, i) {
+          c.style.opacity = phase(u, 0.02 + 0.05 * i, 0.07 + 0.05 * i) * (1 - phase(u, 0.66, 0.74));
+        });
+        var f = u < 0.34 ? 1 - 2 * phase(u, 0.18, 0.26)
+          : u < 0.5 ? -1 + 2 * phase(u, 0.34, 0.42)
+          : 1 + (face - 1) * phase(u, 0.58, 0.66);
+        K.place(hopper, xp, ym, tilt, PL.scale, f);
+        if (chord) chord.style.strokeWidth = (2.8 + 3.4 * Math.sin(Math.PI * phase(u, 0.42, 0.56))) + 'px';
+        if (setArrow) setArrow(PL.arrowLen * phase(u, 0.74, 1));
+      });
+    }
+    if (jumped && dir) {
+      // the jump, the way it picked
+      var arc = 18 + 0.25 * tgt.len;
+      tween(JUMP_MS, function (u) {
+        K.place(hopper, xp + (tgt.x - xp) * u, ym + (tgt.y - ym) * u - 4 * arc * u * (1 - u), tilt, PL.scale, face);
       });
     }
   }
