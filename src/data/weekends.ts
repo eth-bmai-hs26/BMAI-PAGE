@@ -1197,7 +1197,20 @@ export const weekends: Weekend[] = [
         // data and vendored fonts only; not its dev or precompute folders),
         // published on Carlos's word of 2026-10-21. A change there must be
         // recopied here.
-        links: [{ label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') }],
+        //
+        // "Pufferfish notebook" is the VAE half's live demo: a plain autoencoder
+        // on synthetic pufferfish pictures, with sliders on its three numbers.
+        // Linked, not copied: it is the byte-for-byte public copy in
+        // w4-cx-public of the master in the private w4-cx-private (both at
+        // pufferfish-autoencoder/), the address the VAE deck's QR opens. Put on
+        // the site on Carlos's word of 2026-10-22.
+        links: [
+          { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
+          {
+            label: 'Pufferfish notebook',
+            url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
+          },
+        ],
       },
       {
         time: '09:00',
@@ -1247,6 +1260,11 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, manifolds)',
         url: viz(4, 'grasshopper-regression'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Pufferfish autoencoder: the notebook from the lecture (Colab notebook)',
+        url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
       },
       {
         group: 'Coding exercises',
