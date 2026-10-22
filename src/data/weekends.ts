@@ -1211,12 +1211,24 @@ export const weekends: Weekend[] = [
         // published on Carlos's word of 2026-10-21. A change there must be
         // recopied here.
         //
+        // "Season classifier, example" and "Time of day, exercise" are the two
+        // sunrise CNN notebooks of the deck's opening question, one photo of a
+        // sunrise and two predictions (frame 4, "Predicting from a photo"): a
+        // worked example, a small CNN that tells the season, and an exercise,
+        // the same network told to predict the time of the day, four tasks
+        // marked with a target sign, each with a folded hint. Both draw the
+        // Sunrise Machine's pictures. Linked, not copied, from
+        // w4-cx-public/sunrise-cnn/; the master, the exercise with its answers,
+        // is w4-cx-private/sunrise-cnn/sunrise_time_regression_solutions.ipynb.
+        // Put on the site on Carlos's word of 2026-10-22.
+        //
         // "Pufferfish notebook" is the VAE half's live demo: a plain autoencoder
         // on synthetic pufferfish pictures, with sliders on its three numbers.
         // Linked, not copied, from w4-cx-public, the address the VAE deck's QR
         // opens. Since 2026-10-22 that public file is the EXERCISE, three gaps
-        // to fill; the complete notebook is private in w4-cx-private as
-        // pufferfish_autoencoder_solutions.ipynb. Put on the site on Carlos's
+        // to fill; the complete notebook, pufferfish_autoencoder_solutions.ipynb,
+        // is in w4-cx-public too since the same day (8bcb26f, on Carlos's word),
+        // listed in its SOLUTIONS.md and NOT linked here. Put on the site on Carlos's
         // word of 2026-10-22. "Worked example" is the exercise's helper beside
         // it in w4-cx-public, pytorch_example.ipynb: a small network on made-up
         // ice cream sales, with the same three kinds of lines the exercise
@@ -1234,6 +1246,14 @@ export const weekends: Weekend[] = [
           { label: 'Slides: Manifolds', url: deck(4, 'manifolds.pdf') },
           { label: 'Slides: VAEs', url: deck(4, 'vae.pdf') },
           { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
+          {
+            label: 'Season classifier, example',
+            url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
+          },
+          {
+            label: 'Time of day, exercise',
+            url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
+          },
           {
             label: 'Pufferfish notebook',
             url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
@@ -1316,9 +1336,10 @@ export const weekends: Weekend[] = [
         // copied, from w4-cx-public, where it is the EXERCISE, five tasks. The
         // complete notebook, happy-sad-diffusion/happy_sad_diffusion_solutions
         // .ipynb, and its extension, happy_sad_diffusion_extension.ipynb (which
-        // repeats the exercise's answers), are in w4-cx-private only: on
-        // Carlos's word of 2026-10-22 they go to w4-cx-public after the Friday
-        // 14:00 exercise and are never linked here without his word.
+        // repeats the exercise's answers), are in w4-cx-public too since
+        // 2026-10-22 (8bcb26f), on Carlos's word ("Now, all of them", which
+        // replaced his earlier "after the exercise"), listed in its
+        // SOLUTIONS.md. They are never linked here without his word.
         // Put on the site on Carlos's word of 2026-10-22.
         links: [
           {
@@ -1358,6 +1379,20 @@ export const weekends: Weekend[] = [
         group: 'Visualizations',
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, manifolds)',
         url: viz(4, 'grasshopper-regression'),
+      },
+      // The two sunrise CNN notebooks of the Friday 08:15 row, the exercise and
+      // its worked example, linked from w4-cx-public/sunrise-cnn/; the master
+      // is in w4-cx-private/sunrise-cnn/. Put on the site on Carlos's word of
+      // 2026-10-22.
+      {
+        group: 'Coding exercises',
+        label: 'What time is it? A CNN reads a sunrise: four tasks, then the time of day from a photo (Colab notebook)',
+        url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Which season is it? The worked example: a small CNN tells the season of a sunrise (Colab notebook)',
+        url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
       },
       {
         group: 'Coding exercises',
