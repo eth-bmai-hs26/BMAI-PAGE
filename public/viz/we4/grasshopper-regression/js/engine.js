@@ -93,6 +93,24 @@
     return this.records[k - 1] || null;
   };
 
+  // ============================================================ drawing scale
+
+  // One scale for the two panels, so their pictures can be compared: given
+  // the two grasshoppers' numbers (their slopes, or their steps), the larger
+  // is squeezed to at most top by an arctangent, so a wild start stays in the
+  // panel and a nearly flat ground looks flat, and the other is drawn in
+  // proportion to it: drawn a : drawn b = a : b, signs kept. Squeezing each
+  // panel on its own drew -297 and -116 as nearly the same tilt.
+  function squeezePair(a, b, top, s0) {
+    var m = Math.max(Math.abs(a), Math.abs(b));
+    if (!(m > 0)) return { a: 0, b: 0 };
+    var t = top * (2 / Math.PI) * Math.atan(m / s0);
+    if (!isFinite(m)) {
+      return { a: isFinite(a) ? 0 : t * Math.sign(a), b: isFinite(b) ? 0 : t * Math.sign(b) };
+    }
+    return { a: t * a / m, b: t * b / m };
+  }
+
   // ============================================================ formatting
 
   // x rounded to dp decimals, trailing zeros dropped, a real minus sign.
@@ -142,7 +160,7 @@
   function fmtKnob(x) { return String(x); }
 
   var E = {
-    evaluate: evaluate, iteration: iteration, Run: Run,
+    evaluate: evaluate, iteration: iteration, Run: Run, squeezePair: squeezePair,
     fmt: fmt, fmtP: fmtP, fmtL: fmtL, fmtS: fmtS, fmtKnob: fmtKnob, MINUS: MINUS
   };
   root.GHEngine = E;

@@ -257,7 +257,15 @@
 
   // ===================================================== rendering
 
-  function risePx(slope) { return PL.rmax * (2 / Math.PI) * Math.atan(slope / PL.s0); }
+  // The two panels on one scale (E.squeezePair): their rises in proportion
+  // to their slopes, and their jumps, as fractions of the room a jump has, in
+  // proportion to their steps alpha * slope. Worked out for the iteration as
+  // a whole, so a panel already drawn does not change when the other comes.
+  function panelScale(rec) {
+    var r = E.squeezePair(rec.slopeW, rec.slopeB, PL.rmax, PL.s0);
+    var j = E.squeezePair(S.alpha * rec.slopeW, S.alpha * rec.slopeB, 1, PL.jumpS0);
+    return { rise: { w: r.a, b: r.b }, jump: { w: Math.abs(j.a), b: Math.abs(j.b) } };
+  }
 
   function record() { return S.run && S.s > 0 ? S.run.get(S.k) : null; }
 
@@ -483,13 +491,13 @@
   }
 
   // Where the jump lands: down the third side, the way it picked. Its length
-  // grows with the real step, alpha * slope, squeezed like the rises: no
-  // panel could hold the first jump (three hundred hops), and later ones are
-  // shorter. To the right it always clears the triangle and its eps; to the
-  // left it stays clear of the axis.
-  function jumpTarget(xp, ym, kk, dir, step) {
+  // grows with the real step, alpha * slope: frac is that step on the two
+  // panels' shared, squeezed scale (no panel could hold the first jump, three
+  // hundred hops, and later ones are shorter). To the right it always clears
+  // the triangle and its eps; to the left it stays clear of the axis.
+  function jumpTarget(xp, ym, kk, dir, frac) {
     var lo = dir > 0 ? PL.run + 18 : PL.jumpMin, hi = dir > 0 ? PL.ax1 - 30 - xp : xp - PL.ax0 - 36;
-    var J = lo + (hi - lo) * (2 / Math.PI) * Math.atan(Math.abs(step) / PL.jumpS0);
+    var J = lo + (hi - lo) * frac;
     var fall = kk * dir;                  // how far down per unit across
     if (fall > 0) J = Math.min(J, (PL.ay1 - 16 - ym) / fall);
     return { x: xp + dir * J, y: ym + kk * dir * J, len: J };
@@ -503,10 +511,11 @@
   // (DELTA, DVAL); their quotient is the slope, the tilt of the third side
   // (SLOPE). The hop was a test: it goes back the way it came (BACK), looks
   // the picture over and picks the way down, an arrow (DECIDE), and at the
-  // update it jumps that way. The vertical scale is squeezed (an arctangent
-  // of the slope) so a steep start stays in the panel; up stays up and
-  // steeper stays steeper. The numbers on the legs are the real ones; the
-  // lengths are not.
+  // update it jumps that way. Both panels share one vertical scale, so the
+  // steeper slope is drawn steeper in exact proportion; that scale is
+  // squeezed (an arctangent of the steeper slope) so a steep start stays in
+  // the panel and a nearly flat ground looks flat. The numbers on the legs
+  // are the real ones; the lengths are to that scale.
   function renderPanel(which, rec, animate, show) {
     var n = N[which], g0 = GRAD[which], s = S.s;
     var on = !!rec && s >= g0;
@@ -523,7 +532,8 @@
     var hopEv = idx === 0 ? rec.hopW : rec.hopB;
     var d = idx === 0 ? rec.dW : rec.dB;
     var slope = idx === 0 ? rec.slopeW : rec.slopeB;
-    var xp = PL.xp, xh = PL.xp + PL.run, ym = PL.ym, yl = ym - risePx(slope);
+    var scale = panelScale(rec);
+    var xp = PL.xp, xh = PL.xp + PL.run, ym = PL.ym, yl = ym - scale.rise[which];
     var down = yl > ym;                   // the ground falls under the hop (y grows downward)
     var kk = (yl - ym) / PL.run;          // the third side: down per unit across
     var tilt = Math.atan2(yl - ym, PL.run) * 180 / Math.PI;
@@ -598,7 +608,7 @@
     }
     var setArrow = t >= G.DECIDE && dir ? decisionArrow(P, xp, ym - PL.arrowY, dir) : null;
 
-    var tgt = dir ? jumpTarget(xp, ym, kk, dir, S.alpha * slope) : { x: xp, y: ym, len: 0 };
+    var tgt = dir ? jumpTarget(xp, ym, kk, dir, scale.jump[which]) : { x: xp, y: ym, len: 0 };
     var pose = t === G.STAND ? [xp, ym, 0, 1]
       : t < G.DROP ? [xh, ym, 0, 1]
       : t < G.SLOPE ? [xh, yl, 0, 1]
