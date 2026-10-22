@@ -1687,8 +1687,8 @@ export const weekends: Weekend[] = [
         time: '14:30',
         title: 'Conditional VAE with demo',
         summary:
-          'Four one-line gaps: squeeze faces through the VAE of Stable Diffusion, blend two faces in pixels and in codes, and see why a "show me at 70" button needs the manifold.',
-        url: colab('w4-cx-public', 'aging/face_aging.ipynb'),
+          'Build the VAE of Stable Diffusion yourself, four layers with step-by-step hints, load the official weights into it, then age a face, yours if you upload it, with FADING.',
+        url: colab('w4-cx-public', 'face-aging-vae/face_aging_vae.ipynb'),
         level: 'easy',
         rank: 5,
       },
