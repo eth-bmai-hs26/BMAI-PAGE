@@ -1191,14 +1191,21 @@ export const weekends: Weekend[] = [
     startISO: '2026-10-23',
     fridayRoom: 'HG D 7.2',
     saturdayRoom: 'HG D 7.2',
-    project: 'To be announced',
+    project: 'Deepfake detection and generation',
     summary:
-      'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and adversarial robustness, then stable diffusion, CLIP and cross-attention.',
+      'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and stable diffusion, then the future of AI. Saturday turns to adversarial attacks, attacks on LLMs and the deepfake project.',
     friday: [
       {
         time: '08:15',
         title: 'Manifolds and VAEs',
         type: 'lecture',
+        // "Slides: Manifolds" is the manifold half of the lecture, the deck
+        // w4-lecture-material/manifolds-deck/manifolds-slides.pdf (29 frames
+        // over 120 pages), copied on Carlos's word of 2026-10-22 ("Publish the
+        // slides"), byte for byte that repository's commit 0dad959. A rebuild
+        // there must be recopied here. The VAE half's deck and the weekend's
+        // cold open are in the same repository and not published.
+        //
         // "Two grasshoppers fit a line" is the click-through of the lecture's
         // grasshopper frames, page 8 of Carlos's manifold notes: the room types
         // a start for w and b, and every step of an iteration is a click. A copy
@@ -1226,6 +1233,7 @@ export const weekends: Weekend[] = [
         // the site on Carlos's word of 2026-10-22, with the explorer build that
         // has the view (w4-cx-private 05d9874, w4-cx-public fcc774a).
         links: [
+          { label: 'Slides: Manifolds', url: deck(4, 'manifolds.pdf') },
           { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
           {
             label: 'Pufferfish notebook',
@@ -1274,13 +1282,20 @@ export const weekends: Weekend[] = [
         ],
       },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
-      { time: '11:00', title: 'Conditional VAE with demo', type: 'exercise' },
+      // From 11:00 on, the order of the master spreadsheet's Syllabus tab as
+      // Carlos left it on the night of 2026-10-21, transcribed on his word of
+      // 2026-10-22: stable diffusion moved up from 14:00 to 11:00, its
+      // exercise took 14:00 and the conditional VAE exercise moved from 11:00
+      // to 14:30, "Future of AI" took the quiz's 16:00, and the cross-attention
+      // lecture is no longer in it. The break venues stay the programme
+      // office's, see the note at the top of this file.
+      { time: '11:00', title: 'Stable diffusion', type: 'lecture' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
       {
         time: '14:00',
-        title: 'Stable diffusion, CLIP, MAE',
-        type: 'lecture',
+        title: 'Stable diffusion',
+        type: 'exercise',
         // "Happy and sad diffusion" is a tiny text-to-image diffusion model:
         // 9 x 9 faces whose prompt is one bit, trained in seconds. Linked, not
         // copied, from w4-cx-public, where it is the EXERCISE, five tasks. The
@@ -1295,9 +1310,9 @@ export const weekends: Weekend[] = [
           },
         ],
       },
-      { time: '14:30', title: 'Cross-attention mechanisms', type: 'lecture' },
+      { time: '14:30', title: 'Conditional VAE with demo', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
-      { time: '16:00', title: 'Quiz', type: 'quiz' },
+      { time: '16:00', title: 'Future of AI', type: 'lecture' },
     ],
     saturday: [
       { time: '08:15', title: 'Adversarial attacks', type: 'lecture' },
@@ -1307,18 +1322,21 @@ export const weekends: Weekend[] = [
         title: 'Coffee break in the foyer outside the classroom (HG\u00a0D30.0075), until 10:30',
         type: 'break',
       },
-      { time: '10:30', title: 'Deepfake detection and generation', type: 'lecture' },
-      // The syllabus leaves these two slots open for now.
-      { time: '11:00', title: '', type: 'tba' },
-      { time: '12:00', title: 'Project intro', type: 'tba' },
+      // The master spreadsheet, 2026-10-22: attacks on LLMs at 10:30, then the
+      // project intro at 11:00, an hour earlier than on weekends 1 to 3, and
+      // nothing at 12:00.
+      { time: '10:30', title: 'Attacks on LLMs', type: 'lecture' },
+      { time: '11:00', title: 'Project intro: Deepfake detection and generation', type: 'project' },
+      { time: '12:00', title: '', type: 'tba' },
     ],
     resources: [
-      { group: 'Lecture slides', label: 'Manifolds and VAEs', url: SOON },
+      { group: 'Lecture slides', label: 'Manifolds and VAEs, part 1: manifolds', url: deck(4, 'manifolds.pdf') },
+      { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: SOON },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: SOON },
-      { group: 'Lecture slides', label: 'Stable diffusion, CLIP, MAE', url: SOON },
-      { group: 'Lecture slides', label: 'Cross-attention mechanisms', url: SOON },
+      { group: 'Lecture slides', label: 'Stable diffusion', url: SOON },
+      { group: 'Lecture slides', label: 'Future of AI', url: SOON },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
-      { group: 'Lecture slides', label: 'Deepfake detection and generation', url: SOON },
+      { group: 'Lecture slides', label: 'Attacks on LLMs', url: SOON },
       {
         group: 'Visualizations',
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, manifolds)',
@@ -1376,8 +1394,8 @@ export const weekends: Weekend[] = [
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
       },
       { group: 'Coding exercises', label: 'Adversarial attacks', url: SOON },
-      { group: 'Project', label: 'Project description', url: SOON },
-      { group: 'Project', label: 'Grading scheme', url: SOON },
+      { group: 'Project', label: 'Deepfake detection and generation: project description', url: SOON },
+      { group: 'Project', label: 'Deepfake detection and generation: grading scheme', url: SOON },
     ],
   },
 ];
