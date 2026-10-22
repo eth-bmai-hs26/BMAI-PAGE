@@ -1454,7 +1454,11 @@ export const weekends: Weekend[] = [
         // repeats the exercise's answers), are in w4-cx-public too since
         // 2026-10-22 (8bcb26f), on Carlos's word ("Now, all of them", which
         // replaced his earlier "after the exercise"), listed in its
-        // SOLUTIONS.md. They are never linked here without his word.
+        // SOLUTIONS.md. The complete notebook is never linked here. The
+        // extension is, since the evening of 2026-10-22, as a demo for after
+        // the exercise, with the text embeddings exercise and the tiny stable
+        // diffusion, on his word ("put all the notebooks related to this into
+        // the slot on coding exercises on stable diffusion").
         // Put on the site on Carlos's word of 2026-10-22.
       },
       { time: '14:30', title: 'Conditional VAE with demo', type: 'exercise' },
@@ -1535,7 +1539,9 @@ export const weekends: Weekend[] = [
     // place in the easiest-first order, the level is easy or hard. The levels
     // as Carlos set them on 2026-10-22: the pufferfish, the sunrise time of day
     // estimator and the grasshoppers in Python easy, the happy and sad faces
-    // hard. A demo is complete and gets no rank. Solutions are never listed here (the standing
+    // hard. The text embeddings exercise, added with the stable diffusion
+    // slot's other notebooks on his word of the same day, is easy: its hints
+    // point at the ice cream example. A demo is complete and gets no rank. Solutions are never listed here (the standing
     // rule of 2026-10-22: the site links exercises only).
     exercises: [
       {
@@ -1602,11 +1608,51 @@ export const weekends: Weekend[] = [
         summary: 'Five tasks: a tiny diffusion model draws a happy or a sad face from a one-bit prompt.',
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
         level: 'hard',
+        rank: 5,
+        reference: {
+          label: 'Ice cream sales',
+          url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
+        },
+      },
+      // The stable diffusion slot's other notebooks, on Carlos's word of
+      // 2026-10-22 ("put all the notebooks related to this into the slot on
+      // coding exercises on stable diffusion"): the text embeddings exercise,
+      // then two complete coding examples for AFTER the exercises, whose code
+      // gives their answers away, as their summaries say (and a warning at the
+      // top of the tiny stable diffusion). The two solutions,
+      // happy_sad_diffusion_solutions.ipynb and text_embeddings_solutions.ipynb,
+      // stay off the site.
+      {
+        day: 'friday',
+        time: '14:00',
+        title: 'Text embeddings from scratch',
+        summary:
+          'Three tasks: every word gets two numbers of its own, a sentence their average, and a wide network turns it into how happy, sad and surprised the sentence is.',
+        url: colab('w4-cx-public', 'text-embeddings/text_embeddings.ipynb'),
+        level: 'easy',
         rank: 4,
         reference: {
           label: 'Ice cream sales',
           url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
         },
+      },
+      {
+        day: 'friday',
+        time: '14:00',
+        title: 'Three faces and BERT, after the exercise',
+        summary:
+          "Open it once the happy and sad exercise is done, since its code holds that exercise's answers: a third face, surprised, and a sentence read by BERT that picks the face to draw.",
+        url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion_extension.ipynb'),
+        demo: true,
+      },
+      {
+        day: 'friday',
+        time: '14:00',
+        title: 'A tiny stable diffusion, after the exercises',
+        summary:
+          'Open it once the happy and sad exercise and the text embeddings exercise are done, since its code holds their answers: our own text embedder reads a word or a sentence, and the denoiser draws the face it describes.',
+        url: colab('w4-cx-public', 'tiny-stable-diffusion/tiny_stable_diffusion.ipynb'),
+        demo: true,
       },
       { day: 'friday', time: '14:30', title: 'Conditional VAE with demo', summary: '', url: SOON },
       { day: 'saturday', time: '09:00', title: 'Adversarial attacks', summary: '', url: SOON },
