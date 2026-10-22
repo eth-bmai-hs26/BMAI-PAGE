@@ -1194,8 +1194,14 @@ export const weekends: Weekend[] = [
         // w4-lecture-material/manifolds-deck/manifolds-slides.pdf (29 frames
         // over 120 pages), copied on Carlos's word of 2026-10-22 ("Publish the
         // slides"), byte for byte that repository's commit 0dad959. A rebuild
-        // there must be recopied here. The VAE half's deck and the weekend's
-        // cold open are in the same repository and not published.
+        // there must be recopied here. The weekend's cold open is in the same
+        // repository and not published.
+        //
+        // "Slides: VAEs" is the VAE half of the lecture, the deck
+        // w4-lecture-material/vae-deck/vae-slides.pdf (5 frames over 20 pages),
+        // copied on Carlos's word of 2026-10-22 ("Publish the slides on VAE"),
+        // byte for byte that repository's commit ee0c592. A rebuild there must
+        // be recopied here.
         //
         // "Two grasshoppers fit a line" is the click-through of the lecture's
         // grasshopper frames, page 8 of Carlos's manifold notes: the room types
@@ -1226,6 +1232,7 @@ export const weekends: Weekend[] = [
         // opened it at #fold=cylinder, torus, klein and rp2.
         links: [
           { label: 'Slides: Manifolds', url: deck(4, 'manifolds.pdf') },
+          { label: 'Slides: VAEs', url: deck(4, 'vae.pdf') },
           { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
           {
             label: 'Pufferfish notebook',
@@ -1320,7 +1327,7 @@ export const weekends: Weekend[] = [
     ],
     resources: [
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 1: manifolds', url: deck(4, 'manifolds.pdf') },
-      { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: SOON },
+      { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: deck(4, 'vae.pdf') },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: SOON },
       { group: 'Lecture slides', label: 'Stable diffusion', url: SOON },
       { group: 'Lecture slides', label: 'Future of AI', url: SOON },
