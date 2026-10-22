@@ -1209,10 +1209,11 @@ export const weekends: Weekend[] = [
         //
         // "Pufferfish notebook" is the VAE half's live demo: a plain autoencoder
         // on synthetic pufferfish pictures, with sliders on its three numbers.
-        // Linked, not copied: it is the byte-for-byte public copy in
-        // w4-cx-public of the master in the private w4-cx-private (both at
-        // pufferfish-autoencoder/), the address the VAE deck's QR opens. Put on
-        // the site on Carlos's word of 2026-10-22.
+        // Linked, not copied, from w4-cx-public, the address the VAE deck's QR
+        // opens. Since 2026-10-22 that public file is the EXERCISE, three gaps
+        // to fill; the complete notebook is private in w4-cx-private as
+        // pufferfish_autoencoder_solutions.ipynb. Put on the site on Carlos's
+        // word of 2026-10-22.
         //
         // The four "Folding" chips show the chart folding step by step into a
         // cylinder, a torus, a Klein bottle and a projective plane (a
@@ -1304,7 +1305,7 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Coding exercises',
-        label: 'Pufferfish autoencoder: the notebook from the lecture (Colab notebook)',
+        label: 'Pufferfish autoencoder: fill in three gaps, then change the three numbers of a fish (Colab notebook)',
         url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
       },
       {
