@@ -1307,8 +1307,10 @@ export const weekends: Weekend[] = [
         // 9 x 9 faces whose prompt is one bit, trained in seconds. Linked, not
         // copied, from w4-cx-public, where it is the EXERCISE, five tasks. The
         // complete notebook, happy-sad-diffusion/happy_sad_diffusion_solutions
-        // .ipynb, is in w4-cx-private and, since 2026-10-22, in w4-cx-public
-        // too, and on Carlos's word it is NOT linked here until he says so.
+        // .ipynb, and its extension, happy_sad_diffusion_extension.ipynb (which
+        // repeats the exercise's answers), are in w4-cx-private only: on
+        // Carlos's word of 2026-10-22 they go to w4-cx-public after the Friday
+        // 14:00 exercise and are never linked here without his word.
         // Put on the site on Carlos's word of 2026-10-22.
         links: [
           {
