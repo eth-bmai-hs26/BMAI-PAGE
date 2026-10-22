@@ -1218,9 +1218,11 @@ export const weekends: Weekend[] = [
         // the same network told to predict the time of the day, four tasks
         // marked with a target sign, each with a folded hint. Both draw the
         // Sunrise Machine's pictures. Linked, not copied, from
-        // w4-cx-public/sunrise-cnn/; the master, the exercise with its answers,
-        // is w4-cx-private/sunrise-cnn/sunrise_time_regression_solutions.ipynb.
-        // Put on the site on Carlos's word of 2026-10-22.
+        // w4-cx-public/sunrise-cnn/; the complete notebook, the exercise with
+        // its answers, sunrise_time_regression_solutions.ipynb, is in
+        // w4-cx-public too since the same day (9a333a5, on Carlos's standing
+        // rule), listed in its SOLUTIONS.md and NOT linked here. Put on the
+        // site on Carlos's word of 2026-10-22.
         //
         // "Pufferfish notebook" is the VAE half's live demo: a plain autoencoder
         // on synthetic pufferfish pictures, with sliders on its three numbers.
@@ -1381,9 +1383,9 @@ export const weekends: Weekend[] = [
         url: viz(4, 'grasshopper-regression'),
       },
       // The two sunrise CNN notebooks of the Friday 08:15 row, the exercise and
-      // its worked example, linked from w4-cx-public/sunrise-cnn/; the master
-      // is in w4-cx-private/sunrise-cnn/. Put on the site on Carlos's word of
-      // 2026-10-22.
+      // its worked example, linked from w4-cx-public/sunrise-cnn/; the complete
+      // notebook beside them is listed in w4-cx-public's SOLUTIONS.md and NOT
+      // linked here. Put on the site on Carlos's word of 2026-10-22.
       {
         group: 'Coding exercises',
         label: 'What time is it? A CNN reads a sunrise: four tasks, then the time of day from a photo (Colab notebook)',
