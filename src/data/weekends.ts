@@ -1211,6 +1211,17 @@ export const weekends: Weekend[] = [
         // published on Carlos's word of 2026-10-21. A change there must be
         // recopied here.
         //
+        // "Grasshoppers, exercise" is the same gradient descent as a Colab
+        // exercise, asked for by Carlos on 2026-10-22: average_loss(w, b) on the
+        // three sunrise photos, then the grasshoppers' loop (hop, slope, jump),
+        // three tasks marked with a target sign, each with a folded hint, and the
+        // page's numbers. Linked, not copied, from
+        // w4-cx-public/grasshopper-gradient-descent/ (master in
+        // w4-cx-private/grasshopper-gradient-descent/); the complete notebook,
+        // grasshopper_gradient_descent_solutions.ipynb, is in w4-cx-public too,
+        // listed in its SOLUTIONS.md and NOT linked here, on Carlos's standing rule
+        // of 2026-10-22 ("Only publish the exercises to the website").
+        //
         // "Season classifier, example" and "Time of day, exercise" are the two
         // sunrise CNN notebooks of the deck's opening question, one photo of a
         // sunrise and two predictions (frame 4, "Predicting from a photo"): a
@@ -1248,6 +1259,10 @@ export const weekends: Weekend[] = [
           { label: 'Slides: Manifolds', url: deck(4, 'manifolds.pdf') },
           { label: 'Slides: VAEs', url: deck(4, 'vae.pdf') },
           { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
+          {
+            label: 'Grasshoppers, exercise',
+            url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
+          },
           {
             label: 'Season classifier, example',
             url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
@@ -1410,6 +1425,14 @@ export const weekends: Weekend[] = [
         group: 'Coding exercises',
         label: 'Which season is it? The worked example: a small CNN tells the season of a sunrise (Colab notebook)',
         url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
+      },
+      // The grasshoppers' exercise of the Friday 08:15 row, linked from
+      // w4-cx-public/grasshopper-gradient-descent/; the complete notebook beside it
+      // is listed in w4-cx-public's SOLUTIONS.md and NOT linked here.
+      {
+        group: 'Coding exercises',
+        label: 'Two grasshoppers fit a line: three tasks, then gradient descent on the three sunrise photos (Colab notebook)',
+        url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
       },
       {
         group: 'Coding exercises',
