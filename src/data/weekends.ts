@@ -1283,10 +1283,11 @@ export const weekends: Weekend[] = [
         type: 'lecture',
         // "Happy and sad diffusion" is a tiny text-to-image diffusion model:
         // 9 x 9 faces whose prompt is one bit, trained in seconds. Linked, not
-        // copied, from w4-cx-public, where it is the EXERCISE, three one-line
-        // gaps; the complete notebook is private in w4-cx-private as
-        // happy-sad-diffusion/happy_sad_diffusion_solutions.ipynb. Put on the
-        // site on Carlos's word of 2026-10-22.
+        // copied, from w4-cx-public, where it is the EXERCISE, five tasks. The
+        // complete notebook, happy-sad-diffusion/happy_sad_diffusion_solutions
+        // .ipynb, is in w4-cx-private and, since 2026-10-22, in w4-cx-public
+        // too, and on Carlos's word it is NOT linked here until he says so.
+        // Put on the site on Carlos's word of 2026-10-22.
         links: [
           {
             label: 'Happy and sad diffusion notebook',
