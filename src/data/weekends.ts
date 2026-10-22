@@ -19,9 +19,10 @@ import type { Weekend } from '../types';
  * Catering comes from the CAS AIS HS26 schedule sent by the programme office on
  * 3 September 2026. THE FRIDAY VENUES ARE NOT THE SAME EVERY WEEKEND, so they
  * are set per weekend rather than once: weekends 1 and 3 are largely at the
- * Dozentenfoyer, weekends 2 and 4 at Polysnack, and weekend 3's afternoon
- * coffee is at the foyer instead. Every Saturday coffee is at HG D30.0075, the
- * foyer immediately outside the classroom. Do not "tidy" these into one value.
+ * Dozentenfoyer, weekends 2 and 4 at Polysnack, except weekend 4's lunch, which
+ * is at the Dozentenfoyer, and weekend 3's afternoon coffee is at the foyer
+ * instead. Every Saturday coffee is at HG D30.0075, the foyer immediately
+ * outside the classroom. Do not "tidy" these into one value.
  *
  * The programme office sent the breaks for weekends 2 to 4 again by e-mail,
  * transcribed here on 16 September 2026. All twelve match what was already
@@ -35,6 +36,12 @@ import type { Weekend } from '../types';
  * no-break space, \u00a0, because the longer label otherwise wraps between "HG"
  * and "D30.0075" in the two-column schedule on a laptop, and no word order
  * avoids that at every width.
+ *
+ * The programme office sent weekend 4's breaks once more on 22 October 2026,
+ * the day before it. One of the four changed: the Friday lunch, 13:00 to 14:00,
+ * is at the Dozentenfoyer and no longer at Polysnack, a joint lunch with CAS
+ * CMC, which its row says. The two Friday coffees at Polysnack and the Saturday
+ * coffee in the foyer, with its trolley from the Cafebar, are as they were.
  */
 const ORG = 'eth-bmai-hs26';
 
@@ -1428,7 +1435,9 @@ export const weekends: Weekend[] = [
         ],
       },
       { time: '12:00', title: 'Lab session', type: 'lab' },
-      { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
+      // Moved from Polysnack to the Dozentenfoyer by the programme office's
+      // e-mail of 2026-10-22, the day before: a joint lunch with CAS CMC.
+      { time: '13:00', title: 'Lunch break at Dozentenfoyer, together with CAS CMC, until 14:00', type: 'break' },
       {
         time: '14:00',
         title: 'Stable diffusion',
