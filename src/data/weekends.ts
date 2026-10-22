@@ -1213,7 +1213,10 @@ export const weekends: Weekend[] = [
         // opens. Since 2026-10-22 that public file is the EXERCISE, three gaps
         // to fill; the complete notebook is private in w4-cx-private as
         // pufferfish_autoencoder_solutions.ipynb. Put on the site on Carlos's
-        // word of 2026-10-22.
+        // word of 2026-10-22. "Worked example" is the exercise's helper beside
+        // it in w4-cx-public, pytorch_example.ipynb: a small network on made-up
+        // ice cream sales, with the same three kinds of lines the exercise
+        // leaves out. Linked on Carlos's word of 2026-10-22.
         //
         // The four "Folding" chips show the chart folding step by step into a
         // cylinder, a torus, a Klein bottle and a projective plane (a
@@ -1227,6 +1230,10 @@ export const weekends: Weekend[] = [
           {
             label: 'Pufferfish notebook',
             url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
+          },
+          {
+            label: 'Worked example',
+            url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
           },
           { label: 'Folding, cylinder', url: foldTheChart('cylinder') },
           { label: 'Folding, torus', url: foldTheChart('torus') },
@@ -1307,6 +1314,11 @@ export const weekends: Weekend[] = [
         group: 'Coding exercises',
         label: 'Pufferfish autoencoder: fill in three gaps, then change the three numbers of a fish (Colab notebook)',
         url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Pufferfish autoencoder, worked example: a small network on made-up ice cream sales (Colab notebook)',
+        url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
       },
       {
         group: 'Coding exercises',
