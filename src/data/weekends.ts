@@ -1629,7 +1629,7 @@ export const weekends: Weekend[] = [
         summary: 'Five tasks: a tiny diffusion model draws a happy or a sad face from a one-bit prompt.',
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
         level: 'hard',
-        rank: 5,
+        rank: 6,
         reference: {
           label: 'Ice cream sales',
           url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
@@ -1666,7 +1666,7 @@ export const weekends: Weekend[] = [
           "Five tasks, after the happy and sad exercise, whose answers its folded cells hold: a third face, surprised, and BERT reads a sentence to pick the face to draw.",
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion_extension.ipynb'),
         level: 'hard',
-        rank: 6,
+        rank: 7,
         reference: {
           label: 'Sunrise season classifier',
           url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
@@ -1680,7 +1680,7 @@ export const weekends: Weekend[] = [
           'Four tasks, after the three exercises before it: train the denoiser on faces with captions, read by your own frozen text embedder, the way Stable Diffusion is trained, then type a word or a sentence and get its face.',
         url: colab('w4-cx-public', 'tiny-stable-diffusion/tiny_stable_diffusion.ipynb'),
         level: 'hard',
-        rank: 7,
+        rank: 8,
       },
       {
         day: 'friday',
@@ -1689,6 +1689,8 @@ export const weekends: Weekend[] = [
         summary:
           'Four one-line gaps: squeeze faces through the VAE of Stable Diffusion, blend two faces in pixels and in codes, and see why a "show me at 70" button needs the manifold.',
         url: colab('w4-cx-public', 'aging/face_aging.ipynb'),
+        level: 'easy',
+        rank: 5,
       },
       { day: 'saturday', time: '09:00', title: 'Adversarial attacks', summary: '', url: SOON },
     ],
