@@ -1349,6 +1349,12 @@ export const weekends: Weekend[] = [
         // it in w4-cx-public, pytorch_example.ipynb: a small network on made-up
         // ice cream sales, with the same three kinds of lines the exercise
         // leaves out. Linked on Carlos's word of 2026-10-22.
+        //
+        // "Pufferfish VAE, after the exercise" is the same fish trained as a
+        // variational autoencoder, complete, w4-cx-public/pufferfish-vae/ (master
+        // in w4-cx-private): a coding example for after the exercise, since its
+        // code gives the exercise's answers away. A demo of `exercises`, so it
+        // follows the exercise on this row. On Carlos's word of 2026-10-22.
         links: [
           {
             label: 'Slides: VAEs',
@@ -1534,6 +1540,19 @@ export const weekends: Weekend[] = [
           label: 'Ice cream sales',
           url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
         },
+      },
+      // The pufferfish as a variational autoencoder, a complete coding example
+      // to open AFTER the exercise above, whose answers its code gives away (a
+      // warning at its top says so). A demo, so it follows the exercise on the
+      // 09:45 row. Put on the site on Carlos's word of 2026-10-22.
+      {
+        day: 'friday',
+        time: '09:45',
+        title: 'Pufferfish VAE, after the exercise',
+        summary:
+          "Open it once the pufferfish exercise is done, since its code holds that exercise's answers: the same fish as a variational autoencoder, whose three sliders, in most runs, each do one thing: move a fish sideways, move it up and down, or puff it up.",
+        url: colab('w4-cx-public', 'pufferfish-vae/pufferfish_vae.ipynb'),
+        demo: true,
       },
       {
         day: 'friday',
