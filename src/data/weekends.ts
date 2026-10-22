@@ -1499,7 +1499,25 @@ export const weekends: Weekend[] = [
       // project intro at 11:00, an hour earlier than on weekends 1 to 3, and
       // nothing at 12:00.
       { time: '10:30', title: 'Attacks on LLMs', type: 'lecture' },
-      { time: '11:00', title: 'Project intro: Deepfake detection and generation', type: 'project' },
+      {
+        time: '11:00',
+        title: 'Project intro: Deepfake detection and generation',
+        type: 'project',
+        // Same split as weekends 1 to 3: both notebooks OPEN IN COLAB, which
+        // reads w4-project-public directly, so there is nothing to copy. The
+        // generator comes first because its Step 13 exports the
+        // deepfake_imgs.zip the discriminator notebook asks for.
+        links: [
+          {
+            label: 'Deepfake generator notebook',
+            url: colab('w4-project-public', 'deepfake_generation/deepfake_generation.ipynb'),
+          },
+          {
+            label: 'Deepfake discriminator notebook',
+            url: colab('w4-project-public', 'deepfake_discriminator/deepfake_discriminator_handout.ipynb'),
+          },
+        ],
+      },
       { time: '12:00', title: '', type: 'tba' },
     ],
     resources: [
