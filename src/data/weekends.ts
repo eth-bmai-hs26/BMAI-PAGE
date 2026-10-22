@@ -1255,7 +1255,24 @@ export const weekends: Weekend[] = [
           { label: 'Manifold Explorer', url: exercise(4, 'manifold-games/manifold-explorer/index.html') },
         ],
       },
-      { time: '10:00', title: 'Conditional VAEs and age progression', type: 'lecture' },
+      {
+        time: '10:00',
+        title: 'Conditional VAEs and age progression',
+        type: 'lecture',
+        // "Apples and oranges notebook" is the lecture's demo: a conditional
+        // autoencoder on synthetic apples and oranges, its 16-number code trained
+        // twice, without and with a penalty on its length (the stand-in for the
+        // KL term), to show which of the two turns an apple into an orange when
+        // the label is flipped. Linked, not copied, from w4-cx-public; the master
+        // is w4-cx-private/apple-orange-autoencoder/. Put on the site on Carlos's
+        // word of 2026-10-22.
+        links: [
+          {
+            label: 'Apples and oranges notebook',
+            url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
+          },
+        ],
+      },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
       { time: '11:00', title: 'Conditional VAE with demo', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
@@ -1345,6 +1362,11 @@ export const weekends: Weekend[] = [
         group: 'Coding exercises',
         label: 'Manifold games: the Manifold Chart Explorer, 2-D manifolds through their charts (runs in the browser)',
         url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
+      },
+      {
+        group: 'Coding exercises',
+        label: 'Apples and oranges: a conditional autoencoder, trained with and without a penalty on its code (Colab notebook)',
+        url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
       },
       { group: 'Coding exercises', label: 'Conditional VAE with demo', url: SOON },
       {
