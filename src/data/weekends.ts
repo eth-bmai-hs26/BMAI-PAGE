@@ -1212,11 +1212,13 @@ export const weekends: Weekend[] = [
     friday: [
       // THE MORNING, on Carlos's word of the evening of 2026-10-22: the 08:15
       // lecture "Manifolds and VAEs" became five blocks, manifolds 08:15, the
-      // manifold games 08:45, the coding exercises on prediction 09:15,
+      // coding exercises on prediction 08:45, the manifold games 09:15,
       // variational autoencoders 09:45 and conditional VAEs 10:15, a quarter
-      // of an hour, before the 10:30 coffee. Each link sits in the block whose
-      // topic it shows: the Manifold Explorer under manifolds, the grasshoppers
-      // under prediction, the Sunrise Machine, a VAE, under the VAEs.
+      // of an hour, before the 10:30 coffee; the prediction block and the games
+      // swapped places on his word of the same night. Each link sits in the
+      // block whose topic it shows: the Manifold Explorer with the manifold
+      // games, the grasshoppers with prediction, the Sunrise Machine, a VAE,
+      // with the VAEs.
       {
         time: '08:15',
         title: 'Manifolds',
@@ -1227,15 +1229,6 @@ export const weekends: Weekend[] = [
         // slides"), byte for byte that repository's commit 0dad959. A rebuild
         // there must be recopied here. The weekend's cold open is in the same
         // repository and not published.
-        //
-        // "Manifold Explorer" is the Manifold Chart Explorer, the visualization
-        // of this block's manifolds, opened on its first tab. Its "Fold the chart" switch
-        // (key F) folds each tab's chart into the surface, the animated
-        // version of the deck's folding frames (w4-cx-private 05d9874,
-        // w4-cx-public fcc774a). ONE chip, on Carlos's word of 2026-10-22:
-        // "Don't put a chip for every manifold in addition to the manifold
-        // visualizer", which replaced the four chips, one per fold, that
-        // opened it at #fold=cylinder, torus, klein and rp2.
         links: [
           {
             label: 'Slides: Manifolds',
@@ -1243,36 +1236,10 @@ export const weekends: Weekend[] = [
             description:
               'From one photo of a sunrise to the idea of a manifold: pictures that change in only a few ways lie on a surface, and a chart gives every picture its few coordinates. Ends with a cylinder, a torus, a Klein bottle and a projective plane folded from their charts.',
           },
-          {
-            label: 'Manifold Explorer',
-            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
-            description:
-              'The surfaces of the slides to play with: walk on each one through its chart, and watch the chart fold into the surface.',
-          },
         ],
       },
       {
         time: '08:45',
-        title: 'Manifold games',
-        type: 'exercise',
-        // LEFT EMPTY on Carlos's word of 2026-10-22: the teaching assistants add
-        // their manifold games here. A game in the browser goes in as a link with
-        // a `description`, and shows in the colour of the visualizations; a Colab
-        // exercise goes in the weekend's `exercises` instead, with time '08:45',
-        // a level and a rank.
-        //
-        // The two games of HS26, the Sunrise Machine and the Manifold Explorer,
-        // are browser apps copied from w4-cx-public/manifold-games/ (static
-        // builds, no Python), so recopy when the TA edits them there. Each folder
-        // is self-contained and loads its assets by relative path; the Sunrise
-        // Machine pulls TF.js, GSAP, D3 and KaTeX from jsDelivr, so it needs a
-        // network connection.
-        //
-        // The Manifold Explorer is a link of the Manifolds block above, the
-        // Sunrise Machine of the Variational autoencoders block below.
-      },
-      {
-        time: '09:15',
         title: 'Predicting from a photo',
         type: 'exercise',
         // The coding exercises on prediction, in Carlos's words, titled after the
@@ -1285,7 +1252,9 @@ export const weekends: Weekend[] = [
         // of w4-lecture-material/grasshopper-regression/ (the page, css, js,
         // data and vendored fonts only; not its dev or precompute folders),
         // published on Carlos's word of 2026-10-21. A change there must be
-        // recopied here.
+        // recopied here. It is no chip of its own here: on Carlos's word of
+        // 2026-10-22, since it showed twice, it is only the reference of "Two
+        // grasshoppers, in Python", attached to that exercise's chip.
         //
         // The notebooks named below are entries of `exercises`, at the end of
         // this weekend, ranked by difficulty with their worked examples.
@@ -1315,12 +1284,41 @@ export const weekends: Weekend[] = [
         // w4-cx-public too since the same day (9a333a5, on Carlos's standing
         // rule), listed in its SOLUTIONS.md and NOT linked here. Put on the
         // site on Carlos's word of 2026-10-22.
+      },
+      {
+        time: '09:15',
+        title: 'Manifold games',
+        type: 'exercise',
+        // The teaching assistants add their manifold games here, beside the
+        // Manifold Explorer, which Carlos moved here from the Manifolds block on
+        // 2026-10-22. A game in the browser goes in as a link with a
+        // `description`, and shows in the colour of the visualizations; a Colab
+        // exercise goes in the weekend's `exercises` instead, with time '09:15',
+        // a level and a rank.
+        //
+        // "Manifold Explorer" is the Manifold Chart Explorer, opened on its first
+        // tab. Its "Fold the chart" switch
+        // (key F) folds each tab's chart into the surface, the animated
+        // version of the deck's folding frames (w4-cx-private 05d9874,
+        // w4-cx-public fcc774a). ONE chip, on Carlos's word of 2026-10-22:
+        // "Don't put a chip for every manifold in addition to the manifold
+        // visualizer", which replaced the four chips, one per fold, that
+        // opened it at #fold=cylinder, torus, klein and rp2.
+        //
+        // The two games of HS26, the Sunrise Machine and the Manifold Explorer,
+        // are browser apps copied from w4-cx-public/manifold-games/ (static
+        // builds, no Python), so recopy when the TA edits them there. Each folder
+        // is self-contained and loads its assets by relative path; the Sunrise
+        // Machine pulls TF.js, GSAP, D3 and KaTeX from jsDelivr, so it needs a
+        // network connection.
+        //
+        // The Sunrise Machine is a link of the Variational autoencoders block.
         links: [
           {
-            label: 'Two grasshoppers fit a line',
-            url: viz(4, 'grasshopper-regression'),
+            label: 'Manifold Explorer',
+            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
             description:
-              'Click by click, two grasshoppers find the best line through the three sunrise photos of the slides, by gradient descent.',
+              'Move on a cylinder, a torus, a Klein bottle and more through their charts, and fold each chart into its surface.',
           },
         ],
       },
@@ -1516,7 +1514,7 @@ export const weekends: Weekend[] = [
       },
       {
         group: 'Visualizations',
-        label: 'Manifold Chart Explorer: 2-D manifolds through their charts, each chart folded into its surface (Friday, manifolds)',
+        label: 'Manifold Chart Explorer: 2-D manifolds through their charts, each chart folded into its surface (Friday, manifold games)',
         url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
       },
       { group: 'Project', label: 'Deepfake detection and generation: project description', url: SOON },
@@ -1525,9 +1523,10 @@ export const weekends: Weekend[] = [
     // The weekend's coding notebooks, since 2026-10-22 (Carlos: "a
     // rank to each coding exercise in order of difficulty [...] easy and hard",
     // and beside each exercise its reference coding example). A rank is the
-    // place in the easiest-first order. Easy: the lines can be adapted from a
-    // worked example; hard: they are written from the formulas. A demo is
-    // complete and gets no rank. Solutions are never listed here (the standing
+    // place in the easiest-first order, the level is easy or hard. The levels
+    // as Carlos set them on 2026-10-22: the pufferfish, the sunrise time of day
+    // estimator and the grasshoppers in Python easy, the happy and sad faces
+    // hard. A demo is complete and gets no rank. Solutions are never listed here (the standing
     // rule of 2026-10-22: the site links exercises only).
     exercises: [
       {
@@ -1558,7 +1557,7 @@ export const weekends: Weekend[] = [
       },
       {
         day: 'friday',
-        time: '09:15',
+        time: '08:45',
         title: 'Sunrise time of day estimator',
         summary: 'Five tasks: build a small CNN that reads the time of day off a photo of a sunrise.',
         url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
@@ -1571,11 +1570,11 @@ export const weekends: Weekend[] = [
       },
       {
         day: 'friday',
-        time: '09:15',
+        time: '08:45',
         title: 'Two grasshoppers, in Python',
         summary: 'Three tasks: write the average loss, the two slopes and the two jumps, and the grasshoppers find the line through the three sunrise photos.',
         url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
-        level: 'hard',
+        level: 'easy',
         rank: 3,
         reference: { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
       },
