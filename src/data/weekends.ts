@@ -1301,12 +1301,14 @@ export const weekends: Weekend[] = [
         // listed in its SOLUTIONS.md and NOT linked here, on Carlos's standing rule
         // of 2026-10-22 ("Only publish the exercises to the website").
         //
-        // "Season classifier, example" and "Time of day, exercise" are the two
-        // sunrise CNN notebooks of the deck's opening question, one photo of a
-        // sunrise and two predictions (frame 4, "Predicting from a photo"): a
-        // worked example, a small CNN that tells the season, and an exercise,
-        // the same network told to predict the time of the day, four tasks
-        // marked with a target sign, each with a folded hint. Both draw the
+        // "Sunrise time of day estimator" and its worked example "Sunrise season
+        // classifier", names Carlos gave them on 2026-10-22, are the two sunrise
+        // CNN notebooks of the deck's opening question, one photo of a sunrise
+        // and two predictions (frame 4, "Predicting from a photo"): a worked
+        // example, a small CNN that tells the season, and an exercise, the same
+        // network told to predict the time of the day, five tasks marked with a
+        // target sign (the optimizer among them, on his word of the same day),
+        // each with a folded hint. Both draw the
         // Sunrise Machine's pictures. Linked, not copied, from
         // w4-cx-public/sunrise-cnn/; the complete notebook, the exercise with
         // its answers, sunrise_time_regression_solutions.ipynb, is in
@@ -1557,13 +1559,13 @@ export const weekends: Weekend[] = [
       {
         day: 'friday',
         time: '09:15',
-        title: 'What time is it?',
-        summary: 'Four tasks: build a small CNN that reads the time of day off a photo of a sunrise.',
+        title: 'Sunrise time of day estimator',
+        summary: 'Five tasks: build a small CNN that reads the time of day off a photo of a sunrise.',
         url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
         level: 'easy',
         rank: 2,
         reference: {
-          label: 'Which season is it?',
+          label: 'Sunrise season classifier',
           url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
         },
       },
