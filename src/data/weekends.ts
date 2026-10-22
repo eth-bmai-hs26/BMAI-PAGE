@@ -1186,26 +1186,22 @@ export const weekends: Weekend[] = [
     summary:
       'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and stable diffusion, then the future of AI. Saturday turns to adversarial attacks, attacks on LLMs and the deepfake project.',
     friday: [
+      // THE MORNING, RE-CUT on Carlos's word of the evening of 2026-10-22, in
+      // the prototype: the 08:15 lecture "Manifolds and VAEs" became five
+      // blocks, manifolds 08:15, the manifold games 08:45, the coding exercises
+      // on prediction 09:15, variational autoencoders 09:45 (slides and the
+      // pufferfish exercise with its example) and conditional VAEs 10:15, a
+      // quarter of an hour, before the 10:30 coffee.
       {
         time: '08:15',
-        title: 'Manifolds and VAEs',
+        title: 'Manifolds',
         type: 'lecture',
-        // PROTOTYPE OF 2026-10-22: the notebooks this comment names are no
-        // longer chips of this row but entries of `exercises`, at the end of
-        // this weekend, ranked by difficulty with their worked examples.
-        //
         // "Slides: Manifolds" is the manifold half of the lecture, the deck
         // w4-lecture-material/manifolds-deck/manifolds-slides.pdf (29 frames
         // over 120 pages), copied on Carlos's word of 2026-10-22 ("Publish the
         // slides"), byte for byte that repository's commit 0dad959. A rebuild
         // there must be recopied here. The weekend's cold open is in the same
         // repository and not published.
-        //
-        // "Slides: VAEs" is the VAE half of the lecture, the deck
-        // w4-lecture-material/vae-deck/vae-slides.pdf (5 frames over 20 pages),
-        // copied on Carlos's word of 2026-10-22 ("Publish the slides on VAE"),
-        // byte for byte that repository's commit ee0c592. A rebuild there must
-        // be recopied here.
         //
         // "Two grasshoppers fit a line" is the click-through of the lecture's
         // grasshopper frames, page 8 of Carlos's manifold notes: the room types
@@ -1214,6 +1210,68 @@ export const weekends: Weekend[] = [
         // data and vendored fonts only; not its dev or precompute folders),
         // published on Carlos's word of 2026-10-21. A change there must be
         // recopied here.
+        //
+        // "Manifold Explorer" is the Manifold Chart Explorer of the 08:45 row,
+        // the same copy, opened on its first tab. Its "Fold the chart" switch
+        // (key F) folds each tab's chart into the surface, the animated
+        // version of the deck's folding frames (w4-cx-private 05d9874,
+        // w4-cx-public fcc774a). ONE chip, on Carlos's word of 2026-10-22:
+        // "Don't put a chip for every manifold in addition to the manifold
+        // visualizer", which replaced the four chips, one per fold, that
+        // opened it at #fold=cylinder, torus, klein and rp2.
+        links: [
+          {
+            label: 'Slides: Manifolds',
+            url: deck(4, 'manifolds.pdf'),
+            description:
+              'From one photo of a sunrise to the idea of a manifold: pictures that change in only a few ways lie on a surface, and a chart gives every picture its few coordinates. Ends with a cylinder, a torus, a Klein bottle and a projective plane folded from their charts.',
+          },
+          {
+            label: 'Two grasshoppers fit a line',
+            url: viz(4, 'grasshopper-regression'),
+            description:
+              'Click by click, two grasshoppers find the best line through the three sunrise photos of the slides, by gradient descent.',
+          },
+          {
+            label: 'Manifold Explorer',
+            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
+            description:
+              'The surfaces of the slides to play with: walk on each one through its chart, and watch the chart fold into the surface.',
+          },
+        ],
+      },
+      {
+        time: '08:45',
+        title: 'Manifold games',
+        type: 'exercise',
+        // Two browser apps, copied from w4-cx-public/manifold-games/ (static
+        // builds, no Python), so recopy when the TA edits them there. Each folder
+        // is self-contained and loads its assets by relative path; the Sunrise
+        // Machine pulls TF.js, GSAP, D3 and KaTeX from jsDelivr, so it needs a
+        // network connection.
+        links: [
+          {
+            label: 'Sunrise Machine',
+            url: exercise(4, 'manifold-games/sunrise-machine/index.html'),
+            description:
+              'A VAE trained on synthetic sunrises, in the browser: walk through its code space, decode sunrises live and play Find the Sunrise.',
+          },
+          {
+            label: 'Manifold Explorer',
+            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
+            description:
+              'Move on a cylinder, a torus, a Klein bottle and more through their charts, and fold each chart into its surface.',
+          },
+        ],
+      },
+      {
+        time: '09:15',
+        title: 'Prediction',
+        type: 'exercise',
+        // The coding exercises on prediction, in Carlos's words: the deck's
+        // opening question, one photo of a sunrise and what to predict from it.
+        // The notebooks named below are entries of `exercises`, at the end of
+        // this weekend, ranked by difficulty with their worked examples.
         //
         // "Grasshoppers, exercise" is the same gradient descent as a Colab
         // exercise, asked for by Carlos on 2026-10-22: average_loss(w, b) on the
@@ -1238,6 +1296,19 @@ export const weekends: Weekend[] = [
         // w4-cx-public too since the same day (9a333a5, on Carlos's standing
         // rule), listed in its SOLUTIONS.md and NOT linked here. Put on the
         // site on Carlos's word of 2026-10-22.
+      },
+      {
+        time: '09:45',
+        title: 'Variational autoencoders',
+        type: 'lecture',
+        // "Slides: VAEs" is the VAE half of the lecture, the deck
+        // w4-lecture-material/vae-deck/vae-slides.pdf (5 frames over 20 pages),
+        // copied on Carlos's word of 2026-10-22 ("Publish the slides on VAE"),
+        // byte for byte that repository's commit ee0c592. A rebuild there must
+        // be recopied here.
+        //
+        // The notebooks named below are entries of `exercises`, at the end of
+        // this weekend, ranked by difficulty with their worked examples.
         //
         // "Pufferfish notebook" is the VAE half's live demo: a plain autoencoder
         // on synthetic pufferfish pictures, with sliders on its three numbers.
@@ -1250,77 +1321,25 @@ export const weekends: Weekend[] = [
         // it in w4-cx-public, pytorch_example.ipynb: a small network on made-up
         // ice cream sales, with the same three kinds of lines the exercise
         // leaves out. Linked on Carlos's word of 2026-10-22.
-        //
-        // "Manifold Explorer" is the Manifold Chart Explorer of the 09:00 row,
-        // the same copy, opened on its first tab. Its "Fold the chart" switch
-        // (key F) folds each tab's chart into the surface, the animated
-        // version of the deck's folding frames (w4-cx-private 05d9874,
-        // w4-cx-public fcc774a). ONE chip, on Carlos's word of 2026-10-22:
-        // "Don't put a chip for every manifold in addition to the manifold
-        // visualizer", which replaced the four chips, one per fold, that
-        // opened it at #fold=cylinder, torus, klein and rp2.
         links: [
-          {
-            label: 'Slides: Manifolds',
-            url: deck(4, 'manifolds.pdf'),
-            description:
-              'From one photo of a sunrise to the idea of a manifold: pictures that change in only a few ways lie on a surface, and a chart gives every picture its few coordinates. Ends with a cylinder, a torus, a Klein bottle and a projective plane folded from their charts.',
-          },
           {
             label: 'Slides: VAEs',
             url: deck(4, 'vae.pdf'),
             description:
               'A picture of a pufferfish is three numbers: where it swims and how puffed up it is. The yogurt-cup game becomes the training of an autoencoder, changing the three numbers by hand draws a new fish, and one slide sums up the variational autoencoder.',
           },
-          {
-            label: 'Two grasshoppers fit a line',
-            url: viz(4, 'grasshopper-regression'),
-            description:
-              'Click by click, two grasshoppers find the best line through the three sunrise photos of the slides, by gradient descent.',
-          },
-          {
-            label: 'Manifold Explorer',
-            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
-            description:
-              'The surfaces of the slides to play with: walk on each one through its chart, and watch the chart fold into the surface.',
-          },
         ],
       },
       {
-        time: '09:00',
-        title: 'Manifold games',
-        type: 'exercise',
-        // Two browser apps, copied from w4-cx-public/manifold-games/ (static
-        // builds, no Python), so recopy when the TA edits them there. Each folder
-        // is self-contained and loads its assets by relative path; the Sunrise
-        // Machine pulls TF.js, GSAP, D3 and KaTeX from jsDelivr, so it needs a
-        // network connection.
-        links: [
-          {
-            label: 'Sunrise Machine',
-            url: exercise(4, 'manifold-games/sunrise-machine/index.html'),
-            description:
-              'A VAE trained on synthetic sunrises, in the browser: walk through its code space, decode sunrises live and play Find the Sunrise.',
-          },
-          {
-            label: 'Manifold Explorer',
-            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
-            description:
-              'Move on a cylinder, a torus, a Klein bottle and more through their charts, and fold each chart into its surface.',
-          },
-        ],
-      },
-      {
-        time: '10:00',
+        time: '10:15',
         title: 'Conditional VAEs and age progression',
         type: 'lecture',
-        // PROTOTYPE OF 2026-10-22: the notebooks this comment names are no
-        // longer chips of this row but entries of `exercises`, at the end of
+        // The notebooks named below are entries of `exercises`, at the end of
         // this weekend, ranked by difficulty with their worked examples.
         //
         // "Slides: Conditional VAEs" is the deck "Conditional variational
         // autoencoders", w4-lecture-material/cvae-deck/cvae-slides.pdf (9 frames
-        // over 32 pages), built on the 08:15 VAE deck with the apples and oranges
+        // over 32 pages), built on the 09:45 VAE deck with the apples and oranges
         // notebook as its example, copied on Carlos's word of 2026-10-22
         // ("Publish it"), byte for byte that repository's commit d4f8b8f. A
         // rebuild there must be recopied here.
@@ -1431,8 +1450,8 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: '', type: 'tba' },
     ],
     resources: [
-      { group: 'Lecture slides', label: 'Manifolds and VAEs, part 1: manifolds', url: deck(4, 'manifolds.pdf') },
-      { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: deck(4, 'vae.pdf') },
+      { group: 'Lecture slides', label: 'Manifolds', url: deck(4, 'manifolds.pdf') },
+      { group: 'Lecture slides', label: 'Variational autoencoders', url: deck(4, 'vae.pdf') },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: deck(4, 'conditional-vae.pdf') },
       { group: 'Lecture slides', label: 'Stable diffusion', url: deck(4, 'stable-diffusion.pdf') },
       { group: 'Lecture slides', label: 'Future of AI', url: deck(4, 'future-of-ai.pdf') },
@@ -1466,7 +1485,7 @@ export const weekends: Weekend[] = [
     exercises: [
       {
         day: 'friday',
-        time: '08:15',
+        time: '09:45',
         title: 'Pufferfish autoencoder',
         summary: 'Three gaps: squeeze a picture of a fish into three numbers and back, then move the numbers with sliders.',
         url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
@@ -1479,7 +1498,7 @@ export const weekends: Weekend[] = [
       },
       {
         day: 'friday',
-        time: '08:15',
+        time: '09:15',
         title: 'What time is it?',
         summary: 'Four tasks: build a small CNN that reads the time of day off a photo of a sunrise.',
         url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
@@ -1492,7 +1511,7 @@ export const weekends: Weekend[] = [
       },
       {
         day: 'friday',
-        time: '08:15',
+        time: '09:15',
         title: 'Two grasshoppers, in Python',
         summary: 'Three tasks: write the average loss, the two slopes and the two jumps, and the grasshoppers find the line through the three sunrise photos.',
         url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
@@ -1502,7 +1521,7 @@ export const weekends: Weekend[] = [
       },
       {
         day: 'friday',
-        time: '10:00',
+        time: '10:15',
         title: 'Apples and oranges',
         summary: 'Run it, flip the label of a fruit, and see whether an apple turns into an orange.',
         url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
