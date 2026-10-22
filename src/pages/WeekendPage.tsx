@@ -123,6 +123,26 @@ export function WeekendPage() {
           <p className="wdetail-head__summary">{weekend.summary}</p>
         </header>
 
+        {weekend.overview && (
+          <section className="overview" aria-labelledby="overview-title">
+            <h2 id="overview-title">{weekend.overview.title}</h2>
+            {weekend.overview.note && <p className="overview__note">{weekend.overview.note}</p>}
+            <div className="overview__pages">
+              {weekend.overview.pages.map((p, i) => (
+                <a
+                  key={i}
+                  className="overview__page"
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={p.image} alt={p.alt} />
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
         <div className="days">
           <ScheduleTable
             day="Friday"

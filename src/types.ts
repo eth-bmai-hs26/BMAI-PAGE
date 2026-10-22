@@ -30,6 +30,30 @@ export interface Resource {
   group?: string;
 }
 
+/**
+ * One page of an `Overview`: a picture the site serves, and where a click on
+ * it goes, usually the same page of a PDF.
+ */
+export interface OverviewPage {
+  /** The picture, e.g. deck(4, 'atlas-1.png'). */
+  image: string;
+  /** What the picture shows, for screen readers. */
+  alt: string;
+  /** Where a click goes, e.g. `${deck(4, 'atlas.pdf')}#page=1`. */
+  url: string;
+}
+
+/**
+ * A block shown on the weekend page just before the agenda, its pages side by
+ * side, e.g. weekend 4's atlas of the weekend's models.
+ */
+export interface Overview {
+  title: string;
+  /** One line under the title. */
+  note?: string;
+  pages: OverviewPage[];
+}
+
 export interface Weekend {
   /** Stable slug used in the URL, e.g. "we2". */
   id: string;
@@ -45,6 +69,8 @@ export interface Weekend {
   project?: string;
   /** Authored short description of the weekend. */
   summary: string;
+  /** Shown just before the agenda, if set. */
+  overview?: Overview;
   /** Room / location for the Friday schedule, if known. */
   fridayRoom?: string;
   /** Room / location for the Saturday schedule, if known. */

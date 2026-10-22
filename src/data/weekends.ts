@@ -1185,6 +1185,30 @@ export const weekends: Weekend[] = [
     project: 'Deepfake detection and generation',
     summary:
       'The closing weekend looks at what a latent space is shaped like: manifolds, variational autoencoders and stable diffusion, then the future of AI. Saturday turns to adversarial attacks, attacks on LLMs and the deepfake project.',
+    // "An atlas of the weekend's models", shown just before the agenda on
+    // Carlos's word of 2026-10-22 ("post it on the website just before the
+    // weekend agenda"): w4-lecture-material/atlas-deck/, two frames, the six
+    // models of the weekend on one chart, then when to use which. Its two-page
+    // handout is copied as slides/we4/atlas.pdf, byte for byte that
+    // repository's 9589d86, and its two pages as atlas-1.png and atlas-2.png
+    // (pdftoppm -r 220). A rebuild there must be recopied here, see that deck's
+    // CLAUDE.md. Also first under Lecture slides.
+    overview: {
+      title: "An atlas of the weekend's models",
+      note: 'Every model of the weekend on one chart, then when to use which. Click a page to open it as a PDF.',
+      pages: [
+        {
+          image: deck(4, 'atlas-1.png'),
+          alt: "An atlas of the weekend's models: six models on a chart. Across, what a model does with a picture: reads it into a few numbers (autoencoder, CNN), makes one in one jump (VAE, conditional VAE), or makes one in many small steps (diffusion, conditional diffusion). Down, what its training needs: pictures only, or pictures with their labels.",
+          url: `${deck(4, 'atlas.pdf')}#page=1`,
+        },
+        {
+          image: deck(4, 'atlas-2.png'),
+          alt: 'Which one, when? A table of the six models: when to use each, when not to, its pros and its cons.',
+          url: `${deck(4, 'atlas.pdf')}#page=2`,
+        },
+      ],
+    },
     friday: [
       {
         time: '08:15',
@@ -1400,6 +1424,11 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: '', type: 'tba' },
     ],
     resources: [
+      {
+        group: 'Lecture slides',
+        label: "An atlas of the weekend's models: all six on one chart, then when to use which",
+        url: deck(4, 'atlas.pdf'),
+      },
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 1: manifolds', url: deck(4, 'manifolds.pdf') },
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: deck(4, 'vae.pdf') },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: deck(4, 'conditional-vae.pdf') },

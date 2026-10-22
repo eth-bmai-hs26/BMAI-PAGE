@@ -599,6 +599,47 @@ h3 {
   font-size: 0.95rem;
 }
 
+/* overview: a block just before the agenda, its pages side by side like the
+   two days below it, one column on a narrow screen */
+.overview {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 36px;
+  margin-bottom: 40px;
+}
+.overview h2 {
+  font-size: 1.3rem;
+}
+.overview__note {
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+  margin: 0 0 20px;
+}
+.overview__pages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 820px) {
+  .overview__pages {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.overview__page {
+  display: block;
+  border: 1px solid var(--line);
+  transition: border-color 0.12s ease;
+}
+.overview__page:hover {
+  border-color: var(--eth-blue);
+}
+.overview__page img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
 /* day columns */
 .days {
   display: grid;
