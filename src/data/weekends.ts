@@ -1263,6 +1263,13 @@ export const weekends: Weekend[] = [
         time: '10:00',
         title: 'Conditional VAEs and age progression',
         type: 'lecture',
+        // "Slides: Conditional VAEs" is the deck "Conditional variational
+        // autoencoders", w4-lecture-material/cvae-deck/cvae-slides.pdf (9 frames
+        // over 32 pages), built on the 08:15 VAE deck with the apples and oranges
+        // notebook as its example, copied on Carlos's word of 2026-10-22
+        // ("Publish it"), byte for byte that repository's commit d4f8b8f. A
+        // rebuild there must be recopied here.
+        //
         // "Apples and oranges notebook" is the lecture's demo: a conditional
         // autoencoder on synthetic apples and oranges, its 16-number code trained
         // twice, without and with a penalty on its length (the stand-in for the
@@ -1271,6 +1278,7 @@ export const weekends: Weekend[] = [
         // is w4-cx-private/apple-orange-autoencoder/. Put on the site on Carlos's
         // word of 2026-10-22.
         links: [
+          { label: 'Slides: Conditional VAEs', url: deck(4, 'conditional-vae.pdf') },
           {
             label: 'Apples and oranges notebook',
             url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
@@ -1341,7 +1349,7 @@ export const weekends: Weekend[] = [
     resources: [
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 1: manifolds', url: deck(4, 'manifolds.pdf') },
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: deck(4, 'vae.pdf') },
-      { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: SOON },
+      { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: deck(4, 'conditional-vae.pdf') },
       { group: 'Lecture slides', label: 'Stable diffusion', url: deck(4, 'stable-diffusion.pdf') },
       { group: 'Lecture slides', label: 'Future of AI', url: SOON },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
