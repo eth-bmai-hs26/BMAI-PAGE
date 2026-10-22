@@ -1371,7 +1371,7 @@ export const weekends: Weekend[] = [
       { group: 'Coding exercises', label: 'Conditional VAE with demo', url: SOON },
       {
         group: 'Coding exercises',
-        label: 'Happy and sad faces from noise: fill in three lines, then generate faces from a one-bit prompt (Colab notebook)',
+        label: 'Happy and sad faces from noise: five tasks, then generate faces from a one-bit prompt (Colab notebook)',
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
       },
       { group: 'Coding exercises', label: 'Adversarial attacks', url: SOON },
