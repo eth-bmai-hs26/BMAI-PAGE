@@ -1463,7 +1463,7 @@ export const weekends: Weekend[] = [
         // *_solutions.ipynb, which are never linked here.
         // Put on the site on Carlos's word of 2026-10-22.
       },
-      { time: '14:30', title: 'Conditional VAE with demo', type: 'exercise' },
+      { time: '14:30', title: 'Face aging with your own VAE', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       {
         time: '16:00',
