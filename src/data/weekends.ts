@@ -1285,7 +1285,18 @@ export const weekends: Weekend[] = [
       // to 14:30, "Future of AI" took the quiz's 16:00, and the cross-attention
       // lecture is no longer in it. The break venues stay the programme
       // office's, see the note at the top of this file.
-      { time: '11:00', title: 'Stable diffusion', type: 'lecture' },
+      {
+        time: '11:00',
+        title: 'Stable diffusion',
+        type: 'lecture',
+        // "Slides" is the deck "Diffusion models",
+        // w4-lecture-material/stable-diffusion/diffusion-deck/diffusion-slides.pdf
+        // (11 slides over 34 pages, built by clicks), copied on Carlos's word of
+        // 2026-10-22 ("Publish the slides and notebooks we have created so far"),
+        // byte for byte that repository's commit 52a242b. A rebuild there must be
+        // recopied here. Its open points are in that deck's README.
+        links: [{ label: 'Slides', url: deck(4, 'stable-diffusion.pdf') }],
+      },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
       {
@@ -1329,7 +1340,7 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 1: manifolds', url: deck(4, 'manifolds.pdf') },
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: deck(4, 'vae.pdf') },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: SOON },
-      { group: 'Lecture slides', label: 'Stable diffusion', url: SOON },
+      { group: 'Lecture slides', label: 'Stable diffusion', url: deck(4, 'stable-diffusion.pdf') },
       { group: 'Lecture slides', label: 'Future of AI', url: SOON },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
       { group: 'Lecture slides', label: 'Attacks on LLMs', url: SOON },
