@@ -150,7 +150,12 @@ export function ScheduleTable({
                     <SessionTypeChip type={s.type} />
                     {!open &&
                       links.map((l, j) => {
-                        if (typed) return <LinkChip key={j} link={l} />;
+                        // A project's notebooks are the project itself, not
+                        // worked examples, so they go without "Example:".
+                        if (typed)
+                          return (
+                            <LinkChip key={j} link={l} prefix={s.type === 'project' ? '' : undefined} />
+                          );
                         const isLinkFile = downloadKind(l.url) !== null;
                         return (
                           <a
