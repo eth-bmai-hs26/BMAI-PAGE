@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { weekends, getWeekend, weekendRoom } from '../data/weekends';
-import { ScheduleTable } from '../components/ScheduleTable';
-import type { Resource } from '../types';
+import { ScheduleTable, exercisesOfRow, rowHasDetails, rowKey } from '../components/ScheduleTable';
+import { ExerciseList } from '../components/ExerciseList';
+import { KindLegend } from '../components/Chips';
+import { useDoneExercises } from '../lib/exercises';
+import type { Resource, Weekend } from '../types';
 import { downloadKind } from '../lib/links';
 
 function ResourceLink({ resource }: { resource: Resource }) {
@@ -42,13 +45,40 @@ function ResourceLink({ resource }: { resource: Resource }) {
   );
 }
 
+/** The rows of a weekend that have details to open, by rowKey(). */
+function detailKeysOf(weekend: Weekend): string[] {
+  const exercises = weekend.exercises ?? [];
+  const keys = (day: string, sessions: Weekend['friday'], dayName: 'friday' | 'saturday') =>
+    sessions
+      .filter((s) => rowHasDetails(s, exercisesOfRow(s, exercises.filter((e) => e.day === dayName))))
+      .map((s) => rowKey(day, s.time));
+  return weekend.exercises === undefined
+    ? []
+    : [...keys('Friday', weekend.friday, 'friday'), ...keys('Saturday', weekend.saturday, 'saturday')];
+}
+
+/**
+ * The rows open on arrival: none, unless the address asks for them, as
+ * #/weekend/we4?details=all for every row or ?details=Friday-08:15 for one.
+ */
+function initialOpen(id: string | undefined, search: string): Set<string> {
+  const asked = new URLSearchParams(search).get('details');
+  const weekend = id ? getWeekend(id) : undefined;
+  if (!asked || !weekend) return new Set();
+  return new Set(asked === 'all' ? detailKeysOf(weekend) : [asked]);
+}
+
 export function WeekendPage() {
   const { id } = useParams();
   const weekend = id ? getWeekend(id) : undefined;
+  const [done, toggleDone] = useDoneExercises(weekend?.id ?? '');
+  const { search } = useLocation();
+  const [openRows, setOpenRows] = useState<Set<string>>(() => initialOpen(id, search));
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+    setOpenRows(initialOpen(id, search));
+  }, [id, search]);
 
   if (!weekend) {
     return (
@@ -69,6 +99,17 @@ export function WeekendPage() {
     weekend.dates.split('–').length === 2
       ? weekend.dates.split('–')
       : [weekend.dates, weekend.dates];
+
+  const exercises = weekend.exercises;
+  const detailKeys = detailKeysOf(weekend);
+  const allOpen = detailKeys.length > 0 && detailKeys.every((k) => openRows.has(k));
+  const toggleRow = (key: string) =>
+    setOpenRows((prev) => {
+      const nextOpen = new Set(prev);
+      if (nextOpen.has(key)) nextOpen.delete(key);
+      else nextOpen.add(key);
+      return nextOpen;
+    });
 
   const hasRealResources = weekend.resources.some((r) => r.url !== '#');
   const room = weekendRoom(weekend);
@@ -123,26 +164,57 @@ export function WeekendPage() {
           <p className="wdetail-head__summary">{weekend.summary}</p>
         </header>
 
+        {exercises && (
+          <div className="days__tools">
+            <KindLegend />
+            {detailKeys.length > 0 && (
+              <button
+                type="button"
+                className="days__toggle"
+                onClick={() => setOpenRows(allOpen ? new Set() : new Set(detailKeys))}
+              >
+                {allOpen ? 'Hide all details' : 'Show all details'}
+              </button>
+            )}
+          </div>
+        )}
+
         <div className="days">
           <ScheduleTable
             day="Friday"
             date={friDate.trim()}
             sessions={weekend.friday}
             room={weekend.fridayRoom}
+            exercises={exercises?.filter((e) => e.day === 'friday')}
+            done={done}
+            onToggleDone={toggleDone}
+            openRows={openRows}
+            onToggleRow={toggleRow}
           />
           <ScheduleTable
             day="Saturday"
             date={satDate.trim()}
             sessions={weekend.saturday}
             room={weekend.saturdayRoom}
+            exercises={exercises?.filter((e) => e.day === 'saturday')}
+            done={done}
+            onToggleDone={toggleDone}
+            openRows={openRows}
+            onToggleRow={toggleRow}
           />
         </div>
+
+        {exercises && exercises.length > 0 && (
+          <ExerciseList exercises={exercises} done={done} onToggle={toggleDone} />
+        )}
 
         <section className="resources">
           <h2>Materials</h2>
           <p className="resources__note">
             {hasRealResources
-              ? 'Slides, notebooks and project descriptions for this weekend.'
+              ? exercises
+                ? 'Slides, visualizations and project descriptions for this weekend. The coding exercises are listed above, easiest first.'
+                : 'Slides, notebooks and project descriptions for this weekend.'
               : 'Materials for this weekend will be linked here once they are uploaded.'}
           </p>
           {isGrouped ? (

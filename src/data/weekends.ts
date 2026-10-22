@@ -1190,6 +1190,10 @@ export const weekends: Weekend[] = [
         time: '08:15',
         title: 'Manifolds and VAEs',
         type: 'lecture',
+        // PROTOTYPE OF 2026-10-22: the notebooks this comment names are no
+        // longer chips of this row but entries of `exercises`, at the end of
+        // this weekend, ranked by difficulty with their worked examples.
+        //
         // "Slides: Manifolds" is the manifold half of the lecture, the deck
         // w4-lecture-material/manifolds-deck/manifolds-slides.pdf (29 frames
         // over 120 pages), copied on Carlos's word of 2026-10-22 ("Publish the
@@ -1256,30 +1260,30 @@ export const weekends: Weekend[] = [
         // visualizer", which replaced the four chips, one per fold, that
         // opened it at #fold=cylinder, torus, klein and rp2.
         links: [
-          { label: 'Slides: Manifolds', url: deck(4, 'manifolds.pdf') },
-          { label: 'Slides: VAEs', url: deck(4, 'vae.pdf') },
-          { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
           {
-            label: 'Grasshoppers, exercise',
-            url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
+            label: 'Slides: Manifolds',
+            url: deck(4, 'manifolds.pdf'),
+            description:
+              'From one photo of a sunrise to the idea of a manifold: pictures that change in only a few ways lie on a surface, and a chart gives every picture its few coordinates. Ends with a cylinder, a torus, a Klein bottle and a projective plane folded from their charts.',
           },
           {
-            label: 'Season classifier, example',
-            url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
+            label: 'Slides: VAEs',
+            url: deck(4, 'vae.pdf'),
+            description:
+              'A picture of a pufferfish is three numbers: where it swims and how puffed up it is. The yogurt-cup game becomes the training of an autoencoder, changing the three numbers by hand draws a new fish, and one slide sums up the variational autoencoder.',
           },
           {
-            label: 'Time of day, exercise',
-            url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
+            label: 'Two grasshoppers fit a line',
+            url: viz(4, 'grasshopper-regression'),
+            description:
+              'Click by click, two grasshoppers find the best line through the three sunrise photos of the slides, by gradient descent.',
           },
           {
-            label: 'Pufferfish notebook',
-            url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
+            label: 'Manifold Explorer',
+            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
+            description:
+              'The surfaces of the slides to play with: walk on each one through its chart, and watch the chart fold into the surface.',
           },
-          {
-            label: 'Worked example',
-            url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
-          },
-          { label: 'Manifold Explorer', url: exercise(4, 'manifold-games/manifold-explorer/index.html') },
         ],
       },
       {
@@ -1292,14 +1296,28 @@ export const weekends: Weekend[] = [
         // Machine pulls TF.js, GSAP, D3 and KaTeX from jsDelivr, so it needs a
         // network connection.
         links: [
-          { label: 'Sunrise Machine', url: exercise(4, 'manifold-games/sunrise-machine/index.html') },
-          { label: 'Manifold Explorer', url: exercise(4, 'manifold-games/manifold-explorer/index.html') },
+          {
+            label: 'Sunrise Machine',
+            url: exercise(4, 'manifold-games/sunrise-machine/index.html'),
+            description:
+              'A VAE trained on synthetic sunrises, in the browser: walk through its code space, decode sunrises live and play Find the Sunrise.',
+          },
+          {
+            label: 'Manifold Explorer',
+            url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
+            description:
+              'Move on a cylinder, a torus, a Klein bottle and more through their charts, and fold each chart into its surface.',
+          },
         ],
       },
       {
         time: '10:00',
         title: 'Conditional VAEs and age progression',
         type: 'lecture',
+        // PROTOTYPE OF 2026-10-22: the notebooks this comment names are no
+        // longer chips of this row but entries of `exercises`, at the end of
+        // this weekend, ranked by difficulty with their worked examples.
+        //
         // "Slides: Conditional VAEs" is the deck "Conditional variational
         // autoencoders", w4-lecture-material/cvae-deck/cvae-slides.pdf (9 frames
         // over 32 pages), built on the 08:15 VAE deck with the apples and oranges
@@ -1315,10 +1333,11 @@ export const weekends: Weekend[] = [
         // is w4-cx-private/apple-orange-autoencoder/. Put on the site on Carlos's
         // word of 2026-10-22.
         links: [
-          { label: 'Slides: Conditional VAEs', url: deck(4, 'conditional-vae.pdf') },
           {
-            label: 'Apples and oranges notebook',
-            url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
+            label: 'Slides: Conditional VAEs',
+            url: deck(4, 'conditional-vae.pdf'),
+            description:
+              'A new fish, but which one? Telling the autoencoder the label: apples and oranges, the label flipped by hand, why a penalty on the code makes the flip work, and age progression as the application.',
           },
         ],
       },
@@ -1340,7 +1359,14 @@ export const weekends: Weekend[] = [
         // 2026-10-22 ("Publish the slides and notebooks we have created so far"),
         // byte for byte that repository's commit 52a242b. A rebuild there must be
         // recopied here. Its open points are in that deck's README.
-        links: [{ label: 'Slides', url: deck(4, 'stable-diffusion.pdf') }],
+        links: [
+          {
+            label: 'Slides',
+            url: deck(4, 'stable-diffusion.pdf'),
+            description:
+              'How a picture turns into noise step by step, how a UNet learns to guess that noise so that each step can be undone, and how a prompt steers what comes out.',
+          },
+        ],
       },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
@@ -1348,6 +1374,10 @@ export const weekends: Weekend[] = [
         time: '14:00',
         title: 'Stable diffusion',
         type: 'exercise',
+        // PROTOTYPE OF 2026-10-22: the notebooks this comment names are no
+        // longer chips of this row but entries of `exercises`, at the end of
+        // this weekend, ranked by difficulty with their worked examples.
+        //
         // "Happy and sad diffusion" is a tiny text-to-image diffusion model:
         // 9 x 9 faces whose prompt is one bit, trained in seconds. Linked, not
         // copied, from w4-cx-public, where it is the EXERCISE, five tasks. The
@@ -1358,12 +1388,6 @@ export const weekends: Weekend[] = [
         // replaced his earlier "after the exercise"), listed in its
         // SOLUTIONS.md. They are never linked here without his word.
         // Put on the site on Carlos's word of 2026-10-22.
-        links: [
-          {
-            label: 'Happy and sad diffusion notebook',
-            url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
-          },
-        ],
       },
       { time: '14:30', title: 'Conditional VAE with demo', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
@@ -1381,7 +1405,14 @@ export const weekends: Weekend[] = [
         // byte for byte that repository's commit a383bf4. A rebuild there must
         // be recopied here. The report itself states no licence and is not on
         // the site; the deck links it on the AI Impacts site.
-        links: [{ label: 'Slides', url: deck(4, 'future-of-ai.pdf') }],
+        links: [
+          {
+            label: 'Slides',
+            url: deck(4, 'future-of-ai.pdf'),
+            description:
+              'What 1,580 AI researchers said in December 2024: when machines could take over tasks and jobs, which milestones they expect when, how good or bad the outcomes could be, and how much safety research matters.',
+          },
+        ],
       },
     ],
     saturday: [
@@ -1412,62 +1443,86 @@ export const weekends: Weekend[] = [
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, manifolds)',
         url: viz(4, 'grasshopper-regression'),
       },
-      // The two sunrise CNN notebooks of the Friday 08:15 row, the exercise and
-      // its worked example, linked from w4-cx-public/sunrise-cnn/; the complete
-      // notebook beside them is listed in w4-cx-public's SOLUTIONS.md and NOT
-      // linked here. Put on the site on Carlos's word of 2026-10-22.
       {
-        group: 'Coding exercises',
-        label: 'What time is it? A CNN reads a sunrise: four tasks, then the time of day from a photo (Colab notebook)',
-        url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Which season is it? The worked example: a small CNN tells the season of a sunrise (Colab notebook)',
-        url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
-      },
-      // The grasshoppers' exercise of the Friday 08:15 row, linked from
-      // w4-cx-public/grasshopper-gradient-descent/; the complete notebook beside it
-      // is listed in w4-cx-public's SOLUTIONS.md and NOT linked here.
-      {
-        group: 'Coding exercises',
-        label: 'Two grasshoppers fit a line: three tasks, then gradient descent on the three sunrise photos (Colab notebook)',
-        url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Pufferfish autoencoder: fill in three gaps, then change the three numbers of a fish (Colab notebook)',
-        url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Pufferfish autoencoder, worked example: a small network on made-up ice cream sales (Colab notebook)',
-        url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
-      },
-      {
-        group: 'Coding exercises',
-        label: 'Manifold games: the Sunrise Machine, a VAE on synthetic sunrises (runs in the browser)',
+        group: 'Visualizations',
+        label: 'Sunrise Machine: a VAE on synthetic sunrises, in the browser (Friday, manifold games)',
         url: exercise(4, 'manifold-games/sunrise-machine/index.html'),
       },
       {
-        group: 'Coding exercises',
-        label: 'Manifold games: the Manifold Chart Explorer, 2-D manifolds through their charts (runs in the browser)',
+        group: 'Visualizations',
+        label: 'Manifold Chart Explorer: 2-D manifolds through their charts, each chart folded into its surface (Friday, manifold games)',
         url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
       },
-      {
-        group: 'Coding exercises',
-        label: 'Apples and oranges: a conditional autoencoder, trained with and without a penalty on its code (Colab notebook)',
-        url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
-      },
-      { group: 'Coding exercises', label: 'Conditional VAE with demo', url: SOON },
-      {
-        group: 'Coding exercises',
-        label: 'Happy and sad faces from noise: five tasks, then generate faces from a one-bit prompt (Colab notebook)',
-        url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
-      },
-      { group: 'Coding exercises', label: 'Adversarial attacks', url: SOON },
       { group: 'Project', label: 'Deepfake detection and generation: project description', url: SOON },
       { group: 'Project', label: 'Deepfake detection and generation: grading scheme', url: SOON },
+    ],
+    // The weekend's coding notebooks, PROTOTYPE OF 2026-10-22 (Carlos: "a
+    // rank to each coding exercise in order of difficulty [...] easy and hard",
+    // and beside each exercise its reference coding example). A rank is the
+    // place in the easiest-first order. Easy: the lines can be adapted from a
+    // worked example; hard: they are written from the formulas. A demo is
+    // complete and gets no rank. Solutions are never listed here (the standing
+    // rule of 2026-10-22: the site links exercises only).
+    exercises: [
+      {
+        day: 'friday',
+        time: '08:15',
+        title: 'Pufferfish autoencoder',
+        summary: 'Three gaps: squeeze a picture of a fish into three numbers and back, then move the numbers with sliders.',
+        url: colab('w4-cx-public', 'pufferfish-autoencoder/pufferfish_autoencoder.ipynb'),
+        level: 'easy',
+        rank: 1,
+        reference: {
+          label: 'Ice cream sales',
+          url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
+        },
+      },
+      {
+        day: 'friday',
+        time: '08:15',
+        title: 'What time is it?',
+        summary: 'Four tasks: build a small CNN that reads the time of day off a photo of a sunrise.',
+        url: colab('w4-cx-public', 'sunrise-cnn/sunrise_time_regression.ipynb'),
+        level: 'easy',
+        rank: 2,
+        reference: {
+          label: 'Which season is it?',
+          url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
+        },
+      },
+      {
+        day: 'friday',
+        time: '08:15',
+        title: 'Two grasshoppers, in Python',
+        summary: 'Three tasks: write the average loss, the two slopes and the two jumps, and the grasshoppers find the line through the three sunrise photos.',
+        url: colab('w4-cx-public', 'grasshopper-gradient-descent/grasshopper_gradient_descent.ipynb'),
+        level: 'hard',
+        rank: 3,
+        reference: { label: 'Two grasshoppers fit a line', url: viz(4, 'grasshopper-regression') },
+      },
+      {
+        day: 'friday',
+        time: '10:00',
+        title: 'Apples and oranges',
+        summary: 'Run it, flip the label of a fruit, and see whether an apple turns into an orange.',
+        url: colab('w4-cx-public', 'apple-orange-autoencoder/apple_orange_autoencoder.ipynb'),
+        demo: true,
+      },
+      {
+        day: 'friday',
+        time: '14:00',
+        title: 'Happy and sad faces from noise',
+        summary: 'Five tasks: a tiny diffusion model draws a happy or a sad face from a one-bit prompt.',
+        url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
+        level: 'hard',
+        rank: 4,
+        reference: {
+          label: 'Ice cream sales',
+          url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
+        },
+      },
+      { day: 'friday', time: '14:30', title: 'Conditional VAE with demo', summary: '', url: SOON },
+      { day: 'saturday', time: '09:00', title: 'Adversarial attacks', summary: '', url: SOON },
     ],
   },
 ];
