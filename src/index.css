@@ -1644,3 +1644,432 @@ textarea.field__input {
   }
 }
 
+
+/*
+ * THE FOUR COLOURS OF A WEEKEND PAGE, one per kind of material: slides blue,
+ * visualizations orange, coding exercises petrol, worked examples purple.
+ * Under normal vision the four sit at least 19.5 CIEDE2000 apart. For
+ * colour-blind readers blue and petrol, blue and purple, and petrol and
+ * purple come closer than the course's gate of 18 (the weekend-1
+ * verify_palette.py, Machado 2009), so the colour is never the only cue: an
+ * exercise is the one SOLID chip, an example says "Example:" in words, slides
+ * say "Slides:" and download (the arrow points down). Orange stands apart
+ * from the other three under every vision (37 or more). The orange is the
+ * Okabe-Ito vermillion darkened so that it reads as text on its tint.
+ */
+:root {
+  --kind-slides: #215caf;
+  --kind-slides-tint: #e9eff9;
+  --kind-viz: #a34700;
+  --kind-viz-tint: #fbede3;
+  --kind-exercise: #007a92;
+  --kind-example: #a30774;
+  --kind-example-tint: #f7e6f1;
+}
+
+/* the bar above the schedule: what the colours mean, and "Show all details" */
+.days__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  margin: -8px 0 14px;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend__item::before {
+  content: '';
+  width: 14px;
+  height: 12px;
+  border: 1px solid;
+}
+.legend__item--slides::before {
+  border-color: var(--kind-slides);
+  background: var(--kind-slides-tint);
+}
+.legend__item--viz::before {
+  border-color: var(--kind-viz);
+  background: var(--kind-viz-tint);
+}
+.legend__item--exercise::before {
+  border-color: var(--kind-exercise);
+  background: var(--kind-exercise);
+}
+.legend__item--example::before {
+  border-color: var(--kind-example);
+  background: var(--kind-example-tint);
+}
+.days__toggle,
+.srow__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--eth-blue);
+  cursor: pointer;
+}
+.days__toggle:hover,
+.srow__toggle:hover {
+  text-decoration: underline;
+}
+.srow__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.srow__toggle {
+  flex: none;
+}
+.srow__chev {
+  display: inline-block;
+  font-size: 0.9em;
+  transition: transform 0.15s ease;
+}
+.srow--open .srow__chev {
+  transform: rotate(180deg);
+}
+
+/* a link chip in the colour of its kind */
+.lchip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  padding: 2px 9px;
+  border: 1px solid;
+}
+a.lchip:hover {
+  text-decoration: none;
+  filter: brightness(0.96);
+}
+.lchip .srow__ext {
+  margin-left: 4px;
+  color: inherit;
+}
+.lchip--slides {
+  color: var(--kind-slides);
+  background: var(--kind-slides-tint);
+  border-color: var(--kind-slides);
+}
+.lchip--viz {
+  color: var(--kind-viz);
+  background: var(--kind-viz-tint);
+  border-color: var(--kind-viz);
+}
+.lchip--example {
+  color: var(--kind-example);
+  background: var(--kind-example-tint);
+  border-color: var(--kind-example);
+}
+.lchip__pre {
+  margin-right: 4px;
+  font-weight: 400;
+}
+.lchip--soon {
+  color: var(--ink-faint);
+  border-color: var(--line-strong);
+  font-weight: 400;
+}
+.lchip__soon {
+  margin-left: 6px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* a coding exercise on its row: solid, its rank, its level, its reference attached */
+.srow__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.xchip {
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+.xchip__main {
+  display: inline-flex;
+  align-items: stretch;
+  min-width: 0;
+  color: #fff;
+  background: var(--kind-exercise);
+  border: 1px solid var(--kind-exercise);
+}
+.xchip__main:hover {
+  text-decoration: none;
+  filter: brightness(1.12);
+}
+.xchip__rank {
+  min-width: 22px;
+  padding: 2px 6px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  background: rgba(0, 0, 0, 0.18);
+}
+.xchip__label {
+  display: inline-block;
+  padding: 2px 9px;
+}
+.xchip__label .srow__ext {
+  margin-left: 4px;
+  color: inherit;
+}
+.xchip__level {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 0 5px;
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+.xchip__ref {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-left: 0;
+}
+.xchip__ref:hover {
+  text-decoration: none;
+  filter: brightness(0.96);
+}
+.xchip__ref .srow__ext {
+  margin-left: 4px;
+  color: inherit;
+}
+.xchip__ref--example {
+  color: var(--kind-example);
+  background: var(--kind-example-tint);
+  border-color: var(--kind-example);
+}
+.xchip__ref--viz {
+  color: var(--kind-viz);
+  background: var(--kind-viz-tint);
+  border-color: var(--kind-viz);
+}
+.xchip--soon .xchip__label {
+  color: var(--ink-faint);
+  border: 1px solid var(--line-strong);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+}
+
+/* an open row: its slides, visualizations and exercises, each described */
+.sdetail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+.sdetail__group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sdetail__title {
+  margin: 0;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+.ditem__title {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+.ditem__title--slides {
+  color: var(--kind-slides);
+}
+.ditem__title--viz {
+  color: var(--kind-viz);
+}
+.ditem__title--example {
+  color: var(--kind-example);
+}
+.ditem__desc,
+.xitem__desc {
+  margin: 2px 0 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* a coding exercise described, in a row's details and in the ranked list */
+.xitem {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.xitem__rank {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: var(--kind-exercise);
+  border: 1px solid var(--kind-exercise);
+}
+.xitem--done .xitem__rank {
+  color: var(--kind-exercise);
+  background: var(--bg-tint);
+  border-color: var(--line-strong);
+}
+.xitem--demo .xitem__rank {
+  background: var(--kind-example-tint);
+  border-color: var(--kind-example);
+}
+.xitem--soon .xitem__rank {
+  background: var(--bg-tint);
+  border: 1px dashed var(--line-strong);
+}
+.xitem__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+.xitem__kind {
+  color: var(--kind-exercise);
+}
+.xitem__kind--demo {
+  color: var(--kind-example);
+}
+.xitem__title {
+  display: inline-block;
+  margin-top: 1px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+a.xitem__title:hover {
+  color: var(--kind-exercise);
+  text-decoration: none;
+}
+.xitem--soon .xitem__title,
+.xitem--done .xitem__title,
+.xitem--done .xitem__desc {
+  color: var(--ink-faint);
+}
+.xitem--soon .xitem__title {
+  font-weight: 400;
+}
+.xitem__ref {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin-top: 8px;
+  font-size: 0.84rem;
+}
+.xitem__ref-pre {
+  color: var(--ink-faint);
+}
+.xitem__check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: max-content;
+  margin-top: 8px;
+  font-size: 0.84rem;
+  color: var(--ink-faint);
+  cursor: pointer;
+  user-select: none;
+}
+.xitem__check input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--kind-exercise);
+  cursor: pointer;
+}
+
+/* the weekend's coding exercises, easiest first */
+.xlist {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+.xlist h2 {
+  font-size: 1.3rem;
+}
+.xlist__note {
+  max-width: 70ch;
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+}
+.xlist__group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px 40px;
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.xlist__title {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+@media (max-width: 600px) {
+  .xlist__group {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* on a phone an exercise chip wraps, its reference going under it when it must */
+@media (max-width: 600px) {
+  .xchip {
+    flex-wrap: wrap;
+  }
+  .xchip__ref {
+    border-left: 1px solid;
+  }
+}

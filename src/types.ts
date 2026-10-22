@@ -28,6 +28,43 @@ export interface Resource {
    * order. Resources without a group render as a single flat list.
    */
   group?: string;
+  /**
+   * Optional one or two sentences on what the material is, shown when a
+   * schedule row is opened with its "Details" button.
+   */
+  description?: string;
+}
+
+/**
+ * One coding notebook of a weekend. An EXERCISE has gaps to fill in and gets a
+ * level and a rank: the weekend page lists the exercises easiest first, split
+ * into easy and hard, and sorts them the same way on their schedule row. A DEMO
+ * is a complete notebook with nothing to fill in, and gets no rank.
+ *
+ * Solutions are never listed here: the course site links exercises only
+ * (Carlos's standing rule of 2026-10-22).
+ */
+export interface CodingExercise {
+  day: 'friday' | 'saturday';
+  /** Time of the schedule row it belongs to, e.g. '08:15'. */
+  time: string;
+  title: string;
+  /** One line: what the participant does. Empty while it is SOON. */
+  summary: string;
+  /** Where it opens, or SOON while it is not uploaded. */
+  url: string;
+  /** A complete notebook with nothing to fill in, shown in the colour of the examples. */
+  demo?: boolean;
+  /** How hard the exercise is: the weekend's list splits easy from hard. */
+  level?: 'easy' | 'hard';
+  /** Its place in the weekend's easiest-first order, 1 being the easiest. */
+  rank?: number;
+  /**
+   * What to open beside it when stuck: a worked example notebook (shown in the
+   * colour of the examples) or a visualization (in the colour of the
+   * visualizations).
+   */
+  reference?: Resource;
 }
 
 /**
@@ -78,4 +115,6 @@ export interface Weekend {
   friday: Session[];
   saturday: Session[];
   resources: Resource[];
+  /** The weekend's coding notebooks; see CodingExercise. */
+  exercises?: CodingExercise[];
 }
