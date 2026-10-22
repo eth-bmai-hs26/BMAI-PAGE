@@ -1682,7 +1682,14 @@ export const weekends: Weekend[] = [
         level: 'hard',
         rank: 7,
       },
-      { day: 'friday', time: '14:30', title: 'Conditional VAE with demo', summary: '', url: SOON },
+      {
+        day: 'friday',
+        time: '14:30',
+        title: 'Conditional VAE with demo',
+        summary:
+          'Four one-line gaps: squeeze faces through the VAE of Stable Diffusion, blend two faces in pixels and in codes, and see why a "show me at 70" button needs the manifold.',
+        url: colab('w4-cx-public', 'aging/face_aging.ipynb'),
+      },
       { day: 'saturday', time: '09:00', title: 'Adversarial attacks', summary: '', url: SOON },
     ],
   },
