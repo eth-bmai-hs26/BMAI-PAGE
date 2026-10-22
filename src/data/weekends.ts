@@ -1685,7 +1685,7 @@ export const weekends: Weekend[] = [
       {
         day: 'friday',
         time: '14:30',
-        title: 'Conditional VAE with demo',
+        title: 'Face aging: build the VAE of Stable Diffusion',
         summary:
           'Build the VAE of Stable Diffusion yourself, four layers with step-by-step hints, load the official weights into it, then age a face, yours if you upload it, with FADING.',
         url: colab('w4-cx-public', 'face-aging-vae/face_aging_vae.ipynb'),
