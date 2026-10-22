@@ -1352,7 +1352,22 @@ export const weekends: Weekend[] = [
       },
       { time: '14:30', title: 'Conditional VAE with demo', type: 'exercise' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
-      { time: '16:00', title: 'Future of AI', type: 'lecture' },
+      {
+        time: '16:00',
+        title: 'Future of AI',
+        type: 'lecture',
+        // "Slides" is the deck "1,580 AI Authors", the 2024 round of the
+        // Expert Survey on Progress in AI (AI Impacts, September 2026),
+        // w4-lecture-material/future-of-ai-deck/future-of-ai-slides.pdf (27
+        // frames over 83 pages), a port of the CSCS deck
+        // cscs-hs26/ai-researchers-survey-slides into the BMAI format, copied on
+        // Carlos's word of 2026-10-22 ("Port the slides here into the BMAI
+        // format and publish them on the website in the last block of Friday"),
+        // byte for byte that repository's commit a383bf4. A rebuild there must
+        // be recopied here. The report itself states no licence and is not on
+        // the site; the deck links it on the AI Impacts site.
+        links: [{ label: 'Slides', url: deck(4, 'future-of-ai.pdf') }],
+      },
     ],
     saturday: [
       { time: '08:15', title: 'Adversarial attacks', type: 'lecture' },
@@ -1374,7 +1389,7 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Manifolds and VAEs, part 2: VAEs', url: deck(4, 'vae.pdf') },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: deck(4, 'conditional-vae.pdf') },
       { group: 'Lecture slides', label: 'Stable diffusion', url: deck(4, 'stable-diffusion.pdf') },
-      { group: 'Lecture slides', label: 'Future of AI', url: SOON },
+      { group: 'Lecture slides', label: 'Future of AI', url: deck(4, 'future-of-ai.pdf') },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
       { group: 'Lecture slides', label: 'Attacks on LLMs', url: SOON },
       {
