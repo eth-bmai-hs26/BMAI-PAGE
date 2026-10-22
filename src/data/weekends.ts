@@ -1260,7 +1260,23 @@ export const weekends: Weekend[] = [
       { time: '11:00', title: 'Conditional VAE with demo', type: 'exercise' },
       { time: '12:00', title: 'Lab session', type: 'lab' },
       { time: '13:00', title: 'Lunch break at Polysnack, until 14:00', type: 'break' },
-      { time: '14:00', title: 'Stable diffusion, CLIP, MAE', type: 'lecture' },
+      {
+        time: '14:00',
+        title: 'Stable diffusion, CLIP, MAE',
+        type: 'lecture',
+        // "Happy and sad diffusion" is a tiny text-to-image diffusion model:
+        // 9 x 9 faces whose prompt is one bit, trained in seconds. Linked, not
+        // copied, from w4-cx-public, where it is the EXERCISE, three one-line
+        // gaps; the complete notebook is private in w4-cx-private as
+        // happy-sad-diffusion/happy_sad_diffusion_solutions.ipynb. Put on the
+        // site on Carlos's word of 2026-10-22.
+        links: [
+          {
+            label: 'Happy and sad diffusion notebook',
+            url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
+          },
+        ],
+      },
       { time: '14:30', title: 'Cross-attention mechanisms', type: 'lecture' },
       { time: '15:30', title: 'Coffee break at Polysnack, until 16:00', type: 'break' },
       { time: '16:00', title: 'Quiz', type: 'quiz' },
@@ -1331,6 +1347,11 @@ export const weekends: Weekend[] = [
         url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
       },
       { group: 'Coding exercises', label: 'Conditional VAE with demo', url: SOON },
+      {
+        group: 'Coding exercises',
+        label: 'Happy and sad faces from noise: fill in three lines, then generate faces from a one-bit prompt (Colab notebook)',
+        url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
+      },
       { group: 'Coding exercises', label: 'Adversarial attacks', url: SOON },
       { group: 'Project', label: 'Project description', url: SOON },
       { group: 'Project', label: 'Grading scheme', url: SOON },
