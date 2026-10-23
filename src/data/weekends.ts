@@ -1758,7 +1758,7 @@ export const weekends: Weekend[] = [
       // Kangsheng Qi, a teaching assistant, wrote for this slot on the branch
       // adversarial-attack of w4-cx-private, with only the changes that let it
       // run from here (w4-cx-private adversarial-attacks-cifar/, which says what
-      // changed). Its solution stays private until he says otherwise. Hard, and
+      // changed). Its solution stays private, on his word of the same day. Hard, and
       // the first of the hard ones, so it shows right below the cats and dogs.
       {
         day: 'saturday',
