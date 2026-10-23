@@ -2,7 +2,7 @@
  *
  * Carlos's handwritten page 8 of manifolds-notes.pdf, drawn live: the three
  * photos and their sun coordinates z, two grasshoppers standing on the
- * numbers w and b, the predictions y_hat = w z_1 + b, the losses
+ * numbers w and b, the predictions y_hat = w z_2 + b, the losses
  * L_i = (y - y_hat)^2, their average L_bar, a slope for each grasshopper
  * found by a hop of epsilon, and the jump w <- w - alpha * slope.
  *
@@ -240,17 +240,17 @@
       var hill = [[x0, y0 + sz * 0.90], [x0 + sz * 0.3, y0 + sz * 0.86], [x0 + sz * 0.62, y0 + sz * 0.90],
                   [x0 + sz, y0 + sz * 0.87], [x0 + sz, y0 + sz], [x0, y0 + sz]];
       K.paper(ph, hill, 'p-hill', 'hill-' + i, { amp: 0.6, step: 10, shadow: false });
-      K.text(gp, PH.cz1, cy + 12, String(p.z1), 'num');
-      K.text(gp, PH.cz2, cy + 12, String(p.z2), 'num dim');
+      K.text(gp, PH.cz1, cy + 12, String(p.z1), 'num dim');   // across: the season, unused
+      K.text(gp, PH.cz2, cy + 12, String(p.z2), 'num');       // up: the hour, what the line reads
       K.text(gp, PH.cy, cy + 14, String(p.y), 'num hour');
     });
   }
 
   var LANE_TITLES = ['WHERE THEY STAND', 'GRASSHOPPER *w* HOPS', 'GRASSHOPPER *b* HOPS'];
   var LANE_PRED = [
-    '*' + YH + '* = *w z*' + SUB[1] + ' + *b*',
-    '*' + YH + '* = (*w* + *' + EP + '*) *z*' + SUB[1] + ' + *b*',
-    '*' + YH + '* = *w z*' + SUB[1] + ' + (*b* + *' + EP + '*)'
+    '*' + YH + '* = *w z*' + SUB[2] + ' + *b*',
+    '*' + YH + '* = (*w* + *' + EP + '*) *z*' + SUB[2] + ' + *b*',
+    '*' + YH + '* = *w z*' + SUB[2] + ' + (*b* + *' + EP + '*)'
   ];
   function buildLanes() {
     N.lanes = LANE_X.map(function (x0, i) {
@@ -922,7 +922,7 @@
     var ev = [rec.base, rec.hopW, rec.hopB][i];
     D.photos.forEach(function (p, j) {
       if (s >= at[1]) {
-        cell(g, L.pc, ROWS[j], fP(ev.w) + ' ' + TI + ' ' + p.z1 + plusTerm(ev.b), fP(ev.yhat[j]), 'p-pred',
+        cell(g, L.pc, ROWS[j], fP(ev.w) + ' ' + TI + ' ' + p.z2 + plusTerm(ev.b), fP(ev.yhat[j]), 'p-pred',
           'slip-p-' + i + '-' + j, s === at[1]);
       }
       if (s >= at[2]) {
@@ -1131,9 +1131,9 @@
     var o = readHash(), out = [], overlaps = [], seen = 0;
     var cases = [];
     for (var s = 0; s <= STEPS; s++) cases.push(['0', '0', 0.1, 0.01, 1, s]);
-    cases.push(['0', '0', 0.1, 0.01, 2, 12], ['0', '0', 0.1, 0.01, 40, 29], ['0', '0', 0.1, 0.01, 345, 29],
+    cases.push(['0', '0', 0.1, 0.01, 2, 12], ['0', '0', 0.1, 0.01, 40, 29], ['0', '0', 0.1, 0.01, 319, 29],
       ['-50', '50', 0.1, 0.001, 1, 27], ['-50', '50', 0.1, 0.001, 1, 29], ['50', '-50', 0.05, 0.1, 1, 27],
-      ['5', '-3', 0.19, 0.01, 150, 27], ['5', '-3', 0.19, 0.01, 900, 29], ['-1', '10', 0.1, 0.01, 1, 29]);
+      ['5', '-3', 0.19, 0.01, 150, 27], ['5', '-3', 0.19, 0.01, 900, 29], ['1', '6', 0.1, 0.01, 1, 29]);
     var W = window.innerWidth, H = window.innerHeight;
     cases.forEach(function (c) {
       pause();

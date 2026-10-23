@@ -18,7 +18,7 @@
   // The three predictions, losses and their average at (w, b).
   function evaluate(photos, w, b) {
     var yhat = [], loss = [], i, d;
-    for (i = 0; i < photos.length; i++) yhat.push(w * photos[i].z1 + b);
+    for (i = 0; i < photos.length; i++) yhat.push(w * photos[i].z2 + b);
     for (i = 0; i < photos.length; i++) {
       d = photos[i].y - yhat[i];
       loss.push(d * d);
