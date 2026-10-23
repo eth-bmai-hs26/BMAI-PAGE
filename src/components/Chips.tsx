@@ -39,9 +39,10 @@ export function LinkChip({ link, prefix }: { link: Resource; prefix?: string }) 
 }
 
 /**
- * A coding exercise on its schedule row: its rank, its title and its level in
- * one solid chip, and the reference to open beside it attached at the end, in
- * the reference's own colour.
+ * A coding exercise on its schedule row: its title in one solid chip, a tick in
+ * front once it is done, and the reference to open beside it attached at the
+ * end, in the reference's own colour. No rank and no level on the chip (Carlos,
+ * 2026-10-23); the list under the schedule still has both.
  */
 export function ExerciseChip({ ex, isDone }: { ex: CodingExercise; isDone: boolean }) {
   if (isSoon(ex.url)) {
@@ -56,10 +57,9 @@ export function ExerciseChip({ ex, isDone }: { ex: CodingExercise; isDone: boole
   return (
     <span className="xchip">
       <a className="xchip__main" href={ex.url} target="_blank" rel="noopener noreferrer">
-        <span className="xchip__rank">{isDone ? '✓' : ex.rank}</span>
+        {isDone && <span className="xchip__done">✓</span>}
         <span className="xchip__label">
           {ex.title}
-          {ex.level && <span className="xchip__level">{ex.level === 'hard' ? 'Hard' : 'Easy'}</span>}
           <span className="srow__ext" aria-hidden="true">
             ↗
           </span>

@@ -1800,7 +1800,7 @@ a.lchip:hover {
   letter-spacing: 0.08em;
 }
 
-/* a coding exercise on its row: solid, its rank, its level, its reference attached */
+/* a coding exercise on its row: solid, a tick once done, its reference attached */
 .srow__steps {
   display: flex;
   flex-wrap: wrap;
@@ -1827,11 +1827,10 @@ a.lchip:hover {
   text-decoration: none;
   filter: brightness(1.12);
 }
-.xchip__rank {
+.xchip__done {
   min-width: 22px;
   padding: 2px 6px;
   text-align: center;
-  font-variant-numeric: tabular-nums;
   background: rgba(0, 0, 0, 0.18);
 }
 .xchip__label {
@@ -1841,15 +1840,6 @@ a.lchip:hover {
 .xchip__label .srow__ext {
   margin-left: 4px;
   color: inherit;
-}
-.xchip__level {
-  display: inline-block;
-  margin-left: 7px;
-  padding: 0 5px;
-  font-size: 0.64rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid rgba(255, 255, 255, 0.7);
 }
 .xchip__ref {
   display: inline-flex;
