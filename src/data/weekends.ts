@@ -1234,9 +1234,24 @@ export const weekends: Weekend[] = [
         // w4-lecture-material/manifolds-deck/manifolds-slides.pdf (29 frames
         // over 120 pages), copied on Carlos's word of 2026-10-22 ("Publish the
         // slides"), byte for byte that repository's commit 0dad959. A rebuild
-        // there must be recopied here. The weekend's cold open is in the same
-        // repository and not published.
+        // there must be recopied here.
+        //
+        // The weekend's cold open comes first, as on weekends 1 to 3: Strabo,
+        // six excerpts of his Geography in H. L. Jones's English (Loeb, 1917) on
+        // why a map of the land pays off and how to draw one, then two slides on
+        // John Snow's map of the 1854 cholera deaths around the Broad Street
+        // pump, then the weekend's agenda. It is
+        // w4-lecture-material/cold-intro/slides-strabo.pdf, copied here on
+        // Carlos's word of 2026-10-23 ("Publish it"), byte for byte that
+        // repository's commit eaed6d3; a change there must be recopied here. The
+        // Ovid and Riemann version, cold-intro/slides.pdf, is not published.
         links: [
+          {
+            label: 'Cold open',
+            url: deck(4, 'cold-open.pdf'),
+            description:
+              'Strabo, the Greek geographer, on why a map of the land pays off, in six excerpts of his Geography; then John Snow, whose map of the 1854 cholera deaths in London pointed at one water pump; then the weekend at a glance.',
+          },
           {
             label: 'Slides: Manifolds',
             url: deck(4, 'manifolds.pdf'),
@@ -1523,6 +1538,7 @@ export const weekends: Weekend[] = [
       { time: '12:00', title: '', type: 'tba' },
     ],
     resources: [
+      { group: 'Lecture slides', label: 'The cold open', url: deck(4, 'cold-open.pdf') },
       {
         group: 'Lecture slides',
         label: "An atlas of the weekend's models: all six on one chart, then when to use which",
