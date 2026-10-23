@@ -1703,11 +1703,12 @@ export const weekends: Weekend[] = [
       // loop written by the room, ten one-line gaps. It sat on the unmerged
       // branch stableDiff of w4-cx-private (cx4_stable_diffusion.ipynb and
       // cx4_stable_diffusion_sol.ipynb) until she pushed the exercise to the
-      // root of w4-cx-public on 2026-10-23, where it is linked; its solution
-      // is beside it, listed in SOLUTIONS.md and never linked here. Put on the
+      // root of w4-cx-public on 2026-10-23, where it is linked. Put on the
       // site on Carlos's word of 2026-10-23 ("a coding exercise on stable
       // diffusion that was done by one of the TAs [...] I'd like to put it on
-      // the website"). Never merge that branch: it deletes vae_sunrises/.
+      // the website"). Its solution stays private, on that branch, on his word
+      // of the same day ("publish only the version for the students, not the
+      // solution"). Never merge that branch: it deletes vae_sunrises/.
       {
         day: 'friday',
         time: '14:00',
