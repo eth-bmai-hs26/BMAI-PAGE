@@ -8,27 +8,26 @@
 <script src="js/errors.js"></script>
 </head>
 <body>
-<header>
-  <h1>Two grasshoppers fit a line</h1>
-  <div class="controls">
-    <button id="prev" title="Back one step (left arrow)">Back</button>
-    <span id="count" class="count">Start</span>
-    <button id="next" title="Next step (right arrow, space, page down)">Next</button>
-    <span class="gap"></span>
-    <button id="run1" title="Finish this iteration, or do one more">+1</button>
-    <button id="run10" title="Ten more iterations">+10</button>
-    <button id="run100" title="A hundred more iterations">+100</button>
-    <button id="play" title="Play or pause the iterations (p)">Play</button>
-    <span class="gap"></span>
-    <label title="How far each grasshopper jumps, per unit of slope">&alpha; <select id="alpha"></select></label>
-    <label title="How far each grasshopper hops to feel the slope">&epsilon; <select id="eps"></select></label>
-    <button id="restart" title="Type a new start (home)">New start</button>
-  </div>
-</header>
-<main>
-  <svg id="stage" viewBox="0 0 1600 870" preserveAspectRatio="xMidYMid meet" role="img"
-       aria-label="Two grasshoppers learn w and b of a line through three sunrise photos"></svg>
-</main>
+<svg id="stage" viewBox="0 0 1600 960" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="Two grasshoppers learn w and b of a line through three sunrise photos, in cut paper, with a map of where they stand">
+  <g id="world"></g>
+  <foreignObject x="20" y="900" width="1560" height="54">
+    <div xmlns="http://www.w3.org/1999/xhtml" class="controls">
+      <button id="prev" title="Back one step (left arrow)">BACK</button>
+      <span id="count" class="count">START</span>
+      <button id="next" title="Next step (right arrow, space, page down)">NEXT</button>
+      <span class="gap"></span>
+      <button id="run1" title="Finish this iteration, or do one more">+1</button>
+      <button id="run10" title="Ten more iterations">+10</button>
+      <button id="run100" title="A hundred more iterations">+100</button>
+      <button id="play" title="Play or pause the iterations (p)">PLAY</button>
+      <span class="gap"></span>
+      <label title="How far each grasshopper jumps, per unit of slope"><span class="sym">&alpha;</span><select id="alpha"></select></label>
+      <label title="How far each grasshopper hops to feel the slope"><span class="sym">&epsilon;</span><select id="eps"></select></label>
+      <button id="restart" title="Type a new start (home)">NEW START</button>
+    </div>
+  </foreignObject>
+</svg>
 <script src="data/data.js"></script>
 <script src="js/engine.js"></script>
 <script src="js/svg.js"></script>

@@ -1,198 +1,142 @@
-/* style.css : the look of the grasshopper regression.
+/* style.css : the look of the grasshopper regression, cut paper on cream.
  *
- * The page is projected in the same Friday 08:15 lecture as the manifolds
- * deck, so it takes the deck's type and colours (Libertinus everywhere,
- * near-black ink, the deck's blue and the Okabe-Ito pair), on a plain white
- * ground: the deck's squared paper and sepia margin rule came off on
- * Carlos's word of 2026-10-22, as too distracting behind the numbers. Light
- * only, as the deck is.
+ * Chosen by Carlos on the evening of 2026-10-22 from five design concepts
+ * (design/, "Cutout"), with the map of Atlas added: paper cut-outs after
+ * Matisse's late gouaches decoupees and Saul Bass's film titles. Flat shapes
+ * of coloured paper with scissor-cut edges (js/svg.js cuts them with seeded
+ * jitter, so a shape is the same at every render), a crisp offset shadow in
+ * a darker cream, bold type, a calm cream field with no texture.
  *
- * Colour roles. Okabe-Ito blue for the predictions, Okabe-Ito vermillion for
- * the losses (darkened for text), the weekend-3 bluish green for the
- * grasshoppers, a sun yellow inside the photos. precompute/check_palette.py
- * holds the pairs that share the page at CIEDE2000 18 or more under normal
- * vision, protanopia and deuteranopia, and every text colour at contrast 4.5
- * or more on the paper. Every colour lives here as a token; the drawing code
- * sets classes and never writes a colour.
+ * Colour roles. A sky-blue paper under the predictions, a light vermillion
+ * paper under the losses, teal paper grasshoppers (an emerald came within
+ * CIEDE2000 10.6 of the losses under protanopia), black paper for the
+ * measured ground and the averages, a sun yellow for the number the last
+ * click found, ochre papers for the valley on the map, deeper towards its
+ * floor. precompute/check_palette.py holds every pair that shares the page at
+ * CIEDE2000 18 or more under normal vision, protanopia and deuteranopia, and
+ * every text colour at contrast 4.5 or more on the paper it sits on. Every
+ * colour lives here as a token; the drawing code sets classes only.
  */
 
-@font-face {
-  font-family: "Libertinus Serif";
-  src: url("../vendor/fonts/LibertinusSerif-Regular.otf") format("opentype");
-  font-weight: 400; font-style: normal;
-}
-@font-face {
-  font-family: "Libertinus Serif";
-  src: url("../vendor/fonts/LibertinusSerif-Italic.otf") format("opentype");
-  font-weight: 400; font-style: italic;
-}
-@font-face {
-  font-family: "Libertinus Serif";
-  src: url("../vendor/fonts/LibertinusSerif-Bold.otf") format("opentype");
-  font-weight: 700; font-style: normal;
-}
-@font-face {
-  font-family: "Libertinus Serif";
-  src: url("../vendor/fonts/LibertinusSerif-BoldItalic.otf") format("opentype");
-  font-weight: 700; font-style: italic;
-}
-@font-face {
-  font-family: "Libertinus Math";
-  src: url("../vendor/fonts/LibertinusMath-Regular.otf") format("opentype");
-}
+@font-face { font-family: "Josefin Sans"; src: url("../vendor/fonts/JosefinSans-Bold.ttf") format("truetype"); font-weight: 700; }
+@font-face { font-family: "Montserrat"; src: url("../vendor/fonts/Montserrat-Regular.otf") format("opentype"); font-weight: 400; }
+@font-face { font-family: "Montserrat"; src: url("../vendor/fonts/Montserrat-Medium.otf") format("opentype"); font-weight: 500; }
+@font-face { font-family: "Montserrat"; src: url("../vendor/fonts/Montserrat-SemiBold.otf") format("opentype"); font-weight: 600; }
+@font-face { font-family: "Libertinus Serif"; src: url("../vendor/fonts/LibertinusSerif-Regular.otf") format("opentype"); font-style: normal; }
+@font-face { font-family: "Libertinus Serif"; src: url("../vendor/fonts/LibertinusSerif-Italic.otf") format("opentype"); font-style: italic; }
 /* The calligraphic L of the loss: Latin Modern Math's is the Computer Modern
    \mathcal{L} the decks print (TeX Live 2024, GUST-FONT-LICENSE.txt). */
-@font-face {
-  font-family: "Latin Modern Math";
-  src: url("../vendor/fonts/latinmodern-math.otf") format("opentype");
-}
+@font-face { font-family: "Latin Modern Math"; src: url("../vendor/fonts/latinmodern-math.otf") format("opentype"); }
 
 :root {
-  --paper: #FFFFFF;       /* the ground, plain white */
-  --ink: #212121;         /* black 87 percent */
-  --muted: #707070;       /* black 56 percent: contrast 4.6 on the paper */
-  --hair: #C9C6C0;        /* frames and rules */
-  --brand: #26456E;       /* ink blue: controls, the hop's triangle, the slope */
-  --pred: #0072B2;        /* Okabe-Ito blue: the predictions */
-  --loss: #D55E00;        /* Okabe-Ito vermillion: the losses, as strokes */
-  --loss-text: #B34A00;   /* vermillion dark enough to read as text */
-  --hopper: #32B08C;      /* bluish green, the weekend-3 land colour */
-  --hopper-dark: #14594F; /* its legs, eye and antenna */
-  --sun: #F0C24A;         /* the sun in the photos */
-  --sun-edge: #B07800;
-  --fresh: rgba(38, 69, 110, 0.09);   /* behind what the last click showed */
+  --ground: #F1E7D3;      /* the field, a warm cream */
+  --shadow: #D3C2A2;      /* paper lifted off the field */
+  --ink: #1B1A17;         /* black paper, and the text */
+  --muted: #5F574B;       /* small arithmetic, the counter */
+  --slip: #FBF7EE;        /* the white slips under the two values */
+  --cream: #F7EFDD;       /* text on black paper */
+  --pred-paper: #8EC3E6;  /* the slips under the predictions, a sky blue */
+  --loss-paper: #F3A475;  /* the slips under the losses, a light vermillion */
+  --pred-text: #005A8F;   /* the prediction head, on the field */
+  --loss-text: #A23F00;   /* the loss head, on the field */
+  --hopper: #178A86;      /* the grasshoppers, a teal paper */
+  --hopper-deep: #0D5D5A; /* their wings and jumping legs */
+  --sun: #FFD43B;         /* the paper suns, and the slip of the number the last click found */
+  --land: #D9531E;        /* the point it finds after the hop: a loss */
+  --sky-7: #C9709E;       /* dawn at 7 */
+  --sky-8: #F0B04C;       /* gold at 8 */
+  --sky-9: #A8D5EC;       /* clear at 9 */
+  --sun-low: #FFC23A;
+  --sun-pale: #FFF4D6;    /* the sun at 8, pale on the gold sky */
+  --hill: #22362A;
+  --sheet: #FAF4E6;       /* the map's sheet, the high ground */
+  --band-1: #EFE1C2;      /* the valley on the map, from the rim ... */
+  --band-2: #E8D3A8;
+  --band-3: #E0C38D;
+  --band-4: #D6B071;
+  --band-5: #CA9B56;
+  --band-6: #BA843E;
+  --band-7: #A46D2B;      /* ... to the floor */
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background-color: var(--paper);
-  color: var(--ink);
-  font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
-}
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-/* ======== the top bar */
-header {
-  flex: 0 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 22px;
-  row-gap: 4px;
-  padding: 12px 30px 6px 52px;
-  border-bottom: 1px solid var(--hair);
-  margin: 0 24px 0 0;
-}
-header h1 {
-  font-size: 26px;
-  font-weight: 700;
-  margin: 0;
-  flex: 1 1 auto;
-  white-space: nowrap;
-}
-.controls { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: 16px; }
-.controls button, .controls select {
-  font-family: inherit;
-  font-size: 16px;
-  color: var(--brand);
-  background: transparent;
-  border: 1px solid var(--brand);
-  border-radius: 3px;
-  padding: 1px 9px;
-  cursor: pointer;
-}
-.controls select { padding: 0 2px; }
-.controls label { color: var(--ink); font-style: italic; white-space: nowrap; }
-.controls button:disabled { color: var(--muted); border-color: var(--hair); cursor: default; }
-.controls .count { color: var(--muted); min-width: 178px; text-align: center; }
-.controls .gap { width: 6px; }
-.controls button.on { color: var(--paper); background: var(--brand); }
-
-/* ======== the drawing */
-main {
-  flex: 1 1 auto;
-  min-height: 0;
-  padding: 6px 24px 8px 40px;
-  display: flex;
-}
-main > svg {
-  flex: 1 1 auto;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--ground); overflow: hidden; }
+body { display: flex; }
+#stage { flex: 1 1 auto; width: 100%; height: 100%; display: block; }
 
 /* SVG text */
-text {
-  font-family: "Libertinus Serif", "Iowan Old Style", Palatino, Georgia, serif;
-  fill: var(--ink);
-}
-.it { font-style: italic; }
-.cal { font-family: "Latin Modern Math", "Libertinus Math", serif; font-style: normal; }
+text { font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; fill: var(--ink); }
+.it { font-family: "Libertinus Serif", Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: 0; }
+.cal { font-family: "Latin Modern Math", serif; font-style: normal; font-weight: 400; letter-spacing: 0; }
 .cal.bar { text-decoration: overline; }
-.title { font-size: 26px; font-weight: 700; }
-.lanetitle { font-size: 24px; font-weight: 700; text-anchor: middle; }
-.colhead { font-size: 23px; text-anchor: middle; }
-.colhead.pred { fill: var(--pred); }
+
+.title { font-family: "Josefin Sans", sans-serif; font-weight: 700; font-size: 25px; letter-spacing: 0.22em; fill: var(--cream); }
+.name { font-family: "Josefin Sans", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.14em; }
+.name .it { font-size: 1.45em; letter-spacing: 0; }
+.lanetitle { font-family: "Josefin Sans", sans-serif; font-weight: 700; font-size: 19px; letter-spacing: 0.13em; text-anchor: middle; }
+.lanetitle .it { font-size: 1.4em; letter-spacing: 0; }
+.colhead { font-size: 21px; font-weight: 500; text-anchor: middle; }
+.colhead .it, .colhead .cal { font-size: 1.12em; }
+.colhead.pred { fill: var(--pred-text); }
 .colhead.loss { fill: var(--loss-text); }
-.arith { font-size: 17px; fill: var(--muted); }
-.num { font-size: 27px; }
-.num.pred { fill: var(--pred); }
-.num.loss { fill: var(--loss-text); }
-.num.ink { fill: var(--ink); }
-.num.dim { fill: var(--muted); }
-.avgarith { font-size: 17px; fill: var(--muted); }
-.avgvalue { font-size: 27px; font-weight: 700; fill: var(--loss-text); }
-.avglabel { font-weight: 400; fill: var(--ink); }
-.valuelabel { font-size: 32px; }
-.value { font-size: 34px; font-weight: 700; }
-.axlabel { font-size: 22px; }
-.ticklabel { font-size: 19px; fill: var(--muted); }
-.qmark { font-size: 24px; fill: var(--brand); font-weight: 700; }
-.leglabel { font-size: 22px; }
-.slope-row .result { font-weight: 700; fill: var(--brand); }
-.formula-line { font-size: 26px; }
-.formula-line.result { font-weight: 700; }
+.photohead { font-size: 24px; text-anchor: middle; }
+.arith { font-size: 16.5px; font-weight: 500; text-anchor: middle; }
+.num { font-size: 31px; font-weight: 600; text-anchor: middle; }
+.num.dim { fill: var(--muted); font-weight: 500; }
+.num.hour { font-size: 38px; }
+.avgarith { font-size: 15.5px; font-weight: 500; fill: var(--cream); text-anchor: middle; }
+.avgvalue { font-size: 29px; font-weight: 600; fill: var(--cream); text-anchor: middle; }
+.lit .avgarith, .lit .avgvalue { fill: var(--ink); }
+.valuelabel { font-size: 50px; font-weight: 500; }
+.valuelabel .it { font-size: 1.14em; }
+.value { font-size: 56px; font-weight: 600; text-anchor: end; }
+.axlabel { font-size: 28px; }
+.axlabel .it, .axlabel .cal { font-size: 1.1em; }
+.ticklabel { font-size: 22px; font-weight: 500; text-anchor: middle; }
+.leglabel { font-size: 24px; font-weight: 600; }
+.leglabel .it, .leglabel .cal { font-size: 1.1em; }
+.onramp { fill: var(--cream); }
+.qmark { font-size: 40px; font-weight: 600; }
+.slope-row text { font-weight: 600; }
+.result { font-size: 1.45em; font-weight: 600; }
+.formula-row text { font-weight: 500; }
+.formula-line { font-size: 24px; font-weight: 500; }
+.formula-line.res { font-weight: 600; font-size: 28px; }
+.mapletter { font-size: 32px; }
 
-/* SVG shapes */
-.valuebox { fill: var(--paper); stroke: var(--ink); stroke-width: 2.2; }
-.colbox-pred { fill: none; stroke: var(--pred); stroke-width: 2.2; }
-.colbox-loss { fill: none; stroke: var(--loss); stroke-width: 2.2; }
-.rowrule-pred { stroke: var(--pred); stroke-width: 1; opacity: 0.45; }
-.rowrule-loss { stroke: var(--loss); stroke-width: 1; opacity: 0.45; }
-.avgbox { fill: none; stroke: var(--loss); stroke-width: 2.2; }
-.cellbg { fill: transparent; }
-.fresh > .cellbg, .lit > .cellbg { fill: var(--fresh); }
-.photo-frame { fill: none; stroke: var(--ink); stroke-width: 2; }
-.photo-grid { stroke: var(--hair); stroke-width: 1; }
-.sun { fill: var(--sun); stroke: var(--sun-edge); stroke-width: 1.2; }
-.axis { fill: none; stroke: var(--ink); stroke-width: 1.6; }
-.axis-arrow .shaft { stroke: none; }
-.axis-arrow .head { fill: var(--ink); }
-.tick { stroke: var(--ink); stroke-width: 1.4; }
-.windowbar { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; }
-.stub { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
-.pt-base { fill: var(--ink); }
-.pt-land { fill: var(--loss); }
-.leg { stroke: var(--brand); stroke-width: 2.2; stroke-linecap: round; fill: none; }
-.rightangle { stroke: var(--brand); stroke-width: 1.3; fill: none; }
-.chord { stroke: var(--brand); stroke-width: 2.8; fill: none; }
-.fracbar { stroke: var(--ink); stroke-width: 1.6; }
-.decision path { fill: var(--hopper); stroke: var(--hopper-dark); stroke-width: 1.5; stroke-linejoin: round; }
-.thought { fill: var(--paper); stroke: var(--muted); stroke-width: 1.5; opacity: 0; }
-
-/* the grasshopper of the weekend-1 game */
-.hopper-body { fill: var(--hopper); }
-.hopper-dark { fill: var(--hopper-dark); }
-.hopper-ring { fill: none; stroke: var(--paper); stroke-width: 1.6; }
-.hopper-leg { fill: none; stroke: var(--hopper-dark); stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
-.hopper-antenna { fill: none; stroke: var(--hopper-dark); stroke-width: 1.1; stroke-linecap: round; }
-.hopper-wing { fill: none; stroke: var(--hopper-dark); stroke-width: 1.1; }
+/* paper */
+.shadow { fill: var(--shadow); }
+.p-ink { fill: var(--ink); }
+.p-slip { fill: var(--slip); }
+.p-sun { fill: var(--sun); }
+.p-pred { fill: var(--pred-paper); }
+.p-loss { fill: var(--loss-paper); }
+.p-hopper { fill: var(--hopper); }
+.p-deep { fill: var(--hopper-deep); }
+.p-cream { fill: var(--cream); }
+.p-land { fill: var(--land); }
+.p-sky7 { fill: var(--sky-7); }
+.p-sky8 { fill: var(--sky-8); }
+.p-sky9 { fill: var(--sky-9); }
+.p-sunlow { fill: var(--sun-low); }
+.p-sunpale { fill: var(--sun-pale); }
+.p-hill { fill: var(--hill); }
+.p-sheet { fill: var(--sheet); }
+.p-band1 { fill: var(--band-1); }
+.p-band2 { fill: var(--band-2); }
+.p-band3 { fill: var(--band-3); }
+.p-band4 { fill: var(--band-4); }
+.p-band5 { fill: var(--band-5); }
+.p-band6 { fill: var(--band-6); }
+.p-band7 { fill: var(--band-7); }
+.fracbar { stroke: var(--ink); stroke-width: 2.4; }
+.chord { stroke: var(--ink); stroke-width: 3; fill: none; }
+.dots { fill: var(--muted); }
+.decision path { fill: var(--hopper); }
+.decision path.shadow { fill: var(--shadow); }
+.thought { fill: var(--slip); stroke: var(--ink); stroke-width: 2; opacity: 0; }
+.route { fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linejoin: round; stroke-linecap: round; }
+.stage { fill: var(--ink); }
+.thread { fill: var(--ink); }
 
 /* what the last click showed fades in, on a single forward click only;
    "late" waits for the grasshopper to arrive, or for the division */
@@ -200,24 +144,39 @@ text {
 svg.animate .fresh { animation: appear 450ms ease-out both; }
 svg.animate .fresh.late { animation-delay: 700ms; }
 
-/* the start, typed into the value boxes */
-.startinput {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  font-family: "Libertinus Serif", Palatino, Georgia, serif;
-  font-size: 34px;
-  font-weight: 700;
-  text-align: right;
-  color: var(--ink);
-  background: transparent;
-  border: none;
-  border-bottom: 2px dashed var(--brand);
-  outline: none;
-  padding: 0 4px;
+/* the controls: paper tabs along the foot of the page (in a foreignObject,
+   so they scale with the drawing and can never leave the screen) */
+.controls {
+  box-sizing: border-box; width: 100%; height: 100%;
+  display: flex; align-items: center; gap: 10px;
+  font-family: "Josefin Sans", "Helvetica Neue", Arial, sans-serif; font-weight: 700;
+  font-size: 17px; letter-spacing: 0.12em; color: var(--ink);
 }
-.startinput::placeholder { color: var(--hair); font-weight: 400; }
-.startinput.bad { border-bottom-color: var(--loss); }
+.controls button, .controls select {
+  font-family: inherit; font-weight: 700; font-size: 17px; letter-spacing: 0.12em;
+  color: var(--ink); background: var(--slip); border: none; border-radius: 0;
+  box-shadow: 3px 4px 0 var(--shadow); padding: 7px 13px 5px; cursor: pointer;
+}
+.controls button:nth-child(odd) { transform: rotate(-0.8deg); }
+.controls button:nth-child(even) { transform: rotate(0.7deg); }
+.controls select { padding: 5px 6px 3px; }
+.controls label { white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.controls label .sym { font-family: "Libertinus Serif", Georgia, serif; font-style: italic; font-weight: 400;
+  font-size: 24px; letter-spacing: 0; }
+.controls button:disabled { color: var(--muted); background: transparent; box-shadow: none; cursor: default; }
+.controls button.on { background: var(--sun); }
+.controls .count { min-width: 300px; text-align: center; color: var(--muted); }
+.controls .gap { flex: 0 0 10px; }
+
+/* the start, typed into the two value slips */
+.startinput {
+  box-sizing: border-box; width: 100%; height: 100%;
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif; font-size: 50px; font-weight: 600;
+  text-align: right; color: var(--ink); background: transparent;
+  border: none; border-bottom: 3px dashed var(--ink); outline: none; padding: 0 4px;
+}
+.startinput::placeholder { color: var(--shadow); font-weight: 500; }
+.startinput.bad { border-bottom-color: var(--land); }
 
 /* a script error, written by js/errors.js, shown rather than swallowed */
 html[data-error]::before {
