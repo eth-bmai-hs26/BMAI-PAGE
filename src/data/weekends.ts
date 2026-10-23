@@ -1645,7 +1645,7 @@ export const weekends: Weekend[] = [
         summary: 'Five tasks: a tiny diffusion model draws a happy or a sad face from a one-bit prompt.',
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion.ipynb'),
         level: 'hard',
-        rank: 7,
+        rank: 6,
         reference: {
           label: 'Ice cream sales',
           url: colab('w4-cx-public', 'pufferfish-autoencoder/pytorch_example.ipynb'),
@@ -1682,7 +1682,7 @@ export const weekends: Weekend[] = [
           "Five tasks, after the happy and sad exercise, whose answers its folded cells hold: a third face, surprised, and BERT reads a sentence to pick the face to draw.",
         url: colab('w4-cx-public', 'happy-sad-diffusion/happy_sad_diffusion_extension.ipynb'),
         level: 'hard',
-        rank: 8,
+        rank: 7,
         reference: {
           label: 'Sunrise season classifier',
           url: colab('w4-cx-public', 'sunrise-cnn/sunrise_season_classifier.ipynb'),
@@ -1696,7 +1696,7 @@ export const weekends: Weekend[] = [
           'Four tasks, after the three exercises before it: train the denoiser on faces with captions, read by your own frozen text embedder, the way Stable Diffusion is trained, then type a word or a sentence and get its face.',
         url: colab('w4-cx-public', 'tiny-stable-diffusion/tiny_stable_diffusion.ipynb'),
         level: 'hard',
-        rank: 9,
+        rank: 8,
       },
       // The real Stable Diffusion, the exercise of Sofi Mousia, a teaching
       // assistant: Stable Diffusion 1.5 through diffusers, with the sampling
@@ -1708,16 +1708,20 @@ export const weekends: Weekend[] = [
       // diffusion that was done by one of the TAs [...] I'd like to put it on
       // the website"). Its solution stays private, on that branch, on his word
       // of the same day ("publish only the version for the students, not the
-      // solution"). Never merge that branch: it deletes vae_sunrises/.
+      // solution"). Never merge that branch: it deletes vae_sunrises/. Titled
+      // just "Stable diffusion" and placed last, rank 9, on his word of the
+      // same day ("Can you title it just "Stable diffusion" and put it at the
+      // end of the list"); it is marked hard because the list under the
+      // schedule shows the easy exercises first and only a hard one can close it.
       {
         day: 'friday',
         time: '14:00',
-        title: 'Stable Diffusion: your own sampling loop',
+        title: 'Stable diffusion',
         summary:
           'Ten one-line gaps in the real Stable Diffusion 1.5: write its sampling loop yourself, classifier-free guidance included, decode the result with its VAE, and check your loop against the official pipeline. Runs on a GPU in Colab.',
         url: colab('w4-cx-public', 'cx4_stable_diffusion.ipynb'),
-        level: 'easy',
-        rank: 6,
+        level: 'hard',
+        rank: 9,
       },
       {
         day: 'friday',
