@@ -1258,6 +1258,15 @@ export const weekends: Weekend[] = [
             description:
               'From one photo of a sunrise to the idea of a manifold: pictures that change in only a few ways lie on a surface, and a chart gives every picture its few coordinates. Ends with a cylinder, a torus, a Klein bottle and a projective plane folded from their charts.',
           },
+          // The handout of the deck above: one page per slide, each at its last
+          // click, cut from the same PDF (w4-lecture-material/manifolds-deck/
+          // manifolds-slides-handout.pdf), on Carlos's word of 2026-10-23 ("Also
+          // produce handouts for the manifold slides"). Recut after a rebuild.
+          {
+            label: 'Handout: Manifolds',
+            url: deck(4, 'manifolds-handout.pdf'),
+            description: 'The manifolds slides with one page per slide, each as it ends, to print or to read again.',
+          },
         ],
       },
       {
@@ -1505,7 +1514,29 @@ export const weekends: Weekend[] = [
       },
     ],
     saturday: [
-      { time: '08:15', title: 'Adversarial attacks', type: 'lecture' },
+      {
+        time: '08:15',
+        title: 'Adversarial attacks',
+        type: 'lecture',
+        // The deck w4-lecture-material/adversarial-deck/adversarial-slides.pdf,
+        // Carlos's handwritten drawings for this lecture as slides, with the
+        // 09:00 notebook's own pets, chart and attack, and its handout (the last
+        // click of each slide), copied on his word of 2026-10-23 ("put them on
+        // the website, publish them on the website"). Recopy after a rebuild.
+        links: [
+          {
+            label: 'Slides',
+            url: deck(4, 'adversarial-attacks.pdf'),
+            description:
+              'A CNN tells dogs from cats through a chart of two numbers. Pictures of pets lie on a surface, the line between dogs and cats on the chart is a boundary in picture space, and a dog pushed a tiny step off the surface lands on the cat side. Then the step itself: the sign of the gradient of the loss.',
+          },
+          {
+            label: 'Handout',
+            url: deck(4, 'adversarial-attacks-handout.pdf'),
+            description: 'The same slides with one page per slide, each as it ends, to print or to read again.',
+          },
+        ],
+      },
       { time: '09:00', title: 'Adversarial attacks', type: 'exercise' },
       {
         time: '10:00',
@@ -1545,11 +1576,13 @@ export const weekends: Weekend[] = [
         url: deck(4, 'atlas.pdf'),
       },
       { group: 'Lecture slides', label: 'Manifolds', url: deck(4, 'manifolds.pdf') },
+      { group: 'Lecture slides', label: 'Manifolds, handout', url: deck(4, 'manifolds-handout.pdf') },
       { group: 'Lecture slides', label: 'Variational autoencoders', url: deck(4, 'vae.pdf') },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: deck(4, 'conditional-vae.pdf') },
       { group: 'Lecture slides', label: 'Stable diffusion', url: deck(4, 'stable-diffusion.pdf') },
       { group: 'Lecture slides', label: 'Future of AI', url: deck(4, 'future-of-ai.pdf') },
-      { group: 'Lecture slides', label: 'Adversarial attacks', url: SOON },
+      { group: 'Lecture slides', label: 'Adversarial attacks', url: deck(4, 'adversarial-attacks.pdf') },
+      { group: 'Lecture slides', label: 'Adversarial attacks, handout', url: deck(4, 'adversarial-attacks-handout.pdf') },
       { group: 'Lecture slides', label: 'Attacks on LLMs', url: SOON },
       {
         group: 'Visualizations',
