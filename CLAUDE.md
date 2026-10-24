@@ -232,6 +232,15 @@ chip "Cold open" first on the Friday 08:15 row and "The cold open" first under L
 
     https://eth-bmai-hs26.github.io/BMAI-PAGE/slides/we4/cold-open.pdf
 
+And `attacks-on-llms.pdf`, the Saturday 10:30 lecture "Attacks on LLMs", on Carlos's word of 2026-10-24
+("Publish the Attacks on LLMs deck on the course site, on the Saturday 10:30 row and under Lecture
+slides"): a copy of `w4-lecture-material/attacks-on-llms-deck/attacks-on-llms-slides.pdf` at that
+repository's `9f0b852`, the VMI 2026 workshop deck "Attacking LLMs" from its section 3.3 on, cut to seven
+frames, as a "Slides" link with a description on the Saturday 10:30 row and "Attacks on LLMs" under
+Lecture slides, which was `SOON` (sha256 `58b7a247...c09c8e0`, 470 172 bytes); recopy after a rebuild:
+
+    https://eth-bmai-hs26.github.io/BMAI-PAGE/slides/we4/attacks-on-llms.pdf
+
 **Weekend 4's page shows the atlas of the weekend's models just before its agenda**, since 2026-10-22,
 on Carlos's word ("post it on the website just before the weekend agenda"), BMAI-PAGE commit `01217d7`.
 It is a new optional field of `Weekend`, `overview` (`src/types.ts`: a title, a note and pages, each an

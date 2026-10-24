@@ -1546,7 +1546,25 @@ export const weekends: Weekend[] = [
       // The master spreadsheet, 2026-10-22: attacks on LLMs at 10:30, then the
       // project intro at 11:00, an hour earlier than on weekends 1 to 3, and
       // nothing at 12:00.
-      { time: '10:30', title: 'Attacks on LLMs', type: 'lecture' },
+      {
+        time: '10:30',
+        title: 'Attacks on LLMs',
+        type: 'lecture',
+        // The deck w4-lecture-material/attacks-on-llms-deck/attacks-on-llms-slides.pdf:
+        // the VMI 2026 workshop deck "Attacking LLMs" from its section 3.3 on, cut
+        // to seven frames, opening with the 09:00 notebook's own dog. Copied on
+        // Carlos's word of 2026-10-24 ("Publish the Attacks on LLMs deck on the
+        // course site, on the Saturday 10:30 row and under Lecture slides").
+        // Recopy after a rebuild.
+        links: [
+          {
+            label: 'Slides',
+            url: deck(4, 'attacks-on-llms.pdf'),
+            description:
+              "A few words added to a harmful request make a chat model comply, and this morning's gradient finds them. Then the weights: a model that is safe as published and turns malicious once it is quantized, or once it is finetuned.",
+          },
+        ],
+      },
       {
         time: '11:00',
         title: 'Project intro: Deepfake detection and generation',
@@ -1583,7 +1601,7 @@ export const weekends: Weekend[] = [
       { group: 'Lecture slides', label: 'Future of AI', url: deck(4, 'future-of-ai.pdf') },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: deck(4, 'adversarial-attacks.pdf') },
       { group: 'Lecture slides', label: 'Adversarial attacks, handout', url: deck(4, 'adversarial-attacks-handout.pdf') },
-      { group: 'Lecture slides', label: 'Attacks on LLMs', url: SOON },
+      { group: 'Lecture slides', label: 'Attacks on LLMs', url: deck(4, 'attacks-on-llms.pdf') },
       {
         group: 'Visualizations',
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, predicting from a photo)',
