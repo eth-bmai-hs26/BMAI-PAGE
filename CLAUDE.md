@@ -352,3 +352,13 @@ before `565886e`: the addresses still hold, the places are as in this list.
   subdirectory, create its CLAUDE.md at the same time.
 - Keep it concrete: real file names, real identifiers, real commands. Record the gotchas that cost
   someone an hour. Do not restate what the code already says plainly.
+
+**Weekend 4's project intro deck is served from `public/slides/we4/deepfake-project.pdf`** since
+2026-10-24: "Deepfake Generation & Detection" (Francesco Caperna, Christina Tsakanika, Daniele Russica,
+12 pages, exported from Google Slides), uploaded by Francesco through the GitHub web interface as
+`Slide Project_4.pdf` (commit `26c18f9`) and renamed in the next commit, as the chip "Slides" first on the
+Saturday 11:00 project row and "Deepfake detection and generation: project intro slides" under Project,
+the weekend-2 arrangement. Like the guest deck of weekend 2 it has no source in any of our repositories:
+to change it, replace the file. The project description and the grading scheme stay `SOON`:
+
+    https://eth-bmai-hs26.github.io/BMAI-PAGE/slides/we4/deepfake-project.pdf

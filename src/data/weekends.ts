@@ -1573,7 +1573,13 @@ export const weekends: Weekend[] = [
         // reads w4-project-public directly, so there is nothing to copy. The
         // generator comes first because its Step 13 exports the
         // deepfake_imgs.zip the discriminator notebook asks for.
+        // The intro deck public/slides/we4/deepfake-project.pdf, "Deepfake
+        // Generation & Detection" (Francesco Caperna, Christina Tsakanika,
+        // Daniele Russica), 12 pages, uploaded to the repository through the
+        // GitHub web interface on 2026-10-24 as "Slide Project_4.pdf" and
+        // renamed here. It has no source in any of our repositories.
         links: [
+          { label: 'Slides', url: deck(4, 'deepfake-project.pdf') },
           {
             label: 'Deepfake generator notebook',
             url: colab('w4-project-public', 'deepfake_generation/deepfake_generation.ipynb'),
@@ -1618,6 +1624,11 @@ export const weekends: Weekend[] = [
         url: exercise(4, 'manifold-games/manifold-explorer/index.html'),
       },
       { group: 'Project', label: 'Deepfake detection and generation: project description', url: SOON },
+      {
+        group: 'Project',
+        label: 'Deepfake detection and generation: project intro slides',
+        url: deck(4, 'deepfake-project.pdf'),
+      },
       { group: 'Project', label: 'Deepfake detection and generation: grading scheme', url: SOON },
     ],
     // The weekend's coding notebooks, since 2026-10-22 (Carlos: "a
