@@ -343,8 +343,11 @@ website and get it ready for the classroom"): a "Poll" chip on the Friday 16:00 
 The poll itself runs on his laptop (`w4-lecture-material/future-of-ai-poll/poll.py`) behind a tunnel whose address
 changes at every start, so `public/viz/we4/future-of-ai-poll/index.html` is only a stable forwarder: it reads
 `live.json` beside it (fetched with a `?t=` query, which gets past the 10-minute cache of GitHub Pages) and goes to
-`url`. At every new start of the poll, write the new address there, commit that one file and push; after class set
-`{"url": null}` and the page says the poll is not open right now.
+`url`. At every new address, at a start and whenever localhost.run changes it during a run (six addresses in three
+hours on 2026-10-24), write it there, commit that one file and push:
+`w4-lecture-material/future-of-ai-poll/tools/publish_link.sh` does it. After class set `{"url": null}`
+(`publish_link.sh closed`) and the page says the poll is not open right now. The first class run, 43 phones,
+ended that way (`bdc7b5f`).
 
 ## Maintenance contract
 
