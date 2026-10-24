@@ -338,6 +338,14 @@ weekend 4 only; weekends 1 to 3 have no `exercises` and keep the plain chips.
 The weekend-4 paragraphs above that name chips on rows ("the Friday 08:15 row links ...") describe the page
 before `565886e`: the addresses still hold, the places are as in this list.
 
+**The classroom poll on the "Future of AI" questions, 2026-10-24**, on Carlos's word ("Also publish it on the
+website and get it ready for the classroom"): a "Poll" chip on the Friday 16:00 row, `viz(4, 'future-of-ai-poll')`.
+The poll itself runs on his laptop (`w4-lecture-material/future-of-ai-poll/poll.py`) behind a tunnel whose address
+changes at every start, so `public/viz/we4/future-of-ai-poll/index.html` is only a stable forwarder: it reads
+`live.json` beside it (fetched with a `?t=` query, which gets past the 10-minute cache of GitHub Pages) and goes to
+`url`. At every new start of the poll, write the new address there, commit that one file and push; after class set
+`{"url": null}` and the page says the poll is not open right now.
+
 ## Maintenance contract
 
 - This file is the working memory for this repository. After any major change here, meaning a new or

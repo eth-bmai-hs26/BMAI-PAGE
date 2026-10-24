@@ -1510,6 +1510,19 @@ export const weekends: Weekend[] = [
             description:
               'What 1,580 AI researchers said in December 2024: when machines could take over tasks and jobs, which milestones they expect when, how good or bad the outcomes could be, and how much safety research matters.',
           },
+          // "Poll" is the classroom poll on the same questions, put on the site on
+          // Carlos's word of 2026-10-24 ("Also publish it on the website and get it
+          // ready for the classroom"). The poll runs on his laptop
+          // (w4-lecture-material/future-of-ai-poll/poll.py) behind a tunnel whose
+          // address changes at every start, so this stable page forwards to the
+          // address in public/viz/we4/future-of-ai-poll/live.json; {"url": null}
+          // shows "not open right now".
+          {
+            label: 'Poll',
+            url: viz(4, 'future-of-ai-poll'),
+            description:
+              'Answer the same questions as the 1,580 researchers on your phone, anonymously, in about five minutes. In class, the answers of the room are shown beside theirs.',
+          },
         ],
       },
     ],

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>1,580 AI Authors: the poll</title>
+<!--
+  The stable address of the classroom poll on the "Future of AI" questions. The poll itself runs on Carlos's
+  laptop (w4-lecture-material/future-of-ai-poll/poll.py) behind a tunnel whose address changes at every start,
+  so this page reads today's address from live.json beside it and goes there. {"url": null} means closed.
+-->
+<style>
+  body { margin: 0; background: #fff; color: #212121;
+         font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  main { max-width: 520px; margin: 22vh auto 0; padding: 0 16px; }
+  h1 { font-size: 28px; margin: 0 0 12px; }
+  p { margin: 0 0 12px; color: #424242; }
+  a { color: #26456E; }
+</style>
+</head>
+<body>
+<main>
+  <h1>1,580 AI Authors</h1>
+  <p id="msg">Opening the poll ...</p>
+</main>
+<script>
+  (function () {
+    var msg = document.getElementById("msg");
+    function closed() {
+      msg.textContent = "The poll is not open right now. ";
+      var a = document.createElement("a");
+      a.href = "../../../";
+      a.textContent = "Back to the course site";
+      msg.appendChild(a);
+    }
+    fetch("live.json?t=" + Date.now(), {cache: "no-store"})
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (j) {
+        if (j && typeof j.url === "string" && /^https:\/\/[-a-z0-9.]+(:[0-9]+)?\/?$/.test(j.url)) location.replace(j.url);
+        else closed();
+      })
+      .catch(closed);
+  })();
+</script>
+</body>
+</html>
