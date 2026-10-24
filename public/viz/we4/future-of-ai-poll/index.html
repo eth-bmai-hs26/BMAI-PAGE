@@ -8,7 +8,8 @@
 <!--
   The stable address of the classroom poll on the "Future of AI" questions. The poll itself runs on Carlos's
   laptop (w4-lecture-material/future-of-ai-poll/poll.py) behind a tunnel whose address changes at every start,
-  so this page reads today's address from live.json beside it and goes there. {"url": null} means closed.
+  so this page reads today's address from live.json beside it and goes there. {"url": null} means closed, and so
+  does an "until" (UTC, ISO) in the past: a tunnel address can be reused by a stranger after class.
 -->
 <style>
   body { margin: 0; background: #fff; color: #212121;
@@ -37,7 +38,9 @@
     fetch("live.json?t=" + Date.now(), {cache: "no-store"})
       .then(function (r) { return r.ok ? r.json() : {}; })
       .then(function (j) {
-        if (j && typeof j.url === "string" && /^https:\/\/[-a-z0-9.]+(:[0-9]+)?\/?$/.test(j.url)) location.replace(j.url);
+        var open = j && typeof j.url === "string" && /^https:\/\/[-a-z0-9.]+(:[0-9]+)?\/?$/.test(j.url)
+          && typeof j.until === "string" && Date.now() < Date.parse(j.until);
+        if (open) location.replace(j.url);
         else closed();
       })
       .catch(closed);
