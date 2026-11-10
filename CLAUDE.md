@@ -280,7 +280,17 @@ the iPad export, recorded in `annotated/CLAUDE.md`, which is why the clean deck 
 link. **Weekend 2's followed on 2026-09-19**, the same way, from `w2-lecture-material/annotated/`
 to `public/slides/we2/<name>-annotated.pdf`: four of the six exports, the two without ink left
 off. An export with no ink on it is the clean deck with broken fonts, so check before
-publishing. The home page hero also links the lecture recordings,
+publishing. Weekend 3's four went up on 2026-10-02 and 03 (`6a18aa8`, `90cc327`) as chips only,
+with no Materials entries and no copy in `w3-lecture-material`.
+**Weekend 4's followed on 2026-11-10**, on his word ("Please upload them to the website"), the
+weekend-1 and 2 way, from `w4-lecture-material/annotated/` (its CLAUDE.md has the page-by-page
+check and the sha256 sums) to `public/slides/we4/<name>-annotated.pdf`: six of the seven exports,
+manifolds, vae, conditional-vae, stable-diffusion, adversarial-attacks and attacks-on-llms. The
+Future of AI export carries no ink and is left off. Each chip takes its label from the deck chip
+of its row ("Annotated: Manifolds" beside "Slides: Manifolds", "Annotated" beside "Slides") and
+comes before the handout where a row has one, and each Materials entry sits directly under its
+clean deck, "<deck>, annotated in the lecture". The manifolds copy is the first export whose
+fonts survived (EB Garamond, CFF); the other five have the weekend-1 damage. The home page hero also links the lecture recordings,
 `https://video.ethz.ch/lectures/d-infk/2026/autumn/273-0003-00L`, with a note that the credentials
 are in the course Moodle, `https://moodle-app2.let.ethz.ch/course/view.php?id=28802`.
 

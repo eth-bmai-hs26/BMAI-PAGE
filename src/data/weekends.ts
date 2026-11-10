@@ -1258,6 +1258,15 @@ export const weekends: Weekend[] = [
             description:
               'From one photo of a sunrise to the idea of a manifold: pictures that change in only a few ways lie on a surface, and a chart gives every picture its few coordinates. Ends with a cylinder, a torus, a Klein bottle and a projective plane folded from their charts.',
           },
+          // "Annotated" is the deck as Carlos wrote on it in the lecture, an iPad
+          // export handed over on 2026-11-10, right after the deck it annotates,
+          // as on weekends 1 to 3; the same on every lecture row below. See the
+          // note on the Materials list.
+          {
+            label: 'Annotated: Manifolds',
+            url: deck(4, 'manifolds-annotated.pdf'),
+            description: 'The manifolds slides as written on in the lecture, with the pages of notes added between them.',
+          },
           // The handout of the deck above: one page per slide, each at its last
           // click, cut from the same PDF (w4-lecture-material/manifolds-deck/
           // manifolds-slides-handout.pdf), on Carlos's word of 2026-10-23 ("Also
@@ -1394,6 +1403,11 @@ export const weekends: Weekend[] = [
               'A picture of a pufferfish is three numbers: where it swims and how puffed up it is. The yogurt-cup game becomes the training of an autoencoder, changing the three numbers by hand draws a new fish, and one slide sums up the variational autoencoder.',
           },
           {
+            label: 'Annotated: VAEs',
+            url: deck(4, 'vae-annotated.pdf'),
+            description: 'The VAE slides as written on in the lecture.',
+          },
+          {
             label: 'Sunrise Machine',
             url: exercise(4, 'manifold-games/sunrise-machine/index.html'),
             description:
@@ -1429,6 +1443,11 @@ export const weekends: Weekend[] = [
             description:
               'A new fish, but which one? Telling the autoencoder the label: apples and oranges, the label flipped by hand, why a penalty on the code makes the flip work, and age progression as the application.',
           },
+          {
+            label: 'Annotated: Conditional VAEs',
+            url: deck(4, 'conditional-vae-annotated.pdf'),
+            description: 'The conditional VAE slides as written on in the lecture.',
+          },
         ],
       },
       { time: '10:30', title: 'Coffee break at Polysnack, until 11:00', type: 'break' },
@@ -1455,6 +1474,11 @@ export const weekends: Weekend[] = [
             url: deck(4, 'stable-diffusion.pdf'),
             description:
               'How a picture turns into noise step by step, how a UNet learns to guess that noise so that each step can be undone, and how a prompt steers what comes out.',
+          },
+          {
+            label: 'Annotated',
+            url: deck(4, 'stable-diffusion-annotated.pdf'),
+            description: 'The same slides as written on in the lecture, with the pages of notes added between them.',
           },
         ],
       },
@@ -1503,6 +1527,8 @@ export const weekends: Weekend[] = [
         // byte for byte that repository's commit a383bf4. A rebuild there must
         // be recopied here. The report itself states no licence and is not on
         // the site; the deck links it on the AI Impacts site.
+        //
+        // No "Annotated" chip: the iPad export of 2026-11-10 carries no ink.
         links: [
           {
             label: 'Slides',
@@ -1544,6 +1570,11 @@ export const weekends: Weekend[] = [
               'A CNN tells dogs from cats through a chart of two numbers. Pictures of pets lie on a surface, the line between dogs and cats on the chart is a boundary in picture space, and a dog pushed a tiny step off the surface lands on the cat side. Then the step itself: the sign of the gradient of the loss.',
           },
           {
+            label: 'Annotated',
+            url: deck(4, 'adversarial-attacks-annotated.pdf'),
+            description: 'The same slides as written on in the lecture, with the pages of notes added between them.',
+          },
+          {
             label: 'Handout',
             url: deck(4, 'adversarial-attacks-handout.pdf'),
             description: 'The same slides with one page per slide, each as it ends, to print or to read again.',
@@ -1575,6 +1606,11 @@ export const weekends: Weekend[] = [
             url: deck(4, 'attacks-on-llms.pdf'),
             description:
               "A few words added to a harmful request make a chat model comply, and this morning's gradient finds them. Then the weights: a model that is safe as published and turns malicious once it is quantized, or once it is finetuned.",
+          },
+          {
+            label: 'Annotated',
+            url: deck(4, 'attacks-on-llms-annotated.pdf'),
+            description: 'The same slides as written on in the lecture, with the pages of notes added between them.',
           },
         ],
       },
@@ -1612,15 +1648,52 @@ export const weekends: Weekend[] = [
         label: "An atlas of the weekend's models: all six on one chart, then when to use which",
         url: deck(4, 'atlas.pdf'),
       },
+      // Each annotated copy sits directly under the deck it annotates, as on
+      // weekends 1 and 2. They are Carlos's iPad exports of 2026-11-10, copied
+      // from w4-lecture-material/annotated/. All but the manifolds copy have
+      // their embedded fonts damaged as on weekends 1 and 2, so the clean deck
+      // stays the primary link above each one. Their extra pages are sheets he
+      // inserted to write on. Future of AI has no annotated copy here: its
+      // export carries no ink. See ../w4-lecture-material/annotated/CLAUDE.md.
       { group: 'Lecture slides', label: 'Manifolds', url: deck(4, 'manifolds.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Manifolds, annotated in the lecture',
+        url: deck(4, 'manifolds-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Manifolds, handout', url: deck(4, 'manifolds-handout.pdf') },
       { group: 'Lecture slides', label: 'Variational autoencoders', url: deck(4, 'vae.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Variational autoencoders, annotated in the lecture',
+        url: deck(4, 'vae-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Conditional VAEs and age progression', url: deck(4, 'conditional-vae.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Conditional VAEs and age progression, annotated in the lecture',
+        url: deck(4, 'conditional-vae-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Stable diffusion', url: deck(4, 'stable-diffusion.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Stable diffusion, annotated in the lecture',
+        url: deck(4, 'stable-diffusion-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Future of AI', url: deck(4, 'future-of-ai.pdf') },
       { group: 'Lecture slides', label: 'Adversarial attacks', url: deck(4, 'adversarial-attacks.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Adversarial attacks, annotated in the lecture',
+        url: deck(4, 'adversarial-attacks-annotated.pdf'),
+      },
       { group: 'Lecture slides', label: 'Adversarial attacks, handout', url: deck(4, 'adversarial-attacks-handout.pdf') },
       { group: 'Lecture slides', label: 'Attacks on LLMs', url: deck(4, 'attacks-on-llms.pdf') },
+      {
+        group: 'Lecture slides',
+        label: 'Attacks on LLMs, annotated in the lecture',
+        url: deck(4, 'attacks-on-llms-annotated.pdf'),
+      },
       {
         group: 'Visualizations',
         label: 'Two grasshoppers fit a line: gradient descent on the three sunrise photos, click by click (Friday, predicting from a photo)',
